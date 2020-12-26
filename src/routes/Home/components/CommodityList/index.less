@@ -1,0 +1,32 @@
+.commodityWrap{
+  margin-top: 3px;
+
+  .commodityList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 10px;
+    border-radius: 10px;
+    .commodityItem {
+      background: #ffffff;
+      width: 49%;
+      padding:10px;
+      margin-top: 10px;
+      .img{
+        width: 100%;
+        height: auto;
+      }
+      .title {
+        overflow:hidden; //超出的文本隐藏
+        text-overflow:ellipsis; //溢出用省略号显示
+        white-space:nowrap; //溢出不换行
+        margin: 3px 0px;
+      }
+      .price{
+        font-size: 26px;
+        margin:5px 0px;
+        color: #fc3c36;
+      }
+    }
+  }
+}

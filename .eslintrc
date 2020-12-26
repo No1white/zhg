@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "umi",
+    "eslint:recommended"
+  ],
+}

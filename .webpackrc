@@ -1,0 +1,20 @@
+{
+    "entry": "src/index.js",
+    "env" : {
+        "development":{
+            "extraBabelPlugins":[
+                "dva-hmr"
+            ]
+        },
+        "production": {
+            "extraBabelPlugins": [
+
+            ]
+        }
+    },
+    "extraBabelPlugins": [
+      ["import", { "libraryName": "antd-mobile", "style": true }]
+    ]
+
+
+}

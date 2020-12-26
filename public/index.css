@@ -1,0 +1,11 @@
+.am-tabs-default-bar-content{
+  position: fixed;
+  background: white;
+
+}
+.am-tabs-default-bar-tab{
+  background: white;
+}
+.am-tabs-default-bar-tab-active{
+  color: #fe4c17;
+}

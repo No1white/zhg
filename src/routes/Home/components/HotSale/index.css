@@ -1,0 +1,37 @@
+.hotSaleWrap {
+  background: white;
+}
+.hotSaleWrap .topLine {
+  height: 30px;
+}
+.hotSaleWrap .topLine .title {
+  font-size: 16px;
+  margin: 0px 0px 5px 10px;
+  padding-top: 5px;
+}
+.hotSaleWrap .goodsList {
+  display: flex;
+}
+.hotSaleWrap .goodsList .commodity {
+  width: 23%;
+  margin: 0px 10px;
+  text-align: center;
+}
+.hotSaleWrap .goodsList .commodity .img {
+  width: 100%;
+  height: 80px;
+}
+.hotSaleWrap .goodsList .commodity .title {
+  width: 70px;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #fe2525;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+.hotSaleWrap .goodsList .commodity .price {
+  color: #fe2525;
+  font-size: 20px;
+  margin: 3px 0px;
+}

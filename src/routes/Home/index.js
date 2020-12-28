@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'dva'
 import { createForm } from 'rc-form';
 import SearchBar from './components/SearchBar';
 import TabBar from './components/TabBar'
@@ -10,33 +11,75 @@ class index extends Component {
   constructor(props){
     super(props);
     this.state = {
-
+      quertyParams: {
+        type: '0'
+      }
     }
 
   }
+  componentDidMount(){
+    this.getHotSale()
+  }
+  getHotSale = () => {
+    const {quertyParams} = this.state;
+    this.props.dispatch({
+      type: 'home/getHotList',
+      payload: {
+        quertyParams
+      },
+    });
+  }
   renderContent = tab => {
-    console.log(tab);
     return (
       (
         <div>
-          <HotSale />
-          <CommodityList />
+          {/* <HotSale list={this.props.hotList} /> */}
+          <CommodityList list={this.props.hotList} />
         </div>
       )
     );
   }
-
+  handleTabClick = (data)=> {
+    const {quertyParams} = this.state;
+    const query = quertyParams;
+    query.type = data.type;
+    this.setState({
+      quertyParams: {
+        ...query
+      }
+    })
+    this.getHotSale();
+  }
   renderHeader = () => {
     const tabs = [
-      { title: '全部' },
-      { title: '服装' },
-      { title: '数码' },
-      { title: '百货' },
-      { title: '配饰' },
-      { title: '潮玩' },
-      { title: '美妆' },
-      { title: '食品' },
-      { title: '家居' },
+      {
+        title: '全部',
+        type: '0',
+      },
+      { title: '服装',
+        type: '1',
+      },
+      { title: '数码',
+        type: '2',
+      },
+      { title: '百货',
+        type: '3',
+      },
+      { title: '配饰',
+        type: '4',
+      },
+      { title: '潮玩',
+        type: '5',
+      },
+      { title: '美妆',
+        type: '6',
+      },
+      { title: '食品',
+        type: '7'
+      },
+      { title: '家居',
+        type: '8'
+      },
     ];
     return (
       <div className={styles.headerWrap}>
@@ -50,7 +93,7 @@ class index extends Component {
             <SearchBar />
           </div>
         </div>
-        <TabBar tabs={tabs} renderContent={this.renderContent} />
+        <TabBar tabs={tabs} handleTabClick={this.handleTabClick} renderContent={this.renderContent} />
       </div>
     );
   }
@@ -63,4 +106,7 @@ class index extends Component {
   }
 }
 const HomeWrap = createForm()(index);
-export default HomeWrap;
+const mapStateToProps = state =>({
+  hotList: state.home.hotList
+})
+export default connect(mapStateToProps)(HomeWrap);

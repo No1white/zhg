@@ -46,12 +46,9 @@ class index extends React.Component {
         selectedIcon: 'icon-iconfontwo'
       }
     ];
-    console.log(this.props.history.location);
     let hiddenFlag = true;
     const { history:{location : {pathname}}} = this.props;
     tabBarList.forEach(item => {
-      console.log(item.key,pathname.substr(1));
-      console.log(item.key !== pathname.substr(1));
       if(item.key === pathname.substr(1)) {
         hiddenFlag =false;
       }

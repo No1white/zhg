@@ -1,7 +1,9 @@
 .commodityWrap {
   margin-top: 3px;
+  height: 100%;
 }
 .commodityWrap .commodityList {
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -29,4 +31,8 @@
   font-size: 26px;
   margin: 5px 0px;
   color: #fc3c36;
+}
+:global .list-view-section-body {
+  display: flex;
+  flex-wrap: wrap;
 }

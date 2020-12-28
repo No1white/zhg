@@ -23,6 +23,11 @@ export default class index extends Component {
    },200)
 
   }
+  renderNavBarLeftPart = () => {
+    return (
+      <h2 className={styles.title}>购物车</h2>
+    )
+  }
   renderNavBarRightPart = () => {
     const {showMange} = this.state;
     if(showMange) {

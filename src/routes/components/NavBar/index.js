@@ -5,7 +5,7 @@ export default class index extends Component {
     super(props)
   }
   render() {
-    const {title,renderRight} = this.props;
+    const {title,renderRight,renderLeft} = this.props;
     return (
       <div className={styles.headerWrap}>
         <div className={styles.fixWrap}>
@@ -13,9 +13,11 @@ export default class index extends Component {
             <div className={styles.left}>
               <h2 className={styles.title}>{title}</h2>
             </div>
-            <div className={styles.middle} />
+            <div className={styles.middle} >
+
+            </div>
             <div className={styles.right} >
-              {renderRight()}
+              {renderRight && renderRight()}
             </div>
           </div>
         </div>

@@ -27,9 +27,14 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/CommodityDetail'),
     loading: Loading,
   });
+  const SearchPage = Loadable({
+    loader: () => import('./routes/SearchCommodity'),
+    loading: Loading,
+  });
   const goTo = (url) => {
     history.push(url)
   }
+
   return (
     <Router history={history}>
       <div>
@@ -41,8 +46,9 @@ function RouterConfig({ history }) {
         <Route path="/mine" exact component={MinePage} />
         <Route path="/userPage" exact component={UserPage} />
         <Route path="/commodityDetail" exact component={CommodityPage} />
+        <Route path="/search" exact component={SearchPage} />
         </Switch>
-        <Navigation goTo={goTo}></Navigation>
+        <Navigation history={history} goTo={goTo}></Navigation>
       </div>
     </Router>
   );

@@ -1,0 +1,68 @@
+.commodityWrap .userInfo {
+  padding: 10px;
+  display: flex;
+}
+.commodityWrap .userInfo .img {
+  width: 50px;
+  height: 50px;
+}
+.commodityWrap .userInfo .userName {
+  margin-left: 20px;
+}
+.commodityWrap .commodityInfoWrap {
+  padding: 10px;
+}
+.commodityWrap .commodityInfoWrap .price {
+  color: #f34336;
+  margin: 0px;
+  font-size: 24px;
+}
+.commodityWrap .commodityInfoWrap .labels .label {
+  color: white;
+  margin: 5px 3px;
+  display: inline-block;
+  background: #fc4342;
+}
+.commodityWrap .commodityInfoWrap .labels .title {
+  font-weight: 400;
+  font-size: 20px;
+}
+.commodityWrap .commodityInfoWrap .description {
+  width: 100%;
+}
+.commodityWrap .commodityInfoWrap .description .img {
+  width: 100%;
+}
+.commodityWrap .bottomWrap {
+  width: 100%;
+  z-index: 10;
+  height: 50px;
+  position: fixed;
+  bottom: 0px;
+  border-top: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.commodityWrap .bottomWrap .collectBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+}
+.commodityWrap .bottomWrap .collectBtn .like {
+  margin: 0px 10px;
+}
+.commodityWrap .bottomWrap .collectBtn .like .font {
+  font-size: 10px;
+}
+.commodityWrap .bottomWrap .submitBtn .btn {
+  width: 90px;
+  height: 35px;
+  border: 0px;
+  color: white;
+  margin-left: 10px;
+  border-radius: 30px;
+  background: linear-gradient(#fc6c21, #f02557);
+}

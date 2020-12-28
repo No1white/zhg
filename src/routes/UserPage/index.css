@@ -1,0 +1,36 @@
+.userPageWrap {
+  width: 100%;
+  height: 100%;
+}
+.userPageWrap .closeBtn {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.userPageWrap .closeBtn .close {
+  font-size: 16px;
+}
+.userPageWrap .formWrap {
+  position: absolute;
+  width: 95%;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.userPageWrap .formWrap .titleWrap .title {
+  font-weight: 400;
+}
+.userPageWrap .formWrap .titleWrap .label {
+  color: rgba(0, 0, 0, 0.3);
+}
+.userPageWrap .formWrap .titleWrap .label .swtichBtn {
+  color: #fe5102;
+}
+.userPageWrap .formWrap .operateWrap .submitBtn {
+  margin-top: 30px;
+  color: white;
+  background: linear-gradient(#ff7e02, #ff600c);
+  border-radius: 30px;
+}
+:global .userName {
+  background: none !important;
+}

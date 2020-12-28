@@ -1,0 +1,29 @@
+.goodListWrap {
+  width: 100%;
+}
+.goodListWrap .goodList .goodItem {
+  display: flex;
+  align-items: center;
+}
+.goodListWrap .goodList .goodItem .goodImg {
+  width: 90px;
+  height: 90px;
+}
+.goodListWrap .goodList .goodItem .goodInfo {
+  font-size: 16px;
+  width: 100%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.goodListWrap .goodList .goodItem .goodInfo .goodTitle {
+  font-size: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.goodListWrap .goodList .goodItem .goodInfo .p {
+  margin: 0px;
+}
+.goodListWrap .goodList .goodItem .goodInfo .specification {
+  opacity: 0.6;
+}

@@ -10,3 +10,11 @@
   position: fixed;
   background: white;
 }
+.am-tab-bar-bar {
+  z-index: 20;
+}
+.am-tab-bar-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}

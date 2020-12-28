@@ -1,0 +1,9 @@
+.commodityWrap {
+  margin: 10px 10px 10px 10px;
+  border-radius: 10px;
+  padding-bottom: 100px;
+}
+.commodityWrap .commodityList .commodityItem {
+  margin-top: 20px;
+  background: white;
+}

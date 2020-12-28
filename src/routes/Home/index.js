@@ -50,7 +50,6 @@ class index extends Component {
             <SearchBar />
           </div>
         </div>
-
         <TabBar tabs={tabs} renderContent={this.renderContent} />
       </div>
     );

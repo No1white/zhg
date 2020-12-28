@@ -48,7 +48,7 @@ class index extends React.Component {
     ];
     const {renderContent}= this.props;
     return (
-      <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { height: 400 }}>
+      <div >
         <TabBar
           unselectedTintColor="#949494"
           tintColor="#33A3F4"
@@ -78,161 +78,18 @@ class index extends React.Component {
                     selected={this.state.selectedTab === item.key}
 
                     onPress={() => {
+                      this.props.goTo(item.key)
                       this.setState({
                         selectedTab: item.key
                       });
                     }}
                     data-seed="logId"
                   >
-                    {renderContent(item.key)}
+                    {/* {renderContent(item.key)} */}
                 </TabBar.Item>
               )
             })
           }
-          {/* <TabBar.Item
-            title="首页"
-            key="home"
-            icon={<div style={{
-              width: '26px',
-              height: '26px',
-              fontSize: '26px', }}
-              className={'iconfont '}
-            />
-            }
-            selectedIcon={<div style={{
-              width: '26px',
-              height: '26px',
-              fontSize: '26px',}}
-              className={'iconfont '}
-            />
-            }
-            selected={this.state.selectedTab === 'blueTab'}
-
-            onPress={() => {
-              this.setState({
-                selectedTab: 'blueTab',
-              });
-            }}
-            data-seed="logId"
-          >
-            {this.renderContent('Life')}
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '26px',
-              height: '26px',
-              fontSize: '26px', }}
-              className={'iconfont icon-jiahao2'}
-              />
-            }
-            selectedIcon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px', }}
-                className={'iconfont icon-jiahao1'}
-              />
-            }
-            title="卖闲置"
-            key="idle"
-            selected={this.state.selectedTab === 'redTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'redTab',
-              });
-            }}
-            data-seed="logId1"
-          >
-            {this.renderContent('Koubei')}
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px',}}
-                className={'iconfont icon-cart-full'}
-              />
-            }
-            selectedIcon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px',}}
-                className={'iconfont icon-cart-Empty-fill'}
-              />
-            }
-            title="购物车"
-            key="cart"
-            dot
-            selected={this.state.selectedTab === 'greenTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-              });
-            }}
-          >
-            {this.renderContent('Friend')}
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px',}}
-                className={'iconfont icon-xiaoxi1'}
-              />
-            }
-            selectedIcon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px',}}
-                className={'iconfont icon-xiaoxi'}
-              />
-            }
-            title="消息"
-            key="message"
-            dot
-            selected={this.state.selectedTab === 'greenTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-              });
-            }}
-          >
-            {this.renderContent('Friend')}
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px',}}
-                className={'iconfont icon-wode'}
-              />
-            }
-            selectedIcon={
-              <div style={{
-                width: '26px',
-                height: '26px',
-                fontSize: '26px',}}
-                className={'iconfont icon-iconfontwo'}
-              />
-            }
-            title="我的"
-            key="mine"
-            dot
-            selected={this.state.selectedTab === 'greenTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-              });
-            }}
-          >
-            {this.renderContent('Friend')}
-          </TabBar.Item> */}
         </TabBar>
       </div>
     );

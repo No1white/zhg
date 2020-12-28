@@ -1,0 +1,107 @@
+.mineWrap {
+  widows: 100%;
+}
+.mineWrap .userInfoWrap {
+  width: 100%;
+  height: 230px;
+  background: #ff4f18;
+  position: relative;
+}
+.mineWrap .userInfoWrap .userInfo {
+  position: absolute;
+  top: 50px;
+  left: 30px;
+  display: flex;
+}
+.mineWrap .userInfoWrap .userInfo .avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+.mineWrap .userInfoWrap .userInfo .userName {
+  font-size: 20px;
+  margin-left: 10px;
+  color: white;
+}
+.mineWrap .userInfoWrap .userInfo .userName .userId {
+  margin: 0px 0px 0px 10px;
+}
+.mineWrap .userInfoWrap .userInfo .userName .nickName {
+  font-size: 14px;
+  opacity: 0.6;
+  margin: 10px 0px 0px 10px;
+}
+.mineWrap .userInfoWrap .userStateBar {
+  position: absolute;
+  width: 100%;
+  top: 120px;
+  display: flex;
+  text-align: center;
+  color: white;
+}
+.mineWrap .userInfoWrap .userStateBar .batItem {
+  flex: 1;
+  font-size: 16px;
+}
+.mineWrap .saleInfoWrap {
+  width: 95%;
+  position: relative;
+  height: 150px;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 10px;
+}
+.mineWrap .saleInfoWrap .saleInfo {
+  padding: 10px;
+}
+.mineWrap .saleInfoWrap .saleInfo .saleTitle {
+  margin: 0px;
+}
+.mineWrap .saleInfoWrap .saleInfo .info {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+}
+.mineWrap .saleInfoWrap .saleInfo .info .sale {
+  flex: 1;
+}
+.mineWrap .saleInfoWrap .saleInfo .info .sale .saleIcon {
+  font-size: 30px;
+  margin: 0px;
+}
+.mineWrap .saleInfoWrap .saleInfo .info .sale .saleFont {
+  margin-top: 10px;
+}
+.mineWrap .orderInfoWrap {
+  width: 95%;
+  position: relative;
+  height: 150px;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 10px;
+}
+.mineWrap .orderInfoWrap .orderInfo {
+  padding: 10px;
+}
+.mineWrap .orderInfoWrap .orderInfo .orderTitle {
+  margin: 0px;
+}
+.mineWrap .orderInfoWrap .orderInfo .info {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+}
+.mineWrap .orderInfoWrap .orderInfo .info .order {
+  flex: 1;
+}
+.mineWrap .orderInfoWrap .orderInfo .info .order .orderIcon {
+  font-size: 30px;
+  margin: 0px;
+}
+.mineWrap .orderInfoWrap .orderInfo .info .order .orderFont {
+  margin-top: 10px;
+}

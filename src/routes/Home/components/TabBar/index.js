@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Tabs, WhiteSpace,Button } from 'antd-mobile';
-
+import styles from './index.less'
 class index extends React.Component {
 
   render() {
     const {tabs,renderContent} = this.props;
 
     return (
-      <div>
+      <div className={styles.tabsWrap}>
         <WhiteSpace />
         <Tabs
           tabs={tabs}

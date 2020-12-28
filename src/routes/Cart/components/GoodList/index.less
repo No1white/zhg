@@ -1,0 +1,32 @@
+.goodListWrap{
+  width: 100%;
+  .goodList {
+    .goodItem {
+      display: flex;
+      align-items: center;
+      .goodImg {
+        width: 90px;
+        height: 90px;
+      }
+      .goodInfo {
+        font-size: 16px;
+        width: 100%;
+        overflow: hidden;
+          margin-left: 10px;
+          .goodTitle {
+            font-size: 24px;
+            overflow:hidden; //超出的文本隐藏
+            text-overflow:ellipsis; //溢出用省略号显示
+            white-space:nowrap; //溢出不换行
+
+          }
+          .p{
+            margin: 0px;
+          }
+          .specification{
+            opacity: 0.6;
+          }
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
-import { List } from 'antd-mobile'
 import React, { Component } from 'react'
-
+import { List,WhiteSpace } from 'antd-mobile'
 import styles from './index.less'
 
 export default class index extends Component {

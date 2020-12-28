@@ -20,7 +20,7 @@ class index extends React.Component {
     ];
 
     return (
-      <div>
+      <div >
         <WhiteSpace />
         <Tabs tabs={tabs} renderTabBar={props => <Tabs.DefaultTabBar {...props}  page={5} />}>
           {this.renderContent}

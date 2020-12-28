@@ -1,0 +1,22 @@
+.cartWrap {
+  width: 100%;
+  height: 100%;
+}
+.cartWrap .accountWrap {
+  position: fixed;
+  bottom: 47px;
+  height: 50px;
+  width: 100%;
+  background: white;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cartWrap .accountWrap .btnWrap .account {
+  margin-right: 10px;
+}
+.cartWrap .accountWrap .btnWrap .account .num {
+  color: #ff7804;
+}

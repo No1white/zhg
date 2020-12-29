@@ -1,19 +1,22 @@
 .commodityWrap{
   margin-top: 3px;
   height: 100%;
+  background: #f2f2f2;
   .commodityList {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 10px;
     border-radius: 10px;
     padding-bottom: 50px;
     .commodityItem {
       background: #ffffff;
-      width: 49%;
+      width: 47%;
       padding:10px;
+
       margin-top: 10px;
+      margin-right: 5px;
+      margin-left: 5px;
       .img{
         width: 100%;
         height: auto;
@@ -35,6 +38,13 @@
 :global {
   .list-view-section-body{
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
+  }
+  .am-list-header{
+    padding:0px;
+  }
+  .am-list-view-scrollview-content{
+    width: 100%;
   }
 }

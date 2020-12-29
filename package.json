@@ -14,7 +14,9 @@
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
+    "antd": "^4.9.4",
     "babel-plugin-dva-hmr": "^0.3.2",
+    "dva-loading": "^3.0.22",
     "eslint": "^6.8.0",
     "eslint-config-umi": "^0.1.1",
     "eslint-plugin-flowtype": "^2.34.1",

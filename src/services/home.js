@@ -22,3 +22,16 @@ export const getHotSale = (params) => {
     ...postOptions(params),
   });
 };
+
+// 获取商品列表
+export const getCommodityList = (params) => {
+  return request(getPath('/api/home/commodityList'), {
+    ...postOptions(params),
+  });
+};
+// 获取热搜词
+export const getHotWords = (params) => {
+  return request(getPath('/api/home/hotWords'), {
+    ...postOptions(params),
+  });
+};

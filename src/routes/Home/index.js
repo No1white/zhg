@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva'
 import { createForm } from 'rc-form';
+import ActivityIndicator from '../../components/ActivityIndicator'
 import SearchBar from './components/SearchBar';
 import TabBar from './components/TabBar'
 import HotSale from './components/HotSale'
@@ -18,7 +19,8 @@ class index extends Component {
 
   }
   componentDidMount(){
-    this.getHotSale()
+    this.getHotSale();
+    this.getCommodityList();
   }
   getHotSale = () => {
     const {quertyParams} = this.state;
@@ -29,12 +31,29 @@ class index extends Component {
       },
     });
   }
+  getCommodityList = () => {
+    const {quertyParams} = this.state;
+    this.props.dispatch({
+      type: 'home/getCommodityList',
+      payload: {
+        quertyParams
+      },
+    });
+  }
   renderContent = tab => {
+    const {hotList,loading,commodityList,hasMore} = this.props;
+    console.log(this.props);
     return (
       (
         <div>
-          {/* <HotSale list={this.props.hotList} /> */}
-          <CommodityList list={this.props.hotList} />
+          <ActivityIndicator animating={loading} ></ActivityIndicator>
+          <CommodityList
+            hotList={hotList}
+            loading={loading}
+            getCommodityList={this.getCommodityList}
+            commodityList= {commodityList}
+            hasMore ={hasMore}
+            />
         </div>
       )
     );
@@ -107,6 +126,10 @@ class index extends Component {
 }
 const HomeWrap = createForm()(index);
 const mapStateToProps = state =>({
-  hotList: state.home.hotList
+  hotList: state.home.hotList,
+  commodityList: state.home.commodityList,
+  hasMore: state.home.commodityListHasMore,
+
+  loading: state.loading.models.home
 })
 export default connect(mapStateToProps)(HomeWrap);

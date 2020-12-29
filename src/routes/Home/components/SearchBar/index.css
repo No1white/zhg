@@ -24,8 +24,8 @@
   z-index: 4;
   right: 7%;
   width: 70px;
-  height: 30px;
-  top: 10px;
+  height: 28px;
+  top: 9px;
   font-size: 19px;
   border: 0px;
   color: white;
@@ -34,7 +34,17 @@
 .searchBar .search .searchIcon {
   position: absolute;
   font-size: 33px;
-  top: 5px;
+  top: 0px;
   color: #666666;
   left: 6%;
+}
+.searchBar .autoComplete {
+  width: 100%;
+  margin: 0 auto;
+}
+:global .ant-select-selector {
+  border-radius: 30px !important;
+}
+:global .ant-select-open {
+  border: none;
 }

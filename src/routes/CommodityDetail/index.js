@@ -3,6 +3,12 @@ import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
 import styles from './index.less'
 export default class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+  }
   renderUserInfo = () => {
     return (
       <div className={styles.userInfo}>
@@ -57,7 +63,7 @@ export default class index extends Component {
   render() {
     return (
       <div className={styles.commodityWrap}>
-        <NavBar ></NavBar>
+        <NavBar history={this.props.history} ></NavBar>
         {this.renderUserInfo()}
         {this.renderCommodityInfo()}
         {this.renderBottom()}

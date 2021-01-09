@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva'
 import { createForm } from 'rc-form';
+import {Toast} from 'antd-mobile'
 import ActivityIndicator from '../../components/ActivityIndicator'
 import SearchBar from './components/SearchBar';
 import TabBar from './components/TabBar'
@@ -27,7 +28,7 @@ class index extends Component {
     this.props.dispatch({
       type: 'home/getHotList',
       payload: {
-        quertyParams
+        ...quertyParams
       },
     });
   }
@@ -36,27 +37,18 @@ class index extends Component {
     this.props.dispatch({
       type: 'home/getCommodityList',
       payload: {
-        quertyParams
+        ...quertyParams
       },
     });
   }
-  renderContent = tab => {
-    const {hotList,loading,commodityList,hasMore} = this.props;
-    console.log(this.props);
-    return (
-      (
-        <div>
-          <ActivityIndicator animating={loading} ></ActivityIndicator>
-          <CommodityList
-            hotList={hotList}
-            loading={loading}
-            getCommodityList={this.getCommodityList}
-            commodityList= {commodityList}
-            hasMore ={hasMore}
-            />
-        </div>
-      )
-    );
+  getHotWords = (params) => {
+    // const {quertyParams} = this.state;
+    this.props.dispatch({
+      type: 'home/getHotWords',
+      payload: {
+        word:params
+      },
+    });
   }
   handleTabClick = (data)=> {
     const {quertyParams} = this.state;
@@ -68,6 +60,43 @@ class index extends Component {
       }
     })
     this.getHotSale();
+  }
+  handleSearchBtn = (word)=> {
+    // const {quertyParams} = this.state;
+    // this.props.dispatch({
+    //   type: 'home/getCommodityList',
+    //   payload: {
+    //     ...quertyParams,
+    //     word,
+    //   },
+    // });
+    console.log(this.props);
+    if(word === undefined || word === null) {
+      Toast.info('请输入关键词');
+      return;
+    } else {
+      this.props.history.push(`/search/${word}`)
+    }
+  }
+  renderContent = tab => {
+    const {hotList,loading,commodityList,hasMore,history} = this.props;
+    console.log(this.props);
+    return (
+      (
+        <div>
+          <ActivityIndicator animating={loading} ></ActivityIndicator>
+          <CommodityList
+            hotList={hotList}
+            header = {true}
+            loading={loading}
+            history={history}
+            getCommodityList={this.getCommodityList}
+            commodityList= {commodityList}
+            hasMore ={hasMore}
+            />
+        </div>
+      )
+    );
   }
   renderHeader = () => {
     const tabs = [
@@ -100,6 +129,7 @@ class index extends Component {
         type: '8'
       },
     ];
+    const {hotWords} = this.props;
     return (
       <div className={styles.headerWrap}>
         <div className={styles.fixWrap}>
@@ -109,7 +139,11 @@ class index extends Component {
             </div>
             <div className={styles.middle} />
             <div className={styles.right} />
-            <SearchBar />
+            <SearchBar
+              getHotWords ={this.getHotWords}
+              options={hotWords}
+              handleSearchBtn= {this.handleSearchBtn}
+              />
           </div>
         </div>
         <TabBar tabs={tabs} handleTabClick={this.handleTabClick} renderContent={this.renderContent} />
@@ -129,7 +163,7 @@ const mapStateToProps = state =>({
   hotList: state.home.hotList,
   commodityList: state.home.commodityList,
   hasMore: state.home.commodityListHasMore,
-
+  hotWords: state.home.hotWords,
   loading: state.loading.models.home
 })
 export default connect(mapStateToProps)(HomeWrap);

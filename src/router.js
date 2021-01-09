@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'dva/router';
 import Loadable from 'react-loadable';
 import Navigation from './routes/components/Navigation'
+import SearchPage from './routes/SearchCommodity'
 import IndexPage from './routes/IndexPage';
 // import Home from './routes/Home'
 
@@ -27,8 +28,16 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/CommodityDetail'),
     loading: Loading,
   });
-  const SearchPage = Loadable({
+  const SearchPage2 = Loadable({
     loader: () => import('./routes/SearchCommodity'),
+    loading: Loading,
+  });
+  const SalePage = Loadable({
+    loader: () => import('./routes/SalePage'),
+    loading: Loading,
+  });
+  const ClearingPage = Loadable({
+    loader: () => import('./routes/Clearing'),
     loading: Loading,
   });
   const goTo = (url) => {
@@ -45,8 +54,11 @@ function RouterConfig({ history }) {
         <Route path="/cart" exact component={CartPage} />
         <Route path="/mine" exact component={MinePage} />
         <Route path="/userPage" exact component={UserPage} />
-        <Route path="/commodityDetail" exact component={CommodityPage} />
-        <Route path="/search" exact component={SearchPage} />
+        <Route path='/commodityDetail/:id' exact component={CommodityPage} />
+        <Route path='/search/:word' exact component={SearchPage2} />
+        <Route path='/sale' exact component={SalePage} />
+        <Route path='/clearing' exact component={ClearingPage} />
+        {/* <Route path='/search/:word'  component={SearchPage} /> */}
         </Switch>
         <Navigation history={history} goTo={goTo}></Navigation>
       </div>

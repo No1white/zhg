@@ -23,7 +23,7 @@ class index extends React.Component {
       },
       {
         title:'卖闲置',
-        key: 'idle',
+        key: 'sale',
         icon: 'icon-jiahao2',
         selectedIcon: 'icon-jiahao1'
       },

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import NavBar from '../components/NavBar'
-import {Checkbox} from 'antd-mobile'
+import NavBar from '../../components/NavBar'
+import {Checkbox,WingBlank} from 'antd-mobile'
 import CommodityList from './components/CommodityList'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -11,6 +11,16 @@ export default class index extends Component {
     this.state = {
       showMange: true,
       totalPrice: 0,
+      userInfo: {
+        userName: '林',
+        phone: '180605707639',
+        address: {
+          province: '福建省',
+          city: '漳州市',
+          region: '平和县',
+          defail: '高速路口对面'
+        }
+      }
     }
   }
   showChangeByProperty =(property)=>{
@@ -68,8 +78,7 @@ export default class index extends Component {
     const {showMange,totalPrice} = this.state;
     return (
       <div className={styles.accountWrap}>
-        <CheckboxItem  >
-        </CheckboxItem>
+
         {/* <Radio className="my-radio" onChange={e => console.log('checkbox', e)} >全选</Radio> */}
         {
           showMange && (
@@ -92,10 +101,30 @@ export default class index extends Component {
       </div>
     )
   }
+  renderAddress = () => {
+    const { userInfo } = this.state;
+    return (
+      <WingBlank>
+        <div className={styles.addressWrap}>
+          <div className={`${styles.addressIcon} iconfont icon-dizhi1`}></div>
+          <div className={styles.addressInfo}>
+            <div className={styles.userInfo}>
+              <p>{userInfo.userName}</p>
+              <p>{userInfo.phone}</p>
+            </div>
+            <div className={styles.addressInfo}>
+              {userInfo.address.province} {userInfo.address.city} {userInfo.address.region} {userInfo.address.detail}
+            </div>
+          </div>
+      </div>
+      </WingBlank>
+    );
+  }
   render() {
     return (
-      <div className={styles.cartWrap}>
-        <NavBar title ={'购物车'} renderRight = {this.renderNavBarRightPart}></NavBar>
+      <div className={styles.clearingWrap}>
+        <NavBar ></NavBar>
+        {this.renderAddress()}
         <CommodityList changeTotalPrice={this.changeTotalPrice} ></CommodityList>
         {this.renderAccount()}
       </div>

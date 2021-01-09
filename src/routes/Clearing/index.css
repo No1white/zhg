@@ -1,0 +1,35 @@
+.clearingWrap {
+  width: 100%;
+  height: 100%;
+  background: #f2f2f2;
+}
+.clearingWrap .addressWrap {
+  width: 100%;
+  height: 200px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clearingWrap .addressWrap .addressIcon {
+  width: 40px;
+}
+.clearingWrap .accountWrap {
+  position: fixed;
+  bottom: 47px;
+  height: 50px;
+  width: 100%;
+  background: white;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.clearingWrap .accountWrap .btnWrap .account {
+  margin-right: 10px;
+}
+.clearingWrap .accountWrap .btnWrap .account .num {
+  color: #ff7804;
+}

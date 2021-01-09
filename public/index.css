@@ -48,3 +48,6 @@
 .hideEle {
   display: none;
 }
+.must {
+  color: red;
+}

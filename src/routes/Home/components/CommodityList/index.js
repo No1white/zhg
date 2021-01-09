@@ -25,10 +25,16 @@ export default class index extends Component {
   onEndReached = () =>{
     this.props.getCommodityList();
   }
+  goToDetail = (id) =>{
+    // console.log(this.props);
+    // this.props.history.push()
+    this.props.history.push(`/commodityDetail/${id}`)
+  }
+
   row = (row)=>{
     return (
 
-          <div className={styles.commodityItem}>
+          <div className={styles.commodityItem} onClick={()=> {this.goToDetail(row.id)}}>
             <img src={row.url} className={styles.img} />
             <p className={styles.title}>{row.title}</p>
             <p className={styles.price}>{row.price}</p>
@@ -36,14 +42,24 @@ export default class index extends Component {
 
     )
   }
+  renderHeader = () => {
+    const {header = false,hotList} = this.props;
+    if(header) {
+      return (
+        < HotSale list={hotList} goToDetail={this.goToDetail}></ HotSale>
+      )
+    } else {
+      return <div></div>;
+    }
+  }
   render() {
 
-    const {isLoading =true,loading, hotList,commodityList = [],hasMore,getCommodityList} =  this.props;
+    const {isLoading =true,loading, hotList,commodityList = [],hasMore,getCommodityList,zIndexFlag = false} =  this.props;
     return (
-      <div className={styles.commodityWrap}>
+      <div className={`${styles.commodityWrap} ${zIndexFlag ? styles.zIndex :''}`}>
         <ListView
           ref={el => this.lv = el}
-          renderHeader={() => < HotSale list={hotList}></ HotSale>}
+          renderHeader={this.renderHeader}
           dataSource={this.state.dataSource.cloneWithRows(commodityList)}
           renderRow={this.row}
           className={styles.commodityList}

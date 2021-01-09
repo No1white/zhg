@@ -1,9 +1,10 @@
 .searchCommodityWrap {
+  position: relative;
   width: 100%;
 }
 .searchCommodityWrap .searchBar {
   position: relative;
-  top: -30px;
+  top: -20px;
   left: 30px;
   width: 90%;
 }

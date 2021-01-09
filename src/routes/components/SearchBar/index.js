@@ -1,13 +1,51 @@
 import React, { Component } from 'react';
+import { AutoComplete,Input } from 'antd';
 import styles from './index.less';
 
 
 export default class index extends Component {
   render() {
+    const onSearch = (searchText) => {
+
+    };
+    let timeOut = '';
+    const onSelect = (data) => {
+      this.setState({
+        word:data,
+      })
+    };
+    const onChange = (data) => {
+      console.log(data);
+      if(timeOut) {
+        clearTimeout(timeOut)
+      }
+      if(timeOut) {
+        timeOut= ''
+      }
+      timeOut = setTimeout(()=> {
+        this.props.getHotWords(data);
+        this.setState({
+          word:data,
+        })
+      },300);
+
+
+
+    };
+    const { options = [],handleSearchBtn} = this.props;
     return (
       <div className={styles.searchBar}>
         <div className={styles.search}>
-          <input type="text" placeholder={'搜索热词'} className={styles.searchInput} />
+          <AutoComplete
+              options={options}
+              // style={{ width: 200 }}
+              onSelect={onSelect}
+              onSearch={onSearch}
+              onChange={onChange}
+              className={styles.searchInput}
+              placeholder="请输入关键词"
+            />
+          {/* <input type="text" placeholder={'搜索热词'} className={styles.searchInput} /> */}
           <button className={styles.searchBtn}>搜索</button>
           <span className={`iconfont icon-search ${styles.searchIcon}`} />
         </div>

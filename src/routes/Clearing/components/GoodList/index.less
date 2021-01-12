@@ -4,6 +4,7 @@
     .goodItem {
       display: flex;
       align-items: center;
+
       .goodImg {
         width: 90px;
         height: 90px;
@@ -26,6 +27,42 @@
           .specification{
             opacity: 0.6;
           }
+      }
+    }
+    .dealInfo {
+      width: 100%;
+      .dealList {
+        margin: 20px auto;
+        font-size: 16px;
+        .dealItem {
+          display: flex;
+          align-items: center;
+          text-align: right;
+          // justify-content: right;
+          .flex1 {
+            flex: 1;
+          }
+          .title {
+            font-weight: 500;
+          }
+          .content {
+            margin-left: 10px;
+            text-align: left;
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+    .totalWrap {
+      text-align: right;
+      padding-bottom: 20px;
+      .total {
+        .num {
+
+        }
+        .price {
+          margin-left: 5px;
+        }
       }
     }
   }

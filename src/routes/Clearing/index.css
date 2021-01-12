@@ -5,27 +5,73 @@
 }
 .clearingWrap .addressWrap {
   width: 100%;
-  height: 200px;
+  height: 100px;
   background: white;
   border-radius: 10px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .clearingWrap .addressWrap .addressIcon {
+  text-align: center;
+  width: 70px;
+}
+.clearingWrap .addressWrap .addressIcon .address {
+  font-size: 30px;
+  padding: 5px;
+  border-radius: 50%;
+  color: white;
+}
+.clearingWrap .addressWrap .addressInfo {
+  flex: 2;
+  font-size: 16px;
+}
+.clearingWrap .addressWrap .addressInfo .userInfo {
+  display: flex;
+}
+.clearingWrap .addressWrap .addressInfo .userInfo .phone {
+  margin-left: 20px;
+  opacity: 0.8;
+}
+.clearingWrap .addressWrap .arrow {
   width: 40px;
+}
+.clearingWrap .switchWrap {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  margin: 10px 0px;
+  background: white;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.clearingWrap .switchWrap .title {
+  width: 80px;
+  font-weight: 1000;
+  font-size: 20px;
+  color: #fe4c01;
+}
+.clearingWrap .switchWrap .switchBtn {
+  margin-left: 20px;
 }
 .clearingWrap .accountWrap {
   position: fixed;
-  bottom: 47px;
+  bottom: 0px;
   height: 50px;
   width: 100%;
+  line-height: 1px;
   background: white;
   border-top: 1px solid #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.clearingWrap .accountWrap .btnWrap .goodNum {
+  opacity: 0.6;
+  margin-right: 10px;
 }
 .clearingWrap .accountWrap .btnWrap .account {
   margin-right: 10px;

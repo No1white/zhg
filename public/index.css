@@ -51,3 +51,9 @@
 .must {
   color: red;
 }
+.bgLinear{
+  background: linear-gradient(#ff7e02,#ff600c);
+}
+.themeColor {
+  color: #ff6f0c;
+}

@@ -40,6 +40,14 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Clearing'),
     loading: Loading,
   });
+  const AddressMangePage = Loadable({
+    loader: () => import('./routes/AddressMange'),
+    loading: Loading,
+  });
+  const addAddressPage = Loadable({
+    loader: () => import('./routes/AddAddress'),
+    loading: Loading,
+  });
   const goTo = (url) => {
     history.push(url)
   }
@@ -58,6 +66,8 @@ function RouterConfig({ history }) {
         <Route path='/search/:word' exact component={SearchPage2} />
         <Route path='/sale' exact component={SalePage} />
         <Route path='/clearing' exact component={ClearingPage} />
+        <Route path='/addressMange' exact component={AddressMangePage} />
+        <Route path='/addAddress' exact component={addAddressPage} />
         {/* <Route path='/search/:word'  component={SearchPage} /> */}
         </Switch>
         <Navigation history={history} goTo={goTo}></Navigation>

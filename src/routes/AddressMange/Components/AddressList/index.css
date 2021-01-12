@@ -1,0 +1,23 @@
+.addressListWrap .addressList .addressItem {
+  margin-top: 10px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addressListWrap .addressList .addressItem .userInfoWrap .addressInfo .label {
+  background: #fff1eb;
+  padding: 2px;
+  color: #ff6007;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+.addressListWrap .addressList .addressItem .edit {
+  width: 60px;
+  text-align: center;
+  margin-right: 20px;
+}
+.addressListWrap .addressList .addressItem .edit .btn {
+  display: block;
+  border-left: 2px solid #eeeeee;
+}

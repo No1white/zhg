@@ -153,19 +153,15 @@ export default class index extends Component {
     const {cartList} = this.state;
     return (
 
+      <WingBlank>
         <div className={styles.commodityWrap}>
             <List className={styles.commodityList}>
               {cartList.map(i => {
                 return (
                   <div className={styles.commodityItem}>
-                    <CheckboxItem
-                      key={i.value}
-                      defaultChecked={i.allChecked}
-                      onChange={() => this.onChange(i.userId)}
-                      checked={i.allChecked}
-                      >
-                      {i.nickName}
-                    </CheckboxItem>
+
+                    <div className={styles.shopName}>{i.nickName}</div>
+
                     <div className={styles.goodListWrap}>
                       <GoodList
                         userId ={i.userId}
@@ -179,6 +175,7 @@ export default class index extends Component {
               })}
             </List>
       </div>
+      </WingBlank>
     )
   }
 }

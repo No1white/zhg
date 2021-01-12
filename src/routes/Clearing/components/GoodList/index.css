@@ -27,3 +27,33 @@
 .goodListWrap .goodList .goodItem .goodInfo .specification {
   opacity: 0.6;
 }
+.goodListWrap .goodList .dealInfo {
+  width: 100%;
+}
+.goodListWrap .goodList .dealInfo .dealList {
+  margin: 20px auto;
+  font-size: 16px;
+}
+.goodListWrap .goodList .dealInfo .dealList .dealItem {
+  display: flex;
+  align-items: center;
+  text-align: right;
+}
+.goodListWrap .goodList .dealInfo .dealList .dealItem .flex1 {
+  flex: 1;
+}
+.goodListWrap .goodList .dealInfo .dealList .dealItem .title {
+  font-weight: 500;
+}
+.goodListWrap .goodList .dealInfo .dealList .dealItem .content {
+  margin-left: 10px;
+  text-align: left;
+  opacity: 0.6;
+}
+.goodListWrap .goodList .totalWrap {
+  text-align: right;
+  padding-bottom: 20px;
+}
+.goodListWrap .goodList .totalWrap .total .price {
+  margin-left: 5px;
+}

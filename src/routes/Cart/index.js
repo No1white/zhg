@@ -27,6 +27,9 @@ export default class index extends Component {
   }
   delGoods = () => {
   }
+  goToClearing = () => {
+    this.props.history.push('clearing')
+  }
   renderNavBarLeftPart = () => {
     return (
       <h2 className={styles.title}>购物车</h2>
@@ -77,7 +80,7 @@ export default class index extends Component {
               <span className={styles.account}>
                 合计： <span className={styles.num}>{totalPrice}</span>
               </span>
-              <button className={`circleBtn`}>结算</button>
+              <button className={`circleBtn`} onClick={this.goToClearing}>结算</button>
             </div>
           )
         }

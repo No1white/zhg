@@ -1,0 +1,14 @@
+.addAddressWrap {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.addAddressWrap .btn {
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  border-radius: 30px;
+  position: absolute !important;
+  bottom: 50px;
+}

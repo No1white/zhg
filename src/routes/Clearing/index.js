@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
-import {Checkbox,WingBlank} from 'antd-mobile'
+import {Checkbox,WingBlank,Switch,List} from 'antd-mobile'
+import goTo from '../../utils/goTo'
 import CommodityList from './components/CommodityList'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -37,6 +38,7 @@ export default class index extends Component {
   }
   delGoods = () => {
   }
+
   renderNavBarLeftPart = () => {
     return (
       <h2 className={styles.title}>购物车</h2>
@@ -78,11 +80,12 @@ export default class index extends Component {
     const {showMange,totalPrice} = this.state;
     return (
       <div className={styles.accountWrap}>
-
+        <div></div>
         {/* <Radio className="my-radio" onChange={e => console.log('checkbox', e)} >全选</Radio> */}
         {
           showMange && (
             <div className={styles.btnWrap}>
+            <sapn className={styles.goodNum}>共X件</sapn>
               <span className={styles.account}>
                 合计： <span className={styles.num}>{totalPrice}</span>
               </span>
@@ -106,27 +109,63 @@ export default class index extends Component {
     return (
       <WingBlank>
         <div className={styles.addressWrap}>
-          <div className={`${styles.addressIcon} iconfont icon-dizhi1`}></div>
-          <div className={styles.addressInfo}>
+          <div className={`${styles.addressIcon} `}>
+            <sapn className={`${styles.address} bgLinear iconfont icon-dizhi1`}></sapn>
+          </div>
+
+          <div className={styles.addressInfo} onClick={()=>{goTo('addressMange',this.props.history)}}>
             <div className={styles.userInfo}>
-              <p>{userInfo.userName}</p>
-              <p>{userInfo.phone}</p>
+              <p className={`pMargin0 ${styles.userName}`}>{userInfo.userName}</p>
+              <p className={`pMargin0 ${styles.phone}`}>{userInfo.phone}</p>
             </div>
             <div className={styles.addressInfo}>
-              {userInfo.address.province} {userInfo.address.city} {userInfo.address.region} {userInfo.address.detail}
+              {userInfo.address.province}
+              {userInfo.address.city}
+              {userInfo.address.region}
+              {userInfo.address.detail}
             </div>
           </div>
+          <div className={`${styles.arrow}  iconfont icon-jiantou1`}></div>
       </div>
       </WingBlank>
     );
   }
+  renderSwitch = () => {
+    return (
+      <WingBlank>
+        <div className={styles.switchWrap}>
+          <div className={styles.title}>
+            置换购
+          </div>
+          <div className={styles.info}>
+            以物换物，或者以物价差价换物
+          </div>
+          <div className={styles.switchBtn}>
+            <Switch
+                checked={this.state.checked}
+                onChange={() => {
+                  this.setState({
+                    checked: !this.state.checked,
+                });
+                }}
+                >
+
+                </Switch>
+          </div>
+        </div>
+      </WingBlank>
+    )
+  }
   render() {
     return (
       <div className={styles.clearingWrap}>
-        <NavBar ></NavBar>
-        {this.renderAddress()}
-        <CommodityList changeTotalPrice={this.changeTotalPrice} ></CommodityList>
-        {this.renderAccount()}
+        <List>
+          <NavBar ></NavBar>
+          {this.renderAddress()}
+          {this.renderSwitch()}
+          <CommodityList changeTotalPrice={this.changeTotalPrice} ></CommodityList>
+          {this.renderAccount()}
+        </List>
       </div>
     )
   }

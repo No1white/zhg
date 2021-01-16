@@ -1,0 +1,56 @@
+.collectWrap {
+  width: 100%;
+  height: 100%;
+}
+.collectWrap .collectList {
+  background: #f2f2f2;
+}
+.collectWrap .collectList .collectItem {
+  background: white;
+  margin-top: 10px;
+  padding: 10px;
+}
+.collectWrap .collectList .collectItem .userInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.collectWrap .collectList .collectItem .userInfo .avatar {
+  width: 70px;
+  height: 70px;
+}
+.collectWrap .collectList .collectItem .userInfo .userName {
+  flex: 1;
+  margin-left: 10px;
+  font-size: 20px;
+}
+.collectWrap .collectList .collectItem .userInfo .price {
+  flex: 1;
+  text-align: right;
+  font-size: 30px;
+}
+.collectWrap .collectList .collectItem .goodInfo {
+  margin-top: 10px;
+}
+.collectWrap .collectList .collectItem .goodInfo .imgList {
+  width: 100%;
+  height: 100px;
+  display: inline;
+  white-space: nowrap;
+  overflow-x: scroll;
+  float: left;
+}
+.collectWrap .collectList .collectItem .goodInfo .imgList .imgItem {
+  width: 100px;
+  height: 100px;
+  margin-left: 10px;
+}
+.collectWrap .collectList .collectItem .goodInfo .goodTitle {
+  font-size: 24px;
+  margin-top: 10px;
+}
+.collectWrap .collectList .collectItem .btnWrap .concealCollect {
+  border-radius: 30px;
+  width: 100px;
+  margin-left: auto;
+}

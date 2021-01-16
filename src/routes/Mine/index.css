@@ -7,6 +7,15 @@
   background: #ff4f18;
   position: relative;
 }
+.mineWrap .userInfoWrap .settingIconWrap {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  color: white;
+}
+.mineWrap .userInfoWrap .settingIconWrap .settingIcon {
+  font-size: 30px;
+}
 .mineWrap .userInfoWrap .userInfo {
   position: absolute;
   top: 50px;
@@ -42,6 +51,9 @@
 .mineWrap .userInfoWrap .userStateBar .batItem {
   flex: 1;
   font-size: 16px;
+}
+.mineWrap .userInfoWrap .userStateBar .batItem .num {
+  margin: 3px 0px;
 }
 .mineWrap .saleInfoWrap {
   width: 95%;

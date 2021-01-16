@@ -17,18 +17,21 @@ class index extends Component {
   }
   renderForm = ()=> {
     return (
-      <List>
+      <List className={styles.formWrap}>
         <InputItem
           // {...getFieldProps('input3')}
           placeholder="请输入生活"
+          className={`${styles.inputItem}`}
         >收货人</InputItem>
         <InputItem
           // {...getFieldProps('input3')}
           placeholder="请输入手机号"
+          className={`${styles.inputItem}`}
         >手机号码</InputItem>
         <Picker extra="请选择(可选)"
           data={data}
           title="Areas"
+          className={`${styles.inputItem}`}
           // {...getFieldProps('district', {
           //   initialValue: ['340000', '341500', '341502'],
           // })}
@@ -39,12 +42,14 @@ class index extends Component {
         </Picker>
         <TextareaItem
             title="详细地址"
+            className={`${styles.inputItem}`}
             placeholder="请输入详细地址"
             data-seed="logId"
             autoHeight
             ref={el => this.customFocusInst = el}
           />
         <List.Item
+          className={`${styles.inputItem}`}
           extra={<Switch
             checked={this.state.checked}
             onChange={() => {
@@ -54,7 +59,7 @@ class index extends Component {
             }}
           />}
         >默认地址</List.Item>
-        <span className={styles.delAddress}>删除地址</span>
+        <span className={`${styles.delAddress} themeColor`}>删除地址</span>
 
     </List>
 
@@ -63,7 +68,7 @@ class index extends Component {
   render() {
     return (
       <div className={styles.addAddressWrap}>
-        <NavBar title={'添加收获地址'}></NavBar>
+        <NavBar title={'添加收获地址'} history={this.props.history}></NavBar>
         {this.renderForm()}
         <Button className={`${styles.btn} bgLinear`} size="largar" >保存</Button>
       </div>

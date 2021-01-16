@@ -20,6 +20,26 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Mine'),
     loading: Loading,
   });
+  const CollectPage = Loadable({
+    loader: () => import('./routes/Mine/components/Collect'),
+    loading: Loading,
+  });
+  const AttentionPage = Loadable({
+    loader: () => import('./routes/Mine/components/Attention'),
+    loading: Loading,
+  });
+  const BrosingHistoryPage = Loadable({
+    loader: () => import('./routes/Mine/components/Brosing'),
+    loading: Loading,
+  });
+  const PublishPage = Loadable({
+    loader: () => import('./routes/Mine/components/Publish'),
+    loading: Loading,
+  });
+  const SaledPage = Loadable({
+    loader: () => import('./routes/Mine/components/Saled'),
+    loading: Loading,
+  });
   const UserPage = Loadable({
     loader: () => import('./routes/UserPage'),
     loading: Loading,
@@ -48,6 +68,19 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/AddAddress'),
     loading: Loading,
   });
+  const successPage = Loadable({
+    loader: () => import('./routes/SuccessPage'),
+    loading: Loading,
+  });
+
+  const settingsPage = Loadable({
+    loader: () => import('./routes/Settings'),
+    loading: Loading,
+  });
+  const alterUserInfoPage = Loadable({
+    loader: () => import('./routes/Settings/Components/AlterUserInfo'),
+    loading: Loading,
+  });
   const goTo = (url) => {
     history.push(url)
   }
@@ -60,7 +93,19 @@ function RouterConfig({ history }) {
         <Route path="/"  exact component={IndexPage} />
         <Route path="/home" exact component={HomePage} />
         <Route path="/cart" exact component={CartPage} />
+        {/* 我的 */}
         <Route path="/mine" exact component={MinePage} />
+        {/* 收藏夹 */}
+        <Route path='/mine/collect' exact component={CollectPage} />
+        {/* 关注页面 */}
+        <Route path='/mine/attention' exact component={AttentionPage} />
+        {/* 历史浏览 */}
+        <Route path='/mine/history' exact component={BrosingHistoryPage} />
+        {/* 已发布 */}
+        <Route path='/mine/publish' exact component={PublishPage} />
+        {/* 已卖出 */}
+        <Route path='/mine/saled' exact component={SaledPage} />
+
         <Route path="/userPage" exact component={UserPage} />
         <Route path='/commodityDetail/:id' exact component={CommodityPage} />
         <Route path='/search/:word' exact component={SearchPage2} />
@@ -68,6 +113,11 @@ function RouterConfig({ history }) {
         <Route path='/clearing' exact component={ClearingPage} />
         <Route path='/addressMange' exact component={AddressMangePage} />
         <Route path='/addAddress' exact component={addAddressPage} />
+        <Route path='/success' exact component={successPage} />
+        {/* 设置页面 */}
+        <Route path='/settings' exact component={settingsPage} />
+        {/* 修改用户信息 */}
+        <Route path='/settings/alterUserInfo' exact component={alterUserInfoPage} />
         {/* <Route path='/search/:word'  component={SearchPage} /> */}
         </Switch>
         <Navigation history={history} goTo={goTo}></Navigation>

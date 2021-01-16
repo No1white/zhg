@@ -1,0 +1,30 @@
+.settingsWrap {
+  background: #f2f2f2;
+}
+.settingsWrap .userInfoWrap {
+  padding: 10px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.settingsWrap .userInfoWrap .avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+.settingsWrap .userInfoWrap .userInfo {
+  flex: 1;
+  margin-left: 10px;
+}
+.settingsWrap .userInfoWrap .userInfo .userName {
+  font-size: 20px;
+}
+.settingsWrap .userInfoWrap .userInfo .phone {
+  opacity: 0.6;
+}
+.settingsWrap .userInfoWrap .editBtn {
+  flex: 1;
+  width: 40px;
+  height: 20px;
+}

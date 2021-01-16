@@ -160,7 +160,7 @@ export default class index extends Component {
     return (
       <div className={styles.clearingWrap}>
         <List>
-          <NavBar ></NavBar>
+          <NavBar history={this.props.history} ></NavBar>
           {this.renderAddress()}
           {this.renderSwitch()}
           <CommodityList changeTotalPrice={this.changeTotalPrice} ></CommodityList>

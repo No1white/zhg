@@ -1,29 +1,48 @@
 import React, { Component } from 'react'
+import goTo from '../../utils/goTo'
 import styles from './index.less'
 export default class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: {
+        userId: '林5293656',
+        nickname: '林5293656',
+        collectNum: 10, //收藏数
+        attentionNum: 20, //关注数
+        brosingHistoryNum: 5, //历史浏览数
+
+      }
+    }
+  }
   renderUserInfo = ()=> {
+    const {userInfo = {} } = this.state;
+    const {nickname,userId,collectNum =0,attentionNum =0, brosingHistoryNum = 0} = userInfo;
     return (
       <div className={styles.userInfoWrap}>
+        <div className={styles.settingIconWrap} onClick={()=>{goTo('settings',this.props.history)}}>
+          <span className={`iconfont icon-shezhi ${styles.settingIcon}`}></span>
+        </div>
         <div className={styles.userInfo}>
           <img className={styles.avatar}
             src={'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=259804006,3494356645&fm=11&gp=0.jpg'} />
           <div className={styles.userName}>
-            <p className={styles.userId}>林5293656</p>
-            <p className={styles.nickName}>昵称：林5293656</p>
+            <p className={styles.userId}>{userId}</p>
+            <p className={styles.nickName}>昵称：{nickname}</p>
           </div>
         </div>
         <div className={styles.userStateBar}>
-          <div className={styles.batItem}>
-            <p className={styles.num}>7</p>
+          <div className={styles.batItem} onClick={()=>{goTo('mine/collect',this.props.history)}}>
+            <p className={styles.num}>{collectNum}</p>
             <p className={styles.title}>收藏</p>
           </div>
-          <div className={styles.batItem}>
-            <p className={styles.num}>7</p>
-            <p className={styles.title}>收藏</p>
+          <div className={styles.batItem}  onClick={()=>{goTo('mine/attention',this.props.history)}}>
+            <p className={styles.num}>{attentionNum}</p>
+            <p className={styles.title}>关注</p>
           </div>
-          <div className={styles.batItem}>
-            <p className={styles.num}>7</p>
-            <p className={styles.title}>收藏</p>
+          <div className={styles.batItem} onClick={()=>{goTo('mine/history',this.props.history)}}>
+            <p className={styles.num}>{brosingHistoryNum}</p>
+            <p className={styles.title}>历史浏览</p>
           </div>
           <div className={styles.batItem}>
             <p className={styles.num}>7</p>
@@ -41,11 +60,11 @@ export default class index extends Component {
             发布与卖出
           </h2>
           <div className={styles.info}>
-            <div className={styles.sale}>
+            <div className={styles.sale} onClick={()=>{goTo('mine/publish',this.props.history)}}>
               <p  className={`iconfont icon-fabu ${styles.saleIcon}`}></p>
               <p className={styles.saleFont}>我发布的 0</p>
             </div>
-            <div className={styles.sale}>
+            <div className={styles.sale} onClick={()=>{goTo('mine/saled',this.props.history)}}>
               <p className={`iconfont icon-fabu ${styles.saleIcon}`}></p>
               <p className={styles.saleFont}>我卖出的 0</p>
             </div>

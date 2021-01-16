@@ -3,6 +3,13 @@
   height: 100%;
   position: absolute;
 }
+.addAddressWrap .formWrap .delAddress {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.addAddressWrap .formWrap .inputItem {
+  margin: 10px 0px;
+}
 .addAddressWrap .btn {
   width: 90%;
   left: 50%;

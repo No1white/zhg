@@ -42,6 +42,12 @@ const dealWays = [
     value: '3',
   },
 ]
+const category = [
+  {
+    label: '服装',
+    value:'1'
+  }
+]
 class index extends Component {
   constructor(props) {
     super(props);
@@ -103,6 +109,13 @@ class index extends Component {
               ],
           })} className="forss">
             <List.Item arrow="horizontal"><span className={'must'}>*</span>新旧程度</List.Item>
+          </Picker>
+          <Picker data={category} cols={1} {...getFieldProps('degree',{
+              rules: [
+                { required: true, message: '请选择商品种类' },
+              ],
+          })} className="forss">
+            <List.Item arrow="horizontal"><span className={'must'}>*</span>商品种类</List.Item>
           </Picker>
           <Picker data={seasons} cols={1} {...getFieldProps('effect',{
               rules: [

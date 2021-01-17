@@ -81,7 +81,7 @@ export default class index extends Component {
             我的订单
           </h2>
           <div className={styles.info}>
-            <div className={styles.order}>
+            <div className={styles.order} onClick={()=>{goTo('mine/order',this.props.history)}}>
               <p  className={`iconfont icon-daifahuo ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>待发货</p>
             </div>
@@ -93,6 +93,7 @@ export default class index extends Component {
               <p  className={`iconfont icon-pingjia ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>评价</p>
             </div>
+
           </div>
         </div>
       </div>

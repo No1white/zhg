@@ -16,32 +16,49 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Cart'),
     loading: Loading,
   });
+  // 我的
   const MinePage = Loadable({
     loader: () => import('./routes/Mine'),
     loading: Loading,
   });
+  // 收藏夹
   const CollectPage = Loadable({
     loader: () => import('./routes/Mine/components/Collect'),
     loading: Loading,
   });
+  // 关注的人
   const AttentionPage = Loadable({
     loader: () => import('./routes/Mine/components/Attention'),
     loading: Loading,
   });
+  // 历史浏览
   const BrosingHistoryPage = Loadable({
     loader: () => import('./routes/Mine/components/Brosing'),
     loading: Loading,
   });
+  // 我发布的
   const PublishPage = Loadable({
     loader: () => import('./routes/Mine/components/Publish'),
     loading: Loading,
   });
+  // 我卖出的
   const SaledPage = Loadable({
     loader: () => import('./routes/Mine/components/Saled'),
     loading: Loading,
   });
-  const UserPage = Loadable({
-    loader: () => import('./routes/UserPage'),
+  // 订单页面
+  const OrderPage = Loadable({
+    loader: () => import('./routes/Mine/components/Order'),
+    loading: Loading,
+  });
+  // 登录页面
+  const LoginPage = Loadable({
+    loader: () => import('./routes/Mine/components/Login'),
+    loading: Loading,
+  });
+  // 注册页面
+  const RegisterPage = Loadable({
+    loader: () => import('./routes/Mine/components/Register'),
     loading: Loading,
   });
   const CommodityPage = Loadable({
@@ -105,8 +122,12 @@ function RouterConfig({ history }) {
         <Route path='/mine/publish' exact component={PublishPage} />
         {/* 已卖出 */}
         <Route path='/mine/saled' exact component={SaledPage} />
-
-        <Route path="/userPage" exact component={UserPage} />
+        {/* 订单页面 */}
+        <Route path='/mine/order' exact component={OrderPage} />
+        {/* 登录页面 */}
+        <Route path="/mine/login" exact component={LoginPage} />
+        {/* 注册页面 */}
+        <Route path="/mine/register" exact component={RegisterPage} />
         <Route path='/commodityDetail/:id' exact component={CommodityPage} />
         <Route path='/search/:word' exact component={SearchPage2} />
         <Route path='/sale' exact component={SalePage} />

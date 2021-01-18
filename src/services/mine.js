@@ -11,11 +11,19 @@ const postOptions = (params = {}) => ({
   body: JSON.stringify(params),
   mode: 'cors',
 });
-
+const getOptions = (params = {}) => ({
+  method: 'get',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json;charset=utf-8',
+  },
+  body: JSON.stringify(params),
+  mode: 'cors',
+});
 // 发送验证码
 export const sendVerifyCode = (params) => {
   return request(getPath('/api/mine/sendCode'), {
-    ...postOptions(params),
+    ...getOptions(params),
   });
 };
 

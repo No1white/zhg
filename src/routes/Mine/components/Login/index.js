@@ -40,6 +40,7 @@ class index extends Component {
         <div className={styles.closeBtn} onClick={()=> {this.props.history.goBack(-1)}}>
           <span className={`iconfont icon-guanbi ${styles.close}`}></span>
         </div>
+        <div className={styles.appTitle}>置换购</div>
         <div className={styles.formWrap}>
           <div className={styles.titleWrap}>
             <h2 className={styles.title}>亲，欢迎登陆</h2>

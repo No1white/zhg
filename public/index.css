@@ -57,3 +57,11 @@
 .themeColor {
   color: #ff6f0c;
 }
+/*  按钮不可用 */
+.disableBtn {
+  opacity: .5;
+}
+/* 按钮可用 */
+.ableBtn {
+  opacity: 1;
+}

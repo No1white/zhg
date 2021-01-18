@@ -19,22 +19,18 @@ const postOptions = (params = {}) => ({
 // 获取热门推荐
 export const getHotSale = (params) => {
   return request.get(getPath('/api/home/hotSale'),params
-  // { ...postOptions(params),}
   );
 };
 
 // 获取商品列表
 export const getCommodityList = (params) => {
   return request.get(getPath('/api/home/commodityList'), params
-  // {
-  //   ...postOptions(params),}
+
     );
 };
 // 获取热搜词
 export const getHotWords = (params) => {
   return request.get(getPath('/api/home/hotWords'),params
-  //  {
-  //   ...postOptions(params),
-  // }
+
   );
 };

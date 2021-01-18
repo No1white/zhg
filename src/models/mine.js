@@ -1,6 +1,9 @@
 import {
-  sendVerifyCode
+  sendVerifyCode,
+  login,
+  register
 } from '../services/mine'
+import storage from '../utils/storage'
 const initState = {
 
 }
@@ -21,7 +24,6 @@ export default {
     },
     *sendVerifyCode({ payload }, { call, put }) {
       const reqParams = payload || {};
-      console.log('2');
       const { data } = yield call(sendVerifyCode, reqParams);
       console.log(data);
 
@@ -31,6 +33,23 @@ export default {
         //     hotList: data.list
         //   },
         // });
+    },
+    *register({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      console.log(payload);
+      const { data } = yield call(register, reqParams);
+
+      console.log(data);
+      storage.set('userInfo',data.userInfo);
+      if(data.code === 0 || data.code === '0') {
+        callback(data);
+      }
+      yield put({
+          type: 'save',
+          payload: {
+            userInfo: data.userInfo
+          },
+        });
     },
   },
 

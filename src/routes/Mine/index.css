@@ -27,6 +27,15 @@
   height: 60px;
   border-radius: 5px;
 }
+.mineWrap .userInfoWrap .userInfo .logOut {
+  font-size: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  color: white;
+}
+.mineWrap .userInfoWrap .userInfo .logOut .login {
+  color: #ffc240;
+}
 .mineWrap .userInfoWrap .userInfo .userName {
   font-size: 20px;
   margin-left: 10px;

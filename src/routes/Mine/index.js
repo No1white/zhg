@@ -1,34 +1,51 @@
 import React, { Component } from 'react'
 import goTo from '../../utils/goTo'
+import storage from '../../utils/storage'
 import styles from './index.less'
 export default class index extends Component {
   constructor(props) {
     super(props);
+    const sUserInfo = storage.get('userInfo') || {};
+    console.log('mine');
+    console.log(sUserInfo);
     this.state = {
       userInfo: {
-        userId: '林5293656',
-        nickname: '林5293656',
-        collectNum: 10, //收藏数
-        attentionNum: 20, //关注数
-        brosingHistoryNum: 5, //历史浏览数
-
+        userId: sUserInfo.userId ,
+        nickName: sUserInfo.nickName,
+        avatar: `${sUserInfo.avatar || 'image/activity/avatar.png'}`,
+        phone: sUserInfo.phone
       }
+      // userInfo: {
+      //   userId: '林5293656',
+      //   nickname: '林5293656',
+      //   collectNum: 10, //收藏数
+      //   attentionNum: 20, //关注数
+      //   brosingHistoryNum: 5, //历史浏览数
+
+      // }
     }
   }
+  componentDidMount(){
+
+  }
   renderUserInfo = ()=> {
-    const {userInfo = {} } = this.state;
-    const {nickname,userId,collectNum =0,attentionNum =0, brosingHistoryNum = 0} = userInfo;
+    const userInfo = storage.get('userInfo') || {};
+    const { avatar = 'image/activity/avatar.png' } = userInfo;
+    const {nickName,userId,collectNum =0,attentionNum =0, brosingHistoryNum = 0} = userInfo;
     return (
       <div className={styles.userInfoWrap}>
-        <div className={styles.settingIconWrap} onClick={()=>{goTo('settings',this.props.history)}}>
+        <div className={styles.settingIconWrap} onClick={()=>{goTo('/mine/settings',this.props.history)}}>
           <span className={`iconfont icon-shezhi ${styles.settingIcon}`}></span>
         </div>
         <div className={styles.userInfo}>
           <img className={styles.avatar}
-            src={'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=259804006,3494356645&fm=11&gp=0.jpg'} />
-          <div className={styles.userName}>
+            src={`http://qn2pi0q2o.hn-bkt.clouddn.com/` + avatar} />
+          <div className={`${styles.userName} ${JSON.stringify(userInfo) == '{}' ? 'hideEle' :'showEle' }`} >
             <p className={styles.userId}>{userId}</p>
-            <p className={styles.nickName}>昵称：{nickname}</p>
+            <p className={styles.nickName}>昵称：{nickName}</p>
+          </div>
+          <div className={`${styles.logOut} ${JSON.stringify(userInfo) == '{}' ? 'showEle' :'hideEle' }`}  onClick={()=>{goTo('mine/login',this.props.history)}}>
+          未登录,<span className={styles.login}>去登录</span>
           </div>
         </div>
         <div className={styles.userStateBar}>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'dva'
 import {List,InputItem} from 'antd-mobile'
-import NavBar from '../../../AddressMange/Components/NavBar'
+import NavBar from '../../../../../AddressMange/Components/NavBar'
 import styles from './index.less'
 class index extends Component {
   constructor(props) {

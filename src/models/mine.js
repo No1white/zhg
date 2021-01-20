@@ -1,7 +1,8 @@
 import {
   sendVerifyCode,
   login,
-  register
+  register,
+  autonym
 } from '../services/mine'
 import storage from '../utils/storage'
 const initState = {
@@ -50,6 +51,40 @@ export default {
             userInfo: data.userInfo
           },
         });
+    },
+    *login({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      console.log(payload);
+      const { data } = yield call(login, reqParams);
+
+      console.log(data);
+      storage.set('userInfo',data.userInfo);
+      if(data.code === 0 || data.code === '0') {
+        callback(data);
+      }
+      yield put({
+          type: 'save',
+          payload: {
+            userInfo: data.userInfo
+          },
+        });
+    },
+    *autonym({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      console.log(payload);
+      const { data } = yield call(autonym, reqParams);
+
+      console.log(data);
+      // storage.set('userInfo',data.userInfo);
+      // if(data.code === 0 || data.code === '0') {
+      //   callback(data);
+      // }
+      // yield put({
+      //     type: 'save',
+      //     payload: {
+      //       userInfo: data.userInfo
+      //     },
+      //   });
     },
   },
 

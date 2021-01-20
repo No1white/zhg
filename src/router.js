@@ -61,6 +61,21 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Mine/components/Register'),
     loading: Loading,
   });
+  // 设置页面
+  const settingsPage = Loadable({
+    loader: () => import('./routes/Mine/components/Settings'),
+    loading: Loading,
+  });
+  // 修改页面
+  const alterUserInfoPage = Loadable({
+    loader: () => import('./routes/Mine/components/Settings/Components/AlterUserInfo'),
+    loading: Loading,
+  });
+  // 修改页面
+  const autonymPage = Loadable({
+    loader: () => import('./routes/Mine/components/Settings/Components/Autonym'),
+    loading: Loading,
+  });
   const CommodityPage = Loadable({
     loader: () => import('./routes/CommodityDetail'),
     loading: Loading,
@@ -90,14 +105,7 @@ function RouterConfig({ history }) {
     loading: Loading,
   });
 
-  const settingsPage = Loadable({
-    loader: () => import('./routes/Settings'),
-    loading: Loading,
-  });
-  const alterUserInfoPage = Loadable({
-    loader: () => import('./routes/Settings/Components/AlterUserInfo'),
-    loading: Loading,
-  });
+
   const goTo = (url) => {
     history.push(url)
   }
@@ -126,6 +134,12 @@ function RouterConfig({ history }) {
         <Route path='/mine/order' exact component={OrderPage} />
         {/* 登录页面 */}
         <Route path="/mine/login" exact component={LoginPage} />
+        {/* 设置页面 */}
+        <Route path='/mine/settings' exact component={settingsPage} />
+        {/* 修改用户信息 */}
+        <Route path='/mine/settings/alterUserInfo' exact component={alterUserInfoPage} />
+        {/* 实名认证页面 */}
+        <Route path="/mine/settings/autonym" exact component={autonymPage} />
         {/* 注册页面 */}
         <Route path="/mine/register" exact component={RegisterPage} />
         <Route path='/commodityDetail/:id' exact component={CommodityPage} />
@@ -135,10 +149,7 @@ function RouterConfig({ history }) {
         <Route path='/addressMange' exact component={AddressMangePage} />
         <Route path='/addAddress' exact component={addAddressPage} />
         <Route path='/success' exact component={successPage} />
-        {/* 设置页面 */}
-        <Route path='/settings' exact component={settingsPage} />
-        {/* 修改用户信息 */}
-        <Route path='/settings/alterUserInfo' exact component={alterUserInfoPage} />
+
         {/* <Route path='/search/:word'  component={SearchPage} /> */}
         </Switch>
         <Navigation history={history} goTo={goTo}></Navigation>

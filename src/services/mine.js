@@ -14,6 +14,10 @@ export const register = (params) => {
 
 // 发送验证码
 export const login = (params) => {
-  return request.post(getPath('/api/mine/logine'),params);
+  return request.post(getPath('/api/mine/login'),params);
 };
 
+// 实名认证
+export const autonym = (params) => {
+  return request.post(getPath('/api/mine/autonym'),params);
+};

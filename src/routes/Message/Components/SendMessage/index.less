@@ -1,0 +1,110 @@
+.sendMessageWrap {
+  position: relative;
+  .messageListWrap {
+
+    .messageList{
+      margin-top: 10px;
+      .messageItem{
+
+        .sendMsg{
+          // display: flex;
+          width: 100%;
+          height: auto;
+          padding: 10px;
+          margin-right: 10px;
+          position: relative;
+          text-align: right;
+          // justify-content: right;
+          .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+          .info {
+            display: inline;
+            margin-right: 10px;
+            position: absolute;
+            right: 50px;
+            top: 5px;
+            .msgWrap {
+              padding: 3px;
+              text-align: center;
+              background: #dfdee1;
+              position: relative;
+              .triangle {
+                width: 0;
+                height: 0;
+                border-top: 8px solid transparent;
+                border-left: 10px solid #dfdee1;
+                border-bottom: 6px solid transparent;
+                position: absolute;
+                right: -8px;
+                top: 5px;
+              }
+            }
+          }
+        }
+        .receiveMsg{
+          // display: flex;
+          width: 100%;
+          height: auto;
+          padding: 10px;
+          margin-right: 10px;
+          position: relative;
+          text-align: left;
+          // justify-content: right;
+          .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+          .info {
+            display: inline;
+            margin-left: 10px;
+            position: absolute;
+            left: 50px;
+            top: 5px;
+            .msgWrap {
+              padding: 3px;
+              text-align: center;
+              background: #dfdee1;
+              position: relative;
+              .triangle {
+                width: 0;
+                height: 0;
+                border-top: 8px solid transparent;
+                border-right: 10px solid #dfdee1;
+                border-bottom: 6px solid transparent;
+                position: absolute;
+                left: -8px;
+                top: 3px;
+              }
+            }
+          }
+        }
+       }
+    }
+  }
+  .bottomBtnWrap {
+    bottom: 0px;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: auto;
+    .btnGroup {
+
+      .msgInput {
+      }
+      .sendMsgBtn {
+      }
+    }
+  }
+}
+.am-list-body {
+  display: flex;
+}
+:global(.am-list-content) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -58,6 +58,7 @@ export default class index extends Component {
     return (
       <div className={`${styles.commodityWrap} ${zIndexFlag ? styles.zIndex :''}`}>
         <ListView
+
           ref={el => this.lv = el}
           renderHeader={this.renderHeader}
           dataSource={this.state.dataSource.cloneWithRows(commodityList)}

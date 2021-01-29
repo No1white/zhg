@@ -104,8 +104,21 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/SuccessPage'),
     loading: Loading,
   });
-
-
+  // 消息页面
+  const MessagePage = Loadable({
+    loader: () => import('./routes/Message'),
+    loading: Loading,
+  });
+  // 发送消息
+  const SendMessagePage = Loadable({
+    loader: () => import('./routes/Message/Components/SendMessage'),
+    loading: Loading,
+  });
+  // 发送消息
+  const chatPage = Loadable({
+    loader: () => import('./routes/Message/Chart.js'),
+    loading: Loading,
+  });
   const goTo = (url) => {
     history.push(url)
   }
@@ -116,7 +129,9 @@ function RouterConfig({ history }) {
       <Switch>
 
         <Route path="/"  exact component={IndexPage} />
+        {/* 主页 */}
         <Route path="/home" exact component={HomePage} />
+        {/* 购物车页面 */}
         <Route path="/cart" exact component={CartPage} />
         {/* 我的 */}
         <Route path="/mine" exact component={MinePage} />
@@ -149,6 +164,11 @@ function RouterConfig({ history }) {
         <Route path='/addressMange' exact component={AddressMangePage} />
         <Route path='/addAddress' exact component={addAddressPage} />
         <Route path='/success' exact component={successPage} />
+        {/* 消息页面 */}
+        <Route path='/message' exact component={MessagePage} />
+        {/* 发送消息页面 */}
+        <Route path='/message/sendMessage' exact component={SendMessagePage} />
+        <Route path='/chat' exact component={chatPage} />
 
         {/* <Route path='/search/:word'  component={SearchPage} /> */}
         </Switch>

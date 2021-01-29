@@ -19,6 +19,7 @@ class index extends Component {
       type: 'mine/autonym',
       payload: {
         ...values,
+        userId:userInfo.userId
       },
       callback: (res)=> {
           goTo('/mine',this.props.history)
@@ -50,7 +51,22 @@ class index extends Component {
 
     )
   }
+  renderautonymInfo = () =>{
+    const { getFieldProps } = this.props.form;
+    return (
+      <div className={styles.operateWrap}>
+          <p className={styles.autonym} style={{
+            fontSize: '20px',
+            color: '#ff4f18',
+            textAlign: 'center'
+          }}>实名验证已通过</p>
+      </div>
+
+    )
+  }
   render() {
+    const userInfo = storage.get('userInfo');
+    console.log(userInfo);
     return (
       <div className={styles.userPageWrap}>
         <div className={styles.closeBtn} onClick={()=> {this.props.history.goBack(-1)}}>
@@ -62,7 +78,7 @@ class index extends Component {
             {/* <h2 className={styles.title}>实名认证</h2> */}
 
           </div>
-          {this.renderautonym()}
+          {userInfo.autonym === 1 ? this.renderautonym() : this.renderautonymInfo()}
         </div>
       </div>
     )

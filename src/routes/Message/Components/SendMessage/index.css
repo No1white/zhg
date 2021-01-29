@@ -1,0 +1,93 @@
+.sendMessageWrap {
+  position: relative;
+}
+.sendMessageWrap .messageListWrap .messageList {
+  margin-top: 10px;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .sendMsg {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  margin-right: 10px;
+  position: relative;
+  text-align: right;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .sendMsg .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .sendMsg .info {
+  display: inline;
+  margin-right: 10px;
+  position: absolute;
+  right: 50px;
+  top: 5px;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .sendMsg .info .msgWrap {
+  padding: 3px;
+  text-align: center;
+  background: #dfdee1;
+  position: relative;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .sendMsg .info .msgWrap .triangle {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-left: 10px solid #dfdee1;
+  border-bottom: 6px solid transparent;
+  position: absolute;
+  right: -8px;
+  top: 5px;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .receiveMsg {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  margin-right: 10px;
+  position: relative;
+  text-align: left;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .receiveMsg .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .receiveMsg .info {
+  display: inline;
+  margin-left: 10px;
+  position: absolute;
+  left: 50px;
+  top: 5px;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .receiveMsg .info .msgWrap {
+  padding: 3px;
+  text-align: center;
+  background: #dfdee1;
+  position: relative;
+}
+.sendMessageWrap .messageListWrap .messageList .messageItem .receiveMsg .info .msgWrap .triangle {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-right: 10px solid #dfdee1;
+  border-bottom: 6px solid transparent;
+  position: absolute;
+  left: -8px;
+  top: 3px;
+}
+.sendMessageWrap .bottomBtnWrap {
+  bottom: 0px;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: auto;
+}
+.am-list-body {
+  display: flex;
+}
+:global(.am-list-content) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

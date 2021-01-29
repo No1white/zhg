@@ -4,6 +4,7 @@ import {
   register,
   autonym
 } from '../services/mine'
+import { Toast } from 'antd-mobile'
 import storage from '../utils/storage'
 const initState = {
 
@@ -59,8 +60,13 @@ export default {
 
       console.log(data);
       storage.set('userInfo',data.userInfo);
+
       if(data.code === 0 || data.code === '0') {
         callback(data);
+        Toast.info(data.msg);
+      } else {
+        Toast.info(data.msg);
+        return ;
       }
       yield put({
           type: 'save',
@@ -75,16 +81,20 @@ export default {
       const { data } = yield call(autonym, reqParams);
 
       console.log(data);
-      // storage.set('userInfo',data.userInfo);
-      // if(data.code === 0 || data.code === '0') {
-      //   callback(data);
-      // }
-      // yield put({
-      //     type: 'save',
-      //     payload: {
-      //       userInfo: data.userInfo
-      //     },
-      //   });
+      storage.set('userInfo',data.userInfo);
+      if(data.code === 0 || data.code === '0') {
+        Toast.info(data.msg);
+        callback(data);
+      }else {
+        Toast.info(data.msg);
+        return ;
+      }
+      yield put({
+          type: 'save',
+          payload: {
+            userInfo: data.userInfo
+          },
+        });
     },
   },
 

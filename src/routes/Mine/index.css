@@ -42,7 +42,17 @@
   color: white;
 }
 .mineWrap .userInfoWrap .userInfo .userName .userId {
+  width: 100%;
   margin: 0px 0px 0px 10px;
+  display: flex;
+}
+.mineWrap .userInfoWrap .userInfo .userName .userId .label {
+  margin-left: 30px;
+  font-size: 5px;
+  color: white;
+  border-radius: 15px;
+  border: 1px solid #ffffff;
+  padding: 5px;
 }
 .mineWrap .userInfoWrap .userInfo .userName .nickName {
   font-size: 14px;
@@ -125,4 +135,9 @@
 }
 .mineWrap .orderInfoWrap .orderInfo .info .order .orderFont {
   margin-top: 10px;
+}
+.mineWrap .orderInfoWrap .autonym {
+  font-size: 20px;
+  color: #ff4f18;
+  text-align: center;
 }

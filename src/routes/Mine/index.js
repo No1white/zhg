@@ -30,6 +30,7 @@ export default class index extends Component {
   }
   renderUserInfo = ()=> {
     const userInfo = storage.get('userInfo') || {};
+    const {autonym} = userInfo;
     const { avatar = 'image/activity/avatar.png' } = userInfo;
     const {nickName,userId,collectNum =0,attentionNum =0, brosingHistoryNum = 0} = userInfo;
     return (
@@ -41,8 +42,13 @@ export default class index extends Component {
           <img className={styles.avatar}
             src={`http://qn2pi0q2o.hn-bkt.clouddn.com/` + avatar} />
           <div className={`${styles.userName} ${JSON.stringify(userInfo) == '{}' ? 'hideEle' :'showEle' }`} >
-            <p className={styles.userId}>{userId}</p>
+            <p className={styles.userId}>
+              {userId}
+              <sapn className={`${styles.label} ${autonym == '1' ? 'showEle' :'hideEle'}`} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}}>未实名</sapn>
+              <span className={`${styles.label} ${autonym != '1' ? 'showEle' :'hideEle'}`} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}}>已实名</span>
+            </p>
             <p className={styles.nickName}>昵称：{nickName}</p>
+
           </div>
           <div className={`${styles.logOut} ${JSON.stringify(userInfo) == '{}' ? 'showEle' :'hideEle' }`}  onClick={()=>{goTo('mine/login',this.props.history)}}>
           未登录,<span className={styles.login}>去登录</span>

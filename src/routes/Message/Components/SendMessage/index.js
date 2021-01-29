@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 20:39:20
- * @LastEditTime: 2021-01-28 22:00:37
+ * @LastEditTime: 2021-01-29 18:07:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\Components\SendMessage\index.js
@@ -18,8 +18,7 @@ const messageList = [
 ];
 const Item = List.Item;
 //创建socket连接，http使用ws协议，https使用wss协议
-
-// const socket = require('socket.io-client')('http://localhost:3000')
+const socket = require('socket.io-client')('http://localhost:3000')
 class index extends Component {
   constructor(props) {
     super(props);
@@ -40,28 +39,30 @@ class index extends Component {
   // });
   }
   sendMsg = ()=> {
-    const socket = io('http://localhost:3000', {
-          // reconnectionAttempts: 10,
-          // query: {
-          //      uid: this.state.user.uid
-          // }
-    })
-    socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
-    });
-      console.log('2');
-      socket.emit('online', '123')
-      const message = {
-        sender: '赵敏',
-        receiver: '聂小倩',
-        text: '测试',
-      };
-      socket.emit('private_chat', message, data => {
-        console.log('data');
-      });
-
-
+    // const socket = io('http://localhost:3000', {
+    //       // reconnectionAttempts: 10,
+    //       // query: {
+    //       //      uid: this.state.user.uid
+    //       // }
+    // })
+    // socket.emit('message',{type:'online',time:new Date().toLocaleString()})
+    // socket.on('news', function (data) {
+    //   console.log(data);
+    //   socket.emit('my other event', { my: 'data' });
+    // });
+    //   console.log('2');
+    //   socket.emit('online', '123')
+    //   const message = {
+    //     sender: '赵敏',
+    //     receiver: '聂小倩',
+    //     text: '测试',
+    //   };
+    //   socket.emit('message', message, data => {
+    //     console.log('data');
+    //   });
+    let name = window.prompt('请输入昵称');
+    socket.emit('message',{type:'content',content:'123'})
+    socket.emit('message',{type:'online',name,time:new Date().toLocaleString()})
 
   }
   // 消息栏

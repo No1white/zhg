@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-16 21:27:06
+ * @LastEditTime: 2021-01-29 19:51:11
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Mine\components\Saled\index.js
+ */
 import React, { Component } from 'react'
 import {WingBlank,Button} from 'antd-mobile'
 import NavBar from '../../../AddressMange/Components/NavBar'

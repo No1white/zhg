@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-25 17:30:20
+ * @LastEditTime: 2021-01-29 19:23:45
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Home\components\CommodityList\index.js
+ */
 import React, { Component } from 'react'
 import {ListView,Flex} from 'antd-mobile'
 import ActivityIndicator from '../../../../components/ActivityIndicator'
@@ -25,10 +33,10 @@ export default class index extends Component {
   onEndReached = () =>{
     this.props.getCommodityList();
   }
-  goToDetail = (id) =>{
+  goToDetail = (goodId) =>{
     // console.log(this.props);
     // this.props.history.push()
-    this.props.history.push(`/commodityDetail/${id}`)
+    this.props.history.push(`/commodityDetail/${goodId}`)
   }
 
   row = (row)=>{

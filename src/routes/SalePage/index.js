@@ -112,7 +112,8 @@ class index extends Component {
     });
   }
   publish = ()=> {
-    console.log('1');
+
+
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
         console.log(this.props.form.getFieldsValue());
@@ -142,92 +143,111 @@ class index extends Component {
       }
     });
   }
-  render() {
+  renderList = () => {
     const { getFieldProps } = this.props.form;
+    const { history } = this.props;
+    const { location } = history;
+    const { query = {} } = location;
+    const { goodInfo = {}} = query;
+
+  }
+  render() {
+
+    console.log(this.props);
+    const { getFieldProps } = this.props.form;
+    const { history } = this.props;
+    const { location } = history;
+    const { query = {} } = location;
+    const { goodInfo = {}} = query;
     return (
       <div className={styles.salePageWrap}>
+        {/* {this.renderList()} */}
         <form>
-        <List >
-          <InputItem
-            {...getFieldProps('title',
-              // {
-              //   rules: [
-              //     { required: true, message: '请输入商品名称' },
-              //   ],
-              // }
-              )}
-            clear
-            placeholder="请输入商品名称"
-            ref={el => this.autoFocusInst = el}
-          ><span className={'must'}>*</span>商品标题</InputItem>
-          <List.Item>
-            <TextareaItem
-              {...getFieldProps('dep')}
-              // title="高度自适应"
-              autoHeight
-              labelNumber={5}
-              placeholder="请输入商品描述"
-              row ={5}
-            />
-          </List.Item>
-          <Picker data={degreeList} cols={1} {...getFieldProps('degree',{
-              // rules: [
-              //   { required: true, message: '请选择新旧程度' },
-              // ],
-          })} className="forss">
-            <List.Item arrow="horizontal"><span className={'must'}>*</span>新旧程度</List.Item>
-          </Picker>
-          <Picker data={category} cols={1} {...getFieldProps('category',{
-              // rules: [
-              //   { required: true, message: '请选择商品种类' },
-              // ],
-          })} className="forss">
-            <List.Item arrow="horizontal"><span className={'must'}>*</span>商品种类</List.Item>
-          </Picker>
-          <Picker data={effects} cols={1} {...getFieldProps('effect',{
-              // rules: [
-              //   { required: true, message: '请选择有无影响使用' },
-              // ],
-          })} className="forss">
-            <List.Item arrow="horizontal"><span className={'must'}>*</span>有无影响使用</List.Item>
-          </Picker>
-          <InputItem
-            {...getFieldProps('explain')}
-            clear
-            placeholder="如有影响使用,请填写指明"
-            ref={el => this.autoFocusInst = el}
-          >原因</InputItem>
-          <Picker data={dealWays} cols={1} {...getFieldProps('dealWay',{
-              //  rules: [
-              //   { required: true, message: '请选择交易方式' },
-              // ],
-          })} className="forss">
-            <List.Item arrow="horizontal"><span className={'must'}>*</span>交易方式</List.Item>
-          </Picker>
-          <InputItem
-              {...getFieldProps('price',{
-                //   rules: [
-                //   { required: true, message: '请输入价格' },
-                // ],
-              })}
-              placeholder="0.00"
-              extra="¥"
-            ><span className={'must'}>*</span>价格</InputItem>
-          <List.Item
-              extra={<Switch
-                checked={this.state.checked}
-                onChange={() => {
-                  this.setState({
-                    checked: !this.state.checked,
-                  });
-                }}
-              />}
-            >是否接受置换</List.Item>
-          <ImagePicker files={this.state.files} onChange={this.ImagePickeronChange}></ImagePicker>
-          <Button onClick={this.publish}>发布</Button>
-          </List>
-        </form>
+          <List >
+            <InputItem
+              {...getFieldProps('title',
 
+                {
+                  initialValue: goodInfo.title || '',
+                  rules: [
+                    { required: true, message: '请输入商品名称' },
+                  ],
+                }
+                )}
+              clear
+              placeholder="请输入商品名称"
+              ref={el => this.autoFocusInst = el}
+            ><span className={'must'}>*</span>商品标题</InputItem>
+            <List.Item>
+              <TextareaItem
+                {...getFieldProps('dep', {
+                  initialValue: goodInfo.dep || '',
+                })}
+                // title="高度自适应"
+                autoHeight
+                labelNumber={5}
+                placeholder="请输入商品描述"
+                row ={5}
+              />
+            </List.Item>
+            <Picker data={degreeList} cols={1} {...getFieldProps('degree',{
+                initialValue: goodInfo.new || '',
+                rules: [
+                  { required: true, message: '请选择新旧程度' },
+                ],
+            })} className="forss">
+              <List.Item arrow="horizontal"><span className={'must'}>*</span>新旧程度</List.Item>
+            </Picker>
+            <Picker data={category} cols={1} {...getFieldProps('category',{
+                // rules: [
+                //   { required: true, message: '请选择商品种类' },
+                // ],
+            })} className="forss">
+              <List.Item arrow="horizontal"><span className={'must'}>*</span>商品种类</List.Item>
+            </Picker>
+            <Picker data={effects} cols={1} {...getFieldProps('effect',{
+                // rules: [
+                //   { required: true, message: '请选择有无影响使用' },
+                // ],
+            })} className="forss">
+              <List.Item arrow="horizontal"><span className={'must'}>*</span>有无影响使用</List.Item>
+            </Picker>
+            <InputItem
+              {...getFieldProps('reason')}
+              clear
+              placeholder="如有影响使用,请填写指明"
+              ref={el => this.autoFocusInst = el}
+            >原因</InputItem>
+            <Picker data={dealWays} cols={1} {...getFieldProps('dealWay',{
+                //  rules: [
+                //   { required: true, message: '请选择交易方式' },
+                // ],
+            })} className="forss">
+              <List.Item arrow="horizontal"><span className={'must'}>*</span>交易方式</List.Item>
+            </Picker>
+            <InputItem
+                {...getFieldProps('price',{
+                  //   rules: [
+                  //   { required: true, message: '请输入价格' },
+                  // ],
+                })}
+                placeholder="0.00"
+                extra="¥"
+              ><span className={'must'}>*</span>价格</InputItem>
+            <List.Item
+                extra={<Switch
+                  checked={this.state.checked}
+                  onChange={() => {
+                    this.setState({
+                      checked: !this.state.checked,
+                    });
+                  }}
+                />}
+              >是否接受置换</List.Item>
+            <ImagePicker files={this.state.files} onChange={this.ImagePickeronChange}></ImagePicker>
+            <Button onClick={this.publish}>发布</Button>
+            </List>
+        </form>
       </div>
     )
   }

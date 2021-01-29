@@ -2,12 +2,14 @@ import {
   sendVerifyCode,
   login,
   register,
-  autonym
+  autonym,
+  getPublishGoodList,
+
 } from '../services/mine'
 import { Toast } from 'antd-mobile'
 import storage from '../utils/storage'
 const initState = {
-
+  BASE_URL: 'http://qn2pi0q2o.hn-bkt.clouddn.com/'
 }
 export default {
 
@@ -24,10 +26,10 @@ export default {
     *fetch({ payload }, { call, put }) {  // eslint-disable-line
       yield put({ type: 'save' });
     },
+    // 发送验证码
     *sendVerifyCode({ payload }, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(sendVerifyCode, reqParams);
-      console.log(data);
 
       // yield put({
         //   type: 'save',
@@ -36,12 +38,11 @@ export default {
         //   },
         // });
     },
+
     *register({ payload,callback }, { call, put }) {
       const reqParams = payload || {};
-      console.log(payload);
       const { data } = yield call(register, reqParams);
 
-      console.log(data);
       storage.set('userInfo',data.userInfo);
       if(data.code === 0 || data.code === '0') {
         callback(data);
@@ -55,10 +56,8 @@ export default {
     },
     *login({ payload,callback }, { call, put }) {
       const reqParams = payload || {};
-      console.log(payload);
       const { data } = yield call(login, reqParams);
 
-      console.log(data);
       storage.set('userInfo',data.userInfo);
 
       if(data.code === 0 || data.code === '0') {
@@ -75,12 +74,11 @@ export default {
           },
         });
     },
+    // 实名
     *autonym({ payload,callback }, { call, put }) {
       const reqParams = payload || {};
-      console.log(payload);
       const { data } = yield call(autonym, reqParams);
 
-      console.log(data);
       storage.set('userInfo',data.userInfo);
       if(data.code === 0 || data.code === '0') {
         Toast.info(data.msg);
@@ -95,6 +93,25 @@ export default {
             userInfo: data.userInfo
           },
         });
+    },
+    // 获取发布的商品
+    *getPublishGoodList({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getPublishGoodList, reqParams);
+
+      // storage.set('userInfo',data.userInfo);
+      if(data.code === 0 || data.code === '0') {
+        yield put({
+          type: 'save',
+          payload: {
+            publishGoodList:data.goodList
+          },
+        });
+      }else {
+        Toast.info(data.msg);
+        return ;
+      }
+
     },
   },
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-24 19:54:33
- * @LastEditTime: 2021-01-25 19:08:46
+ * @LastEditTime: 2021-01-29 21:31:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\models\sale.js
@@ -32,8 +32,8 @@ export default {
       console.log('3');
       console.log(payload);
       const { data } = yield call(publishGood, reqParams);
-      callback(data);
-      console.log(data);
+      // callback(data);
+      // console.log(data);
       //   yield put({
       //     type: 'save',
       //     payload: {

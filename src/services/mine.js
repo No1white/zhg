@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-17 20:51:22
+ * @LastEditTime: 2021-01-29 18:37:16
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\services\mine.js
+ */
 import request from '../utils/request';
 import getPath from '../utils/getPath'
 
@@ -21,3 +29,9 @@ export const login = (params) => {
 export const autonym = (params) => {
   return request.post(getPath('/api/mine/autonym'),params);
 };
+
+// 获取发布的商品
+export const getPublishGoodList = (params) => {
+  return request.get(getPath('/api/mine/getPubshGoodList'),params);
+};
+

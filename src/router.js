@@ -157,7 +157,7 @@ function RouterConfig({ history }) {
         <Route path="/mine/settings/autonym" exact component={autonymPage} />
         {/* 注册页面 */}
         <Route path="/mine/register" exact component={RegisterPage} />
-        <Route path='/commodityDetail/:id' exact component={CommodityPage} />
+        <Route path='/commodityDetail/:goodId' exact component={CommodityPage} />
         <Route path='/search/:word' exact component={SearchPage2} />
         <Route path='/sale' exact component={SalePage} />
         <Route path='/clearing' exact component={ClearingPage} />

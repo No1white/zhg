@@ -55,7 +55,7 @@
   background: linear-gradient(#ff7e02,#ff600c);
 }
 .themeColor {
-  color: #ff6f0c;
+  color: #ff6f0c !important;
 }
 /*  按钮不可用 */
 .disableBtn {

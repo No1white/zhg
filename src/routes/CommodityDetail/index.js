@@ -1,41 +1,100 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-28 11:28:27
+ * @LastEditTime: 2021-02-02 21:59:29
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\CommodityDetail\index.js
+ */
 import { Button } from 'antd-mobile'
 import React, { Component } from 'react'
+import { connect } from 'dva'
+import filedType from '@/routes/Config/const.js'
 import NavBar from '../../components/NavBar'
 import styles from './index.less'
-export default class index extends Component {
+class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
 
     }
   }
+  componentDidMount(){
+    const {match : {params: {goodId}}} = this.props;
+    this.getGoodDetailInfo(goodId);
+  }
+  getGoodDetailInfo = (goodId) => {
+    this.props.dispatch({
+      type: 'goodDetail/getGoodDetailInfo',
+      payload: {
+        goodId: goodId
+      }
+    })
+  }
   renderUserInfo = () => {
+    const { goodDetailInfo } = this.props;
     return (
       <div className={styles.userInfo}>
-        <img className={styles.img} src={'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=259804006,3494356645&fm=11&gp=0.jpg'} alt=""/>
+        <img className={styles.img} src={goodDetailInfo.avatar} alt=""/>
         <div className={styles.userName}>
-          <p>1231231232</p>
+          <p>{goodDetailInfo.nickName}</p>
         </div>
       </div>
     )
   }
   renderCommodityInfo = () => {
-    const label = ['全新','95新']
+    const { goodDetailInfo } = this.props;
+    const { labels = [],imgList =[]} = goodDetailInfo;
     return (
       <div className={styles.commodityInfoWrap}>
-        <p className={styles.price}>￥300</p>
+        <p className={styles.price}>
+
+          ￥{goodDetailInfo.price}
+        </p>
         <div className={styles.labels}>
-          {label.map(item => {
+          {labels.map(item => {
             return (
-              <sapn className={styles.label}>{label[0]}</sapn>
+              <sapn className={styles.label}>{item}</sapn>
             )
           })}
-          <sapn className={styles.title}>山地车</sapn>
+          <h3 className={styles.title}>{goodDetailInfo.title}</h3>
+          <p>{goodDetailInfo.dep}</p>
+
+        </div>
+        <div className={styles.dealInfoList}>
+          <div className={styles.dealInfoItem}>
+            <span className={styles.title}>交易方式:</span>
+            <span className={styles.content}>{filedType.getLabel(goodDetailInfo.dealWay,filedType.dealWay)}</span>
+          </div>
+          <div className={styles.dealInfoItem}>
+            <span className={styles.title}>新旧程度:</span>
+            <span className={styles.content}>{filedType.getLabel(goodDetailInfo.degree,filedType.degree)}</span>
+          </div>
+          <div className={styles.dealInfoItem}>
+            <span className={styles.title}>有无影响使用:</span>
+            <span className={styles.content}>{filedType.getLabel(goodDetailInfo.effect,filedType.effect)}</span>
+          </div>
+          <div className={styles.dealInfoItem}>
+            <span className={styles.title}>影响使用的原因:</span>
+            <span className={styles.content}>{goodDetailInfo.reason}</span>
+          </div>
+          <div className={styles.dealInfoItem}>
+            <span className={styles.title}>类别:</span>
+            <span className={styles.content}>{filedType.getLabel(goodDetailInfo.category,filedType.category)}</span>
+          </div>
+          <div className={styles.dealInfoItem}>
+            <span className={styles.title}>是否接受置换:</span>
+            <span className={styles.content}>{filedType.getLabel(goodDetailInfo.swap,filedType.swap)}</span>
+          </div>
         </div>
         <div className={styles.description}>
-          <p>1233333333333333333333333333
-          33333333333333333333333</p>
-          <img className={styles.img} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fww1.sinaimg.cn%2Fmw690%2F0068LpS2gy1ge1fnj3hmdj30jg0jgwi8.jpg&refer=http%3A%2F%2Fwww.sina.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611719830&t=5b0728711f510d3db877ed4f560f4730'></img>
+          {/* <sapn className={styles.descriptionTitle}>详细信息：</sapn> */}
+          {imgList.map(item => {
+            return (
+              <img className={styles.img} src={item}></img>
+            )
+          })}
+
         </div>
       </div>
     )
@@ -71,3 +130,7 @@ export default class index extends Component {
     )
   }
 }
+const mapStateToProps = (state) =>({
+  goodDetailInfo: state.goodDetail.goodDetailInfo
+})
+export default connect(mapStateToProps)(index)

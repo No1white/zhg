@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 10:03:44
- * @LastEditTime: 2021-01-24 19:55:11
- * @LastEditors: your name
+ * @LastEditTime: 2021-02-02 20:27:33
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\index.js
  */
@@ -26,6 +26,7 @@ app.use(createLoading());
 app.model(require('./models/home').default);
 app.model(require('./models/mine').default);
 app.model(require('./models/sale').default);
+app.model(require('./models/goodDetail').default);
 // 4. Router
 app.router(require('./router').default);
 

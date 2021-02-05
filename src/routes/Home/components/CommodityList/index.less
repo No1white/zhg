@@ -28,11 +28,30 @@
         white-space:nowrap; //溢出不换行
         margin: 3px 0px;
       }
-      .price{
-        font-size: 26px;
-        margin:5px 0px;
-        color: #fc3c36;
+      .goodInfo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .price{
+          font-size: 26px;
+          color: #fc3c36;
+          margin: 3px 3px;
+        }
+        .brose {
+          margin: 0;
+        }
       }
+      .userInfo {
+        .userAvatar {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+        .nickName {
+          margin-left: 5px;
+        }
+      }
+
     }
   }
 }

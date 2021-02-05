@@ -29,10 +29,26 @@
   white-space: nowrap;
   margin: 3px 0px;
 }
-.commodityWrap .commodityList .commodityItem .price {
+.commodityWrap .commodityList .commodityItem .goodInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.commodityWrap .commodityList .commodityItem .goodInfo .price {
   font-size: 26px;
-  margin: 5px 0px;
   color: #fc3c36;
+  margin: 3px 3px;
+}
+.commodityWrap .commodityList .commodityItem .goodInfo .brose {
+  margin: 0;
+}
+.commodityWrap .commodityList .commodityItem .userInfo .userAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.commodityWrap .commodityList .commodityItem .userInfo .nickName {
+  margin-left: 5px;
 }
 :global .list-view-section-body {
   display: flex;

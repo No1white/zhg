@@ -9,7 +9,7 @@ export default class index extends Component {
   constructor(props){
     super(props);
     this.state = {
-      cartList: [
+      goodList: [
         {
           nickName: '店铺名字',
           userId: 0,
@@ -77,11 +77,11 @@ export default class index extends Component {
     }
   }
   onChange = (userId) => {
-    const {cartList} = this.state;
-    // const userList = cartList.filter(item => {
+    const {goodList} = this.state;
+    // const userList = goodList.filter(item => {
     //   return item.userId === userId
     // });
-    cartList.forEach(item =>{
+    goodList.forEach(item =>{
       if(item.userId === userId) {
         const allChecked = !item.allChecked;
         item.allChecked = allChecked;
@@ -91,17 +91,17 @@ export default class index extends Component {
       }
     })
     this.setState({
-      cartList
+      goodList
     })
     this.reCount()
     // userList.goodList
   }
   goodListCheckChange = (userId,goodId)=>{
-    const {cartList} = this.state;
-    // const userList = cartList.filter(item => {
+    const {goodList} = this.state;
+    // const userList = goodList.filter(item => {
     //   return item.userId === userId
     // });
-    cartList.forEach(item =>{
+    goodList.forEach(item =>{
       let i = 0;
 
       if(item.userId === userId) {
@@ -128,14 +128,14 @@ export default class index extends Component {
 
     })
     this.setState({
-      cartList
+      goodList
     });
     this.reCount()
   }
   reCount = () => {
-    const {cartList} = this.state;
+    const {goodList} = this.state;
     let sum = 0;
-    cartList.forEach(item => {
+    goodList.forEach(item => {
       item.goodList.forEach(goodItem => {
         if(goodItem.checked) {
           sum+=goodItem.price;
@@ -150,13 +150,14 @@ export default class index extends Component {
       { value: 1, label: 'Bachelor' },
       { value: 2, label: 'College diploma' },
     ];
-    const {cartList} = this.state;
+    const {goodList = []} = this.props;
+    console.log(goodList);
     return (
 
       <WingBlank>
         <div className={styles.commodityWrap}>
             <List className={styles.commodityList}>
-              {cartList.map(i => {
+              {goodList.map(i => {
                 return (
                   <div className={styles.commodityItem}>
 

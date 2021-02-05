@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from '../components/NavBar'
 import {Checkbox} from 'antd-mobile'
+import storage from '@/utils/storage'
 import CommodityList from './components/CommodityList'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -96,6 +97,7 @@ export default class index extends Component {
     )
   }
   render() {
+
     return (
       <div className={styles.cartWrap}>
         <NavBar title ={'购物车'} renderRight = {this.renderNavBarRightPart}></NavBar>

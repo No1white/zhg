@@ -1,0 +1,12 @@
+.dropdownMenuWap {
+  display: flex;
+  text-align: center;
+}
+.dropdownMenuWap .menuItem {
+  display: inline-block;
+  flex: 1;
+  color: black;
+}
+.dropdownMenuWap .menuItem .dangerColor {
+  color: #ff6f0c !important;
+}

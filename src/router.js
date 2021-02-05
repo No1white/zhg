@@ -167,7 +167,7 @@ function RouterConfig({ history }) {
         {/* 消息页面 */}
         <Route path='/message' exact component={MessagePage} />
         {/* 发送消息页面 */}
-        <Route path='/message/sendMessage' exact component={SendMessagePage} />
+        <Route path='/message/sendMessage/:receiver' exact component={SendMessagePage} />
         <Route path='/chat' exact component={chatPage} />
 
         {/* <Route path='/search/:word'  component={SearchPage} /> */}

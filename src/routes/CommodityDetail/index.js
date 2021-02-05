@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-02-02 21:59:29
+ * @LastEditTime: 2021-02-05 19:42:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -9,6 +9,9 @@
 import { Button } from 'antd-mobile'
 import React, { Component } from 'react'
 import { connect } from 'dva'
+import {Toast} from 'antd-mobile'
+import storage from '@/utils/storage'
+import goTo from '@/utils/goTo'
 import filedType from '@/routes/Config/const.js'
 import NavBar from '../../components/NavBar'
 import styles from './index.less'
@@ -30,6 +33,68 @@ class index extends Component {
         goodId: goodId
       }
     })
+  }
+  // 立即购买
+  handleBuy = () => {
+    const {goodDetailInfo} = this.props;
+    let tempItem = {
+      nickName: goodDetailInfo.nickName,
+      allChecked: false,
+      userId: goodDetailInfo.userId,
+      goodList: [
+        {
+          goodId: goodDetailInfo.goodId,
+          title: goodDetailInfo.title,
+          price: goodDetailInfo.price,
+          url: goodDetailInfo.imgList[0],
+          checked: false,
+        }
+      ]
+    };
+    let goodList = [];
+    goodList.push(tempItem)
+    goTo('/clearing',this.props.history,goodList);
+  }
+  //加入购物车
+  handleJoinCart = () => {
+    const { goodDetailInfo} = this.props;
+    console.log(goodDetailInfo);
+    const cartGoodList = storage.get('cartGoodList');
+    console.log(cartGoodList);
+    goodDetailInfo.checked =false;
+    let tempItem = {
+      nickName: goodDetailInfo.nickName,
+      allChecked: false,
+      userId: goodDetailInfo.userId,
+      goodList: [
+        {
+          goodId: goodDetailInfo.goodId,
+          title: goodDetailInfo.title,
+          price: goodDetailInfo.price,
+          url: goodDetailInfo.imgList[0],
+          checked: false,
+        }
+      ]
+    };
+    // 购物车为空
+    if( cartGoodList === null || cartGoodList === 'null') {
+      let goodList = [];
+
+      goodList.push(tempItem);
+      storage.set('cartGoodList',goodList)
+    }else {
+
+      cartGoodList.push(tempItem);
+      storage.set('cartGoodList',cartGoodList)
+    }
+    Toast.info('成功加入购物车！');
+    // storage.set('')
+  }
+  handleGoToSendMessage = () => {
+    const userInfo = storage.get('userInfo');
+    const {goodDetailInfo} = this.props;
+    console.log(goodDetailInfo);
+    this.props.history.push(`/message/sendMessage/${goodDetailInfo.userId}`)
   }
   renderUserInfo = () => {
     const { goodDetailInfo } = this.props;
@@ -111,10 +176,15 @@ class index extends Component {
             <p className={'iconfont icon-collection pMargin0'}></p>
             <p className={`pMargin0 ${styles.font}`}>收藏</p>
           </div>
+          <div className={styles.contact} onClick={()=>{this.handleGoToSendMessage()}}>
+            <p className={'iconfont   icon-xiaoxi1 pMargin0'}></p>
+            <p className={`pMargin0 ${styles.font}`}>联系商家</p>
+          </div>
+
         </div>
         <div className={styles.submitBtn}>
-          <button  className={`${styles.btn}`}>加入购物车</button>
-          <button className={`${styles.btn}`}>立即购买</button>
+          <button  className={`${styles.btn}`} onClick={()=>{this.handleJoinCart()}}>加入购物车</button>
+          <button className={`${styles.btn}`} onClick={this.handleBuy}>立即购买</button>
         </div>
       </div>
     )

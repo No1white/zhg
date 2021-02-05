@@ -8,6 +8,8 @@ const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 export default class index extends Component {
   constructor(props) {
+    const {location:{query =[]}} = props;
+    const  {goodList = []} = query;
     super(props);
     this.state = {
       showMange: true,
@@ -21,8 +23,11 @@ export default class index extends Component {
           region: '平和县',
           defail: '高速路口对面'
         }
-      }
+      },
+      goodList:query,
+
     }
+    console.log(query);
   }
   showChangeByProperty =(property)=>{
     this.setState({
@@ -157,13 +162,15 @@ export default class index extends Component {
     )
   }
   render() {
+    const {goodList = []} = this.state;
+    console.log(goodList);
     return (
       <div className={styles.clearingWrap}>
         <List>
           <NavBar history={this.props.history} ></NavBar>
           {this.renderAddress()}
           {this.renderSwitch()}
-          <CommodityList changeTotalPrice={this.changeTotalPrice} ></CommodityList>
+          <CommodityList goodList={goodList || []} changeTotalPrice={this.changeTotalPrice} ></CommodityList>
           {this.renderAccount()}
         </List>
       </div>

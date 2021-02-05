@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { List, Checkbox,WingBlank} from 'antd-mobile';
 import GoodList from '../GoodList'
+import storage from '@/utils/storage'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -145,11 +146,8 @@ export default class index extends Component {
     this.props.changeTotalPrice(sum);
   }
   render() {
-    const data = [
-      { value: 0, label: 'Ph.D.' },
-      { value: 1, label: 'Bachelor' },
-      { value: 2, label: 'College diploma' },
-    ];
+    const cartGoodList = storage.get('cartGoodList');
+
     const {cartList} = this.state;
     return (
 
@@ -158,14 +156,15 @@ export default class index extends Component {
               {cartList.map(i => {
                 return (
                   <div className={styles.commodityItem}>
-                    <CheckboxItem
+                    {/* <CheckboxItem
                       key={i.value}
                       defaultChecked={i.allChecked}
                       onChange={() => this.onChange(i.userId)}
                       checked={i.allChecked}
                       >
                       {i.nickName}
-                    </CheckboxItem>
+                    </CheckboxItem> */}
+                    <h2>{i.nickName}</h2>
                     <div className={styles.goodListWrap}>
                       <GoodList
                         userId ={i.userId}

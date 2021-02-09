@@ -12,7 +12,7 @@ export default class index extends Component {
       userInfo: {
         userId: sUserInfo.userId ,
         nickName: sUserInfo.nickName,
-        avatar: `${sUserInfo.avatar || 'image/activity/avatar.png'}`,
+        avatar: `${sUserInfo.avatar || 'http://qn2pi0q2o.hn-bkt.clouddn.com/image/activity/avatar.png'}`, //此处设置默认头像
         phone: sUserInfo.phone
       }
       // userInfo: {
@@ -40,7 +40,7 @@ export default class index extends Component {
         </div>
         <div className={styles.userInfo}>
           <img className={styles.avatar}
-            src={`http://qn2pi0q2o.hn-bkt.clouddn.com/` + avatar} />
+            src={avatar} />
           <div className={`${styles.userName} ${JSON.stringify(userInfo) == '{}' ? 'hideEle' :'showEle' }`} >
             <p className={styles.userId}>
               {userId}

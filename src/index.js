@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 10:03:44
- * @LastEditTime: 2021-02-04 21:41:50
+ * @LastEditTime: 2021-02-06 16:42:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\index.js
@@ -11,7 +11,6 @@ import createLoading from 'dva-loading';
 import { createBrowserHistory as createHistory } from 'history';
 
 import './index.css';
-
 
 // 1. Initialize
 const app = dva({

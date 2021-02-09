@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 20:39:20
- * @LastEditTime: 2021-02-05 21:35:18
+ * @LastEditTime: 2021-02-09 17:50:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\Components\SendMessage\index.js
@@ -33,18 +33,27 @@ class index extends Component {
     }
   }
   componentDidMount() {
+
+    // 设置在线
+    const userInfo =  storage.get('userInfo');
     const {match:{params={}}} = this.props;
-    console.log(this.props);
     this.props.dispatch({
       type: 'message/getReceiverInfo',
       payload: {
         receiverId: params.receiver
       }
+    });
+    this.props.dispatch({
+      type: 'message/getMessage',
+      payload: {
+        sender: userInfo.userId,
+        receiver: params.receiver
+      }
     })
-    // 设置在线
-    const userInfo =  storage.get('userInfo');
+
     socket.emit('online',{userId:userInfo.userId,time:new Date().toLocaleString()})
     socket.on('reply_private_chat',this.getMessage);
+    window.scrollTo(0, document.body.scrollHeight)
     // var sokcet = new io()
     // 发送消息
     // socket.emit('CHAT_SEND', {}, {})
@@ -57,45 +66,54 @@ class index extends Component {
   }
   sendMsg = ()=> {
     const { getFieldsValue } = this.props.form;
-    const { messageList} = this.state;
+    const { message} = this.props;
     const values = getFieldsValue();
     const userInfo =  storage.get('userInfo');
     const {match:{params={}}} = this.props;
+
     // const socket = io('http://localhost:3000', {
     //       reconnectionAttempts: 10,
     //       query: {
     //       }
     // })
-    console.log(params.receiver);
-    const message = {
+    const sendMessage = {
       sender: userInfo.userId,
       avatar: userInfo.avatar,
       nickName: userInfo.nickName,
       receiver: params.receiver,
       msg: values.msg,
+      senderOrReceiver: 0,
       // sender: '5',
       // receiver: '4',
       // nickName: '测试1',
       // avatar: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2796144188,439704386&fm=26&gp=0.jpg',
 
     };
-      socket.emit('private_chat', message, data => {
-        console.log('data=');
+      socket.emit('private_chat', sendMessage, data => {
         console.log(data);
-        messageList.push({
-          nickName: userInfo.nickName,
-          avatar: data.avatar,
-          msg: values.msg,
-          createTime:data.createTime,
-          // senderPhoto: data.senderPhoto,
-          senderOrReceiver: 0,  // 0发送者
-
-        })
-        this.setState({
-          messageList
+        let sendMessageItem = {
+          ...sendMessage,
+          createTime:data.createTime
+        };
+        // message.push({
+        //   sender: data.sender,
+        //   receiver: data.receiver,
+        //   nickName: data.nickName,
+        //   avatar: data.avatar,
+        //   msg: values.msg,
+        //   createTime:data.createTime,
+        //   // senderPhoto: data.senderPhoto,
+        //   senderOrReceiver: 0,  // 0发送者
+        // })
+        this.props.dispatch({
+          type: 'message/saveMessage',
+          payload: {
+            message: sendMessage
+          }
         })
       });
-      socket.on('reply_private_chat',this.getMessage);
+      window.scrollTo(0, document.body.scrollHeight)
+      // socket.on('reply_private_chat',this.getMessage);
       // message.push({
       //   nickName: userInfo.nickName,
       //   avatar: userInfo.avatar,
@@ -106,10 +124,8 @@ class index extends Component {
 
       // })
     // socket.on('news', function (data) {
-    //   console.log(data);
     //   socket.emit('my other event', { my: 'data' });
     // });
-    //   console.log('2');
     //   socket.emit('online', '123')
     //   const message = {
     //     sender: '赵敏',
@@ -124,55 +140,72 @@ class index extends Component {
   getMessage =(data) => {
     console.log('服务端的返回的数据');
     console.log(data);
-    const {messageList} = this.state;
-    messageList.push({
+    // const {messageList} = this.state;
+    let messageList = [];
+    let msgItem = {
       nickName: data.nickName,
       avatar: data.avatar,
       msg: data.msg,
       createTime:data.createTime,
-      // senderPhoto: data.senderPhoto,
       senderOrReceiver:1,  // 0发送者
-    })
+    }
+    messageList.push(msgItem);
+
     this.setState({
       messageList
     })
+    // this.props.dispatch({
+    //   type: 'message/save',
+    //   payload: {
+    //     message:messageList
+    //   }
+    // })
   }
   // 消息栏
   messageRender = () => {
     const {messageList} = this.state;
+    const {message} = this.props;
     return(
       <div className={styles.messageListWrap}>
         <div className={styles.messageList}>
-          {messageList.map((item,index) => {
-            return (
-              <div className={styles.messageItem} key={index}>
-                <div className={styles.sendMsg}>
-                  <div className={styles.info}>
-                    {item.senderOrReceiver === 0 ? <span className={styles.timer}>{item.createTime}   {item.nickName}</span>
-                    :<span className={styles.timer}>{item.nickName}  {item.createTime}</span>}
-                    <div className={styles.msgWrap}>
-                      <span>{item.msg}</span>
-                      <div className={styles.triangle}></div>
+          {message.map((item,index) => {
+            //发信息渲染
+            if(item.senderOrReceiver === 0) {
+              return (
+                <div className={styles.messageItem} key={index}>
+                  <div className={styles.sendMsg}>
+                    <div className={styles.info}>
+                      <span className={styles.timer}>{item.createTime}   {item.nickName}</span>
+                      <div className={styles.msgWrap}>
+                        <span>{item.msg}</span>
+                        <div className={styles.triangle}></div>
+                      </div>
                     </div>
+                    <img className={styles.avatar} src={item.avatar}></img>
                   </div>
-                  <img className={styles.avatar} src={item.avatar}></img>
                 </div>
-              </div>
-            )
+              )
+            }else {
+              //接收信息渲染
+              return (
+                <div className={styles.messageItem}>
+                  <div className={styles.receiveMsg}>
+                    <div className={styles.info}>
+                      <span className={styles.timer}>{item.nickName}  {item.createTime}</span>
+                      <div className={styles.msgWrap}>
+                        <span>{item.msg}</span>
+                        <div className={styles.triangle}></div>
+                      </div>
+                    </div>
+                    <img className={styles.avatar} src={item.avatar}></img>
+                  </div>
+                </div>
+              )
+            }
+
           })}
 
-          <div className={styles.messageItem}>
-            <div className={styles.receiveMsg}>
-              <div className={styles.info}>
-                <span className={styles.timer}>xxx  2021年1月27日21:01:05 </span>
-                <div className={styles.msgWrap}>
-                  <span>消息XXXXXXXXXXXXXX</span>
-                  <div className={styles.triangle}></div>
-                </div>
-              </div>
-              <img className={styles.avatar} src='https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2796144188,439704386&fm=26&gp=0.jpg'></img>
-            </div>
-          </div>
+
         </div>
 
       </div>
@@ -210,7 +243,8 @@ class index extends Component {
 }
 const indexWrap = createForm()(index)
 const mapStateToProps = (state) => ({
-  receiverInfo: state.message.receiverInfo
+  receiverInfo: state.message.receiverInfo,
+  message: state.message.message
 })
 
 export default connect(mapStateToProps)(indexWrap)

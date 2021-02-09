@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 19:49:14
- * @LastEditTime: 2021-01-25 20:46:50
+ * @LastEditTime: 2021-02-07 20:42:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\Components\MessageList\index.js
@@ -53,22 +53,22 @@ class index extends Component {
   onEndReached = () =>{
     this.props.getCommodityList();
   }
-  goToSend = () => {
+  goToSend = (userId) => {
 
-    this.props.history.push('/message/sendMessage')
+    this.props.history.push(`/message/sendMessage/${userId}`)
   }
   row = (row)=>{
     return (
 
-      <div className={styles.messageItem} onClick={()=> {this.goToSend(row.id)}}>
-        <img className={styles.avatar} src={row.avatar}></img>
+      <div className={styles.messageItem} onClick={()=> {this.goToSend(row.userId)}}>
+        <img className={styles.avatar} src={row.receiverAvatar}></img>
         <div className={styles.userInfo}>
-          <h3 className={`${styles.userName} pMargin0`}>{row.userId}</h3>
+          <h3 className={`${styles.userName} pMargin0`}>{row.receiverNickName}</h3>
           <p className={`${styles.msg} `}>{row.msg}</p>
-          <p className={styles.timer}>{row.timer}</p>
+          <p className={styles.timer}>{row.createTime}</p>
         </div>
         <div className={styles.messageNum}>
-          <Badge text={77} overflowCount={55} />
+          <Badge text={row.unreadNum} overflowCount={55} />
         </div>
 
       </div>
@@ -76,14 +76,14 @@ class index extends Component {
     )
   }
   render() {
-    const {isLoading =true,loading, hotList,commodityList = [],hasMore,getCommodityList,zIndexFlag = false} =  this.props;
+    const {isLoading =true,loading, hotList,commodityList = [],hasMore,getCommodityList,zIndexFlag = false,messageList=[]} =  this.props;
     return (
       <div className={styles.messageListWrap}>
 
         <ListView
           ref={el => this.lv = el}
           renderHeader={this.renderHeader}
-          dataSource={this.state.dataSource.cloneWithRows(data)}
+          dataSource={this.state.dataSource.cloneWithRows(messageList)}
           renderRow={this.row}
           className={styles.messageList}
           style={{
@@ -94,7 +94,7 @@ class index extends Component {
           pageSize={4}
           initialListSize={4}
           onEndReached={this.onEndReached}
-          renderFooter={() => {            if (!hasMore) return <div style={{ textAlign: 'center' }}>无更多数据了</div>;
+          renderFooter={() => {            if (!hasMore) return <div style={{ textAlign: 'center' }}>没有更多聊天信息了！</div>;
             if (!loading) return <div style={{ height: '0.2rem' }} />;
             return (
               <Flex justify="center">

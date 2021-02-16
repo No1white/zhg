@@ -70,7 +70,8 @@ class index extends Component {
         ...values,
       },
       callback: (res)=> {
-          goTo('/mine',this.props.history)
+        console.log(res);
+        goTo('/mine',this.props.history)
       },
     })
   }

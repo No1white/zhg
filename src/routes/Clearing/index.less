@@ -1,6 +1,8 @@
 .clearingWrap {
   width: 100%;
   height: 100%;
+  position: absolute;
+
   background: #f2f2f2;
   .addressWrap {
     width: 100%;
@@ -59,12 +61,37 @@
     }
 
   }
+  .exchangeWrap {
+    height: 300px;
+    // padding: 10px;
+    border-radius: 5px;
+    background: white;
+    .goodList{
+      display: flex;
+      margin: 10px 0px 0px 10px;
+      .goodItem {
+        margin-left: 10px;
+        .checkBox {
+          margin: 0 auto;
+        }
+        padding: 5px;
+        margin-top: 10px;
+        background: #f2f2f2;
+        .goodImg {
+          width: 90px;
+          height: 90px;
+        }
+      }
+    }
+
+  }
   .accountWrap {
     position: fixed;
     bottom: 0px;
     height: 50px;
     width: 100%;
     line-height: 1px;
+    z-index: 100;
     background: white;
     border-top: 1px solid #e2e2e2;
     border-bottom: 1px solid #e2e2e2;
@@ -81,6 +108,11 @@
         .num {
           color: #ff7804;
         }
+      }
+      .btn{
+        // position:absolute;
+      }
+      .circleBtn {
       }
     }
   }

@@ -11,3 +11,65 @@
   padding: 10px;
   font-size: 16px;
 }
+.commodityWrap .commodityList .commodityItem .goodListWrap {
+  width: 100%;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem {
+  display: flex;
+  align-items: center;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem .goodImg {
+  width: 90px;
+  height: 90px;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem .goodInfo {
+  font-size: 16px;
+  width: 100%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem .goodInfo .goodTitle {
+  font-size: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem .goodInfo .p {
+  margin: 0px;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem .goodInfo .specification {
+  opacity: 0.6;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo {
+  width: 100%;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo .dealList {
+  margin: 20px auto;
+  font-size: 16px;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo .dealList .dealItem {
+  display: flex;
+  align-items: center;
+  text-align: right;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo .dealList .dealItem .flex1 {
+  flex: 1;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo .dealList .dealItem .title {
+  font-weight: 500;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo .dealList .dealItem .flex3 {
+  flex: 3;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo .dealList .dealItem .content {
+  margin-left: 10px;
+  text-align: left;
+  opacity: 0.6;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .totalWrap {
+  text-align: right;
+  padding-bottom: 20px;
+}
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .totalWrap .total .price {
+  margin-left: 5px;
+}

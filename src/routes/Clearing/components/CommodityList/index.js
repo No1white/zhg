@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { List, Checkbox,WingBlank} from 'antd-mobile';
+import { List, Checkbox,WingBlank,InputItem} from 'antd-mobile';
 import GoodList from '../GoodList'
+import { createForm } from 'rc-form';
+import constObj from '@/utils/constObj.js'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 
-export default class index extends Component {
+class index extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -78,9 +80,6 @@ export default class index extends Component {
   }
   onChange = (userId) => {
     const {goodList} = this.state;
-    // const userList = goodList.filter(item => {
-    //   return item.userId === userId
-    // });
     goodList.forEach(item =>{
       if(item.userId === userId) {
         const allChecked = !item.allChecked;
@@ -94,13 +93,11 @@ export default class index extends Component {
       goodList
     })
     this.reCount()
-    // userList.goodList
+
   }
   goodListCheckChange = (userId,goodId)=>{
     const {goodList} = this.state;
-    // const userList = goodList.filter(item => {
-    //   return item.userId === userId
-    // });
+
     goodList.forEach(item =>{
       let i = 0;
 
@@ -145,13 +142,8 @@ export default class index extends Component {
     this.props.changeTotalPrice(sum);
   }
   render() {
-    const data = [
-      { value: 0, label: 'Ph.D.' },
-      { value: 1, label: 'Bachelor' },
-      { value: 2, label: 'College diploma' },
-    ];
-    const {goodList = []} = this.props;
-    console.log(goodList);
+    const { getFieldProps } = this.props.form;
+    const {goodList = [],onRemarkChange,remark} = this.props;
     return (
 
       <WingBlank>
@@ -164,13 +156,59 @@ export default class index extends Component {
                     <div className={styles.shopName}>{i.nickName}</div>
 
                     <div className={styles.goodListWrap}>
-                      <GoodList
-                        userId ={i.userId}
-                        goodList={i.goodList}
-                        allChecked={i.allChecked}
-                        goodListCheckChange={this.goodListCheckChange}
-                        ></GoodList>
+                      <div className={styles.goodList}>
+                          <WingBlank>
+
+                              <div className={styles.goodItem}>
+
+                                <img className={styles.goodImg} src={i.imgList && i.imgList[0]} alt=""/>
+                                <div className={styles.goodInfo}>
+                                  <p className={`${styles.p} ${styles.goodTitle}`}>{i.title}</p>
+                                  <p className={`${styles.p} ${styles.specification}`}>{i.specification}</p>
+                                  <p className={`${styles.p} ${styles.price} themeColor`}>￥{i.price}</p>
+
+                                </div>
+                              </div>
+                            <div className={styles.dealInfo}>
+                              <div className={`${styles.dealList}`}>
+                                <div className={`${styles.dealItem}`}>
+                                  <span className={`${styles.title} ${styles.flex1}`}>交易方式</span>
+                                  <sapn className={`${styles.content} ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}</sapn>
+                                  <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+                                </div>
+                              </div>
+                              {/* <div className={`${styles.dealList}`}>
+                                <div className={`${styles.dealItem}`}>
+                                  <span className={`${styles.title} ${styles.flex1}`}>配送方式</span>
+                                  <sapn className={`${styles.content} ${styles.flex1}`}>普通配送</sapn>
+                                  <div className={`value ${styles.flex1}`}>快递<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+                                </div>
+                              </div> */}
+                              <div className={`${styles.dealList}`}>
+                                <div className={`${styles.dealItem}`}>
+                                  <span className={`${styles.title}`}>订单备注:</span>
+                                  <InputItem
+                                    {...getFieldProps('remarks')}
+                                    value={remark}
+                                    className={`${styles.content} `}
+
+                                    placeholder="选填，请先和卖家协商一致"
+                                    onChange={(e)=>{onRemarkChange(e)}}
+                                  />
+                                  <div className={`value ${styles.flex1}`}></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.totalWrap}>
+                              <div className={styles.total}>
+                                <sapn className={styles.num}>共计1件</sapn>
+                                <span className={`${styles.price} themeColor`}>￥{goodList && goodList[0].price}</span>
+                              </div>
+                            </div>
+                          </WingBlank>
+                      </div>
                     </div>
+
                   </div>
                 )
               })}
@@ -180,3 +218,4 @@ export default class index extends Component {
     )
   }
 }
+export default createForm()(index);

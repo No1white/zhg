@@ -1,8 +1,12 @@
 .sendMessageWrap {
   position: relative;
 }
+.sendMessageWrap .messageListWrap {
+  padding-bottom: 70px;
+}
 .sendMessageWrap .messageListWrap .messageList {
   margin-top: 10px;
+  padding-bottom: 70px;
 }
 .sendMessageWrap .messageListWrap .messageList .messageItem .sendMsg {
   width: 100%;

@@ -1,18 +1,16 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 10:03:44
- * @LastEditTime: 2021-02-06 16:45:18
+ * @LastEditTime: 2021-02-16 19:35:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\IndexPage.js
  */
 import React,{Component} from 'react';
 import { connect } from 'dva';
-import Navigation from './components/Navigation'
-import Home from './Home'
+import Navigation from '../../../components/Navigation'
 import goTo from '@/utils/goTo'
-import Cart from './Cart'
-import styles from './IndexPage.less';
+import styles from './index.less';
 
 class IndexPage extends Component {
   constructor(props) {

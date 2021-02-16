@@ -10,6 +10,80 @@
       }
       margin-top: 20px;
       background: white;
+      .goodListWrap{
+        width: 100%;
+        .goodList {
+          .goodItem {
+            display: flex;
+            align-items: center;
+
+            .goodImg {
+              width: 90px;
+              height: 90px;
+            }
+            .goodInfo {
+              font-size: 16px;
+              width: 100%;
+              overflow: hidden;
+                margin-left: 10px;
+                .goodTitle {
+                  font-size: 24px;
+                  overflow:hidden; //超出的文本隐藏
+                  text-overflow:ellipsis; //溢出用省略号显示
+                  white-space:nowrap; //溢出不换行
+
+                }
+                .p{
+                  margin: 0px;
+                }
+                .specification{
+                  opacity: 0.6;
+                }
+            }
+          }
+          .dealInfo {
+            width: 100%;
+            .dealList {
+              margin: 20px auto;
+              font-size: 16px;
+              .dealItem {
+                display: flex;
+                align-items: center;
+                text-align: right;
+                // justify-content: right;
+                .flex1 {
+                  flex: 1;
+                }
+                .title {
+                  font-weight: 500;
+                }
+                .flex3{
+                  flex: 3;
+                }
+                .content {
+                  margin-left: 10px;
+                  text-align: left;
+                  opacity: 0.6;
+                }
+              }
+            }
+          }
+          .totalWrap {
+            text-align: right;
+            padding-bottom: 20px;
+            .total {
+              .num {
+
+              }
+              .price {
+                margin-left: 5px;
+
+              }
+            }
+          }
+        }
+      }
+
     }
   }
 }

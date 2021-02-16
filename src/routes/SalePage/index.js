@@ -112,10 +112,9 @@ class index extends Component {
     const { location } = history;
     const { query = {} } = location;
     const { goodInfo = {}} = query;
-    console.log('图片改变方法');
     console.log(files);
     // 普通方法
-    if(editFlag) {
+    if (editFlag) {
     }else {
       this.setState({
         files: files,

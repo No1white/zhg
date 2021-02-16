@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-02-05 19:42:24
+ * @LastEditTime: 2021-02-09 18:34:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -37,23 +37,24 @@ class index extends Component {
   // 立即购买
   handleBuy = () => {
     const {goodDetailInfo} = this.props;
-    let tempItem = {
-      nickName: goodDetailInfo.nickName,
-      allChecked: false,
-      userId: goodDetailInfo.userId,
-      goodList: [
-        {
-          goodId: goodDetailInfo.goodId,
-          title: goodDetailInfo.title,
-          price: goodDetailInfo.price,
-          url: goodDetailInfo.imgList[0],
-          checked: false,
-        }
-      ]
-    };
-    let goodList = [];
-    goodList.push(tempItem)
-    goTo('/clearing',this.props.history,goodList);
+    // let tempItem = {
+    //   nickName: goodDetailInfo.nickName,
+    //   allChecked: false,
+    //   userId: goodDetailInfo.userId,
+    //   goodList: [
+    //     {
+    //       goodId: goodDetailInfo.goodId,
+    //       title: goodDetailInfo.title,
+    //       price: goodDetailInfo.price,
+    //       url: goodDetailInfo.imgList[0],
+    //       checked: false,
+    //     }
+    //   ]
+    // };
+    // let goodList = [];
+    // goodList.push(tempItem)
+    this.props.history.push(`/clearing/${goodDetailInfo.goodId}`)
+    // goTo('/clearing/',this.props.history,goodList);
   }
   //加入购物车
   handleJoinCart = () => {

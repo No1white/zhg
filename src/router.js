@@ -92,6 +92,11 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Clearing'),
     loading: Loading,
   });
+
+  const   ClearingSuccessPage = Loadable({
+    loader: () => import('./routes/Clearing/components/OrderSuccess'),
+    loading: Loading,
+  });
   const AddressMangePage = Loadable({
     loader: () => import('./routes/AddressMange'),
     loading: Loading,
@@ -160,7 +165,8 @@ function RouterConfig({ history }) {
         <Route path='/commodityDetail/:goodId' exact component={CommodityPage} />
         <Route path='/search/:word' exact component={SearchPage2} />
         <Route path='/sale' exact component={SalePage} />
-        <Route path='/clearing' exact component={ClearingPage} />
+        <Route path='/clearing/:goodId' exact component={ClearingPage} />
+        <Route path='/clearing/success' exact component={ClearingSuccessPage} />
         <Route path='/addressMange' exact component={AddressMangePage} />
         <Route path='/addAddress' exact component={addAddressPage} />
         <Route path='/success' exact component={successPage} />

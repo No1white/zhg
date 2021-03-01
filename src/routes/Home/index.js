@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva'
 import { createForm } from 'rc-form';
 import {Toast} from 'antd-mobile'
+import config from '../Config/const'
 import ActivityIndicator from '../../components/ActivityIndicator'
 import SearchBar from './components/SearchBar';
 import TabBar from './components/TabBar'
@@ -42,7 +43,6 @@ class index extends Component {
   }
   getCommodityList = (page) => {
     const {quertyParams} = this.state;
-    console.log('222');
     this.props.dispatch({
       type: 'home/getCommodityList',
       payload: {
@@ -142,6 +142,7 @@ class index extends Component {
         category: '8'
       },
     ];
+    // const tabs = config.category;
     const {hotWords} = this.props;
     return (
       <div className={styles.headerWrap}>
@@ -154,6 +155,7 @@ class index extends Component {
             <div className={styles.right} />
             <SearchBar
               getHotWords ={this.getHotWords}
+              word = {'请输入关键词'}
               options={hotWords}
               handleSearchBtn= {this.handleSearchBtn}
               />

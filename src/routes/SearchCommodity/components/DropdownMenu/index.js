@@ -1,13 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2021-02-01 19:10:55
- * @LastEditTime: 2021-02-02 20:06:01
+ * @LastEditTime: 2021-02-28 17:39:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\components\DropdownMenu\index.js
  */
 import React, { Component } from 'react'
 import { Menu, Dropdown } from 'antd';
+import { connect} from 'dva';
+import { createForm } from 'rc-form';
 import { Drawer, List, NavBar, Icon,InputItem,Button } from 'antd-mobile';
 import styles from './index.less'
 class index extends Component {
@@ -18,27 +20,19 @@ class index extends Component {
 
       },
       compositeLabel: '综合',
-      compositeList : [
-        {
-          label: '综合',
-          value: 0,
-          checked: false,
-        },
-        {
-          label: '价格升序',
-          value: 1,
-          checked: false,
-        },
-        {
-          label: '价格降序',
-          value: 2,
-          checked: false,
-        },
-        {
-          label: '最新发布',
-          value: 3,
-          checked: false,
-        },
+
+      labels:[
+        {label:  '全新', value: '0',checked: false,},
+        {label:  '95新', value: '1',checked: false,},
+        {label:  '9成新', value: '2',checked: false,},
+        {label:  '8成新', value: '3',checked: false,},
+        {label:  '二手', value: '4',checked: false,},
+      ],
+      timeLabels: [
+        {label: '1天内', value: '1',checked: false,},
+        {label: '3天内', value: '3',checked: false,},
+        {label: '7天内', value: '7',checked: false,},
+        {label: '30天内', value: '30',checked: false,},
       ],
       open: false, // sider打开的标识
     }
@@ -56,33 +50,71 @@ class index extends Component {
       open:true,
     });
   }
+  //处理筛选商品
+  handleConfirmFilter =() => {
+    const { labels, timeLabels} =this.state;
+    const { getFieldsValue } = this.props.form;
+    const {handleFilterGoodList} = this.props;
+    const values = getFieldsValue();
+    let days = '';
+    let degree  = '';
+    labels.forEach(item => {
+      if(item.checked) {
+        degree = item.value;
+      }
+    })
+    timeLabels.forEach(item => {
+      if(item.checked) {
+        days = item.value;
+      }
+    })
+    this.setState({
+      open:false,
+    })
+    handleFilterGoodList({
+      days,
+      degree,
+      ...values,
+    })
+  }
+  resetLabels = () => {
+    const { labels, timeLabels} =this.state;
+    labels.forEach(item => {
+      item.checked = false;
+    })
+    timeLabels.forEach(item => {
+      item.checked = false;
+    });
+    this.setState({
+      labels,
+      timeLabels,
+    })
+  }
+  handleCheckLabel =(label,property) => {
+    const labels = this.state[property];
+    labels.forEach(item => {
+      if(item.label === label) {
+        item.checked =true;
+      }else {
+        item.checked= false;
+      }
+    })
+    this.setState({
+      [property]: labels
+    })
+  }
   sidebarRender = () => {
-    const labels = [
-      {label:  '全新', value: 'new'},
-      {label:  '全新', value: 'new'},
-      {label:  '全新', value: 'new'},
-      {label:  '全新', value: 'new'},
-      {label:  '全新', value: 'new'},
-      {label:  '全新', value: 'new'},
-      {label:  '全新', value: 'new'},
-    ];
-    const timeLabels = [
-      {label: '1天内', value: '1'},
-      {label: '1天内', value: '1'},
-      {label: '1天内', value: '1'},
-      {label: '1天内', value: '1'},
-      {label: '1天内', value: '1'},
-      {label: '1天内', value: '1'},
-    ]
+    const {labels =[], timeLabels=[]} = this.state;
+    const {getFieldProps} = this.props.form;
     return (
       <div className={styles.sidebarContainer}>
           <List className={styles.sidebarWrap}>
             <div className={styles.labelFilter}>
-              <h2 className={styles.title}>快捷筛选</h2>
+              <h2 className={styles.title}>新旧程度</h2>
               <div className={styles.labels}>
-                {labels.map(item => {
+                {labels.map((item,index) => {
                   return (
-                    <sapn className={styles.label}>{item.label}</sapn>
+                    <span key={index} className={`${styles.label} ${item.checked ? 'themeColor' : ''}`} onClick={()=>{this.handleCheckLabel(item.label,'labels')}} >{item.label}</span>
                   )
                 })}
               </div>
@@ -92,12 +124,12 @@ class index extends Component {
               <div className={styles.labels}>
                 <InputItem
                   className={styles.input}
-                  // {...getFieldProps('preice')}
+                  {...getFieldProps('lowPrice')}
                   placeholder="最低价"
                 ></InputItem>
-                <sapn>-</sapn>
+                <span>-</span>
                 <InputItem
-                  // {...getFieldProps('preice')}
+                  {...getFieldProps('highPrice')}
                   className={styles.input}
                   placeholder="最高价"
                 ></InputItem>
@@ -106,32 +138,30 @@ class index extends Component {
             <div className={styles.timeFilter}>
               <h2 className={styles.title}>发布时间</h2>
               <div className={styles.labels}>
-              {timeLabels.map(item => {
+              {timeLabels.map((item,index) => {
                   return (
-                    <sapn className={styles.label}>{item.label}</sapn>
+                    <span key={index} className={`${styles.label} ${item.checked ? 'themeColor' : ''}`} onClick={()=>{this.handleCheckLabel(item.label,'timeLabels')}} >{item.label}</span>
                   )
                 })}
               </div>
             </div>
         </List>
           <div className={styles.btnGroup}>
-            <Button className={styles.btn} type="default" inline size="larger" style={{ marginRight: '4px' }}>重置</Button>
-            <Button className={styles.btn} type="primary" inline size="largar" style={{ marginRight: '4px' }}>确定</Button>
+            <Button className={styles.btn} type="default" inline size="larger" style={{ marginRight: '4px' }} onClick={this.resetLabels}>重置</Button>
+            <Button className={styles.btn} type="primary" inline size="largar" style={{ marginRight: '4px' }} onClick={this.handleConfirmFilter}>确定</Button>
           </div>
       </div>
     )
   }
   render() {
 
-    const {onComposite,onCredit,creditFlag,compositeList} = this.props;
+    const {onComposite,onCredit,creditFlag,compositeList,handleFilterGoodList} = this.props;
     const { compositeLabel } = this.state;
-    console.log(this.props);
-    console.log(compositeList);
     const menu = (
       <Menu style={{width:'100%'}}>
-        {compositeList.map(item => {
+        {compositeList.map((item,index) => {
           return (
-            <Menu.Item danger={item.checked} onClick={()=>{this.setState({compositeLabel:item.label});onComposite(item.value)}}>
+            <Menu.Item key={index} danger={item.checked} onClick={()=>{this.setState({compositeLabel:item.label});onComposite(item.value)}}>
               {item.label}
             </Menu.Item>
           )
@@ -159,27 +189,27 @@ class index extends Component {
         <Menu.Item danger>a danger item</Menu.Item>
       </Menu>
     )
-    const sidebar = (<List>
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((i, index) => {
-          if (index === 0) {
-            return (<List.Item key={index}
-              thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
-              multipleLine
-            >Category</List.Item>);
-          }
-          return (<List.Item key={index}
-            thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
-          >Category{index}</List.Item>);
-        })}
-      </List>);
+
     return (
       <div className={styles.dropdownMenuWap}>
+        <Drawer
+              className={`${styles.myDrawer} ${this.state.open ? 'showEle' : 'hideEle'}`}
 
+              // style={{ minHeight: document.documentElement.clientHeight }}
+              enableDragHandle
+              contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42,zIndex:-1 }}
+              sidebar={this.sidebarRender()}
+              position={'right'}
+              open={this.state.open}
+              onOpenChange={this.onOpenChange}
+            >
+        </Drawer>
         <Dropdown
           overlay={menu}
           overlayStyle={{width:'100%'}}
+
           >
-          <a className={`${styles.menuItem} "ant-dropdown-link"`} onClick={e => e.preventDefault()}>
+          <a className={`${styles.menuItem} "ant-dropdown-link" themeColor`} >
             {compositeLabel}<span className={`icon-jiantou2 iconfont`}></span>
           </a>
         </Dropdown>
@@ -190,37 +220,20 @@ class index extends Component {
           overlay={menu2}
           overlayStyle={{width:'100%'}}
         >
-          <a className={`${styles.menuItem} "ant-dropdown-link"`} onClick={e => e.preventDefault()}>
+          <a className={`${styles.menuItem} "ant-dropdown-link"`}
+            onClick={()=>{
+              handleFilterGoodList();
+            }}>
             综合<span className={`icon-jiantou2 iconfont`}></span>
           </a>
         </Dropdown>
         <a className={`${styles.menuItem} "ant-dropdown-link"`} onClick={this.openDrawer}>
             筛选<span className={`icon-shaixuan iconfont`}></span>
         </a>
-        {/* <Drawer
-        className="my-drawer"
-        style={{ minHeight: document.documentElement.clientHeight }}
-        contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
-        sidebarStyle={{ border: '1px solid #ddd' }}
-        sidebar={sidebar}
-        open={this.state.open}
-        docked={false}
-      >
-        Click upper-left corner
-      </Drawer> */}
-        {/* <Drawer
-              className={styles.myDrawer}
-              // style={{ minHeight: document.documentElement.clientHeight }}
-              enableDragHandle
-              contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42,zIndex:-1 }}
-              sidebar={this.sidebarRender()}
-              position={'right'}
-              open={this.state.open}
-              onOpenChange={this.onOpenChange}
-            >
-            </Drawer> */}
       </div>
     )
   }
 }
-export default index
+const indexWrap = createForm()(index);
+
+export default connect()(indexWrap)

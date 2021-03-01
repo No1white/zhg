@@ -9,7 +9,6 @@ class index extends Component {
     }
   }
   goBack = ()=>{
-    console.log(this.props);
     this.props.history.goBack()
   }
   // goTo = ()=>{

@@ -9,4 +9,89 @@
       color:#ff6f0c !important;
     }
   }
+  .sidebarContainer {
+    width: 300px;
+    height: 100%;
+    // position: relative;
+    background: white;
+    .sidebarWrap {
+      .labelFilter {
+        padding-top: 10px;
+        .title {
+          text-align: left;
+          font-size: 16px;
+          margin-left: 10px;
+          color: rgba(0,0,0,.6);
+        }
+        .labels {
+          display: flex;
+          margin-top: 10px;
+          flex-flow:row wrap;
+
+          .label {
+            display: block;
+            width: 90px;
+            padding:5px;
+            margin-top: 10px;
+            background: #f4f4f4;
+            margin-left: 10px;
+            border-radius: 3px;
+            // width: 60px;
+          }
+        }
+      }
+      .priceFilter {
+        padding-top: 10px;
+        .title {
+          text-align: left;
+          font-size: 16px;
+          margin-left: 10px;
+          color: rgba(0,0,0,.6);
+        }
+        .labels {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .input {
+            width: 90px;
+          }
+        }
+      }
+      .timeFilter {
+        padding-top: 10px;
+        .title {
+          text-align: left;
+          font-size: 16px;
+          margin-left: 10px;
+          color: rgba(0,0,0,.6);
+        }
+        .labels {
+          display: flex;
+          flex-flow:row wrap;
+          margin-top: 10px;
+          .label {
+            display: block;
+            width: 90px;
+            padding:5px;
+            margin-top: 10px;
+            background: #f4f4f4;
+            margin-left: 10px;
+            border-radius: 3px;
+            // width: 60px;
+          }
+        }
+      }
+
+    }
+    .btnGroup {
+      width: 100%;
+      display: flex;
+      .btn {
+        width: 50%;
+        margin-top: 50px;
+      }
+
+      bottom: 0px ;
+    }
+  }
 }

@@ -1,14 +1,16 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 21:27:06
- * @LastEditTime: 2021-01-29 19:51:11
- * @LastEditors: your name
+ * @LastEditTime: 2021-02-23 19:08:11
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Saled\index.js
  */
 import React, { Component } from 'react'
 import {WingBlank,Button} from 'antd-mobile'
+import { connect } from 'dva';
 import NavBar from '../../../AddressMange/Components/NavBar'
+import storage from '@/utils/storage';
 import styles from './index.less'
 
 // 收藏夹
@@ -19,51 +21,51 @@ class index extends Component {
 
     }
   }
+  componentDidMount(){
+    const userInfo = storage.get('userInfo');
+    this.props.dispatch({
+      type: 'mine/getSaledGood',
+      payload: {
+        userId: userInfo.userId,
+      }
+    })
+  }
+  goToDetail = (goodId) => {
+    this.props.history.push(`/commodityDetail/${goodId}`)
+  }
   renderSaledList = () => {
+    const { saledGoodList } = this.props;
     return (
       <div className={styles.saledList}>
-        <div className={styles.saledItem}>
-          <div className={styles.goodInfo}>
+        {
+          saledGoodList.map(item => {
+            return (
+              <div className={styles.saledItem} onClick={()=>this.goToDetail(item.goodId)}>
+                <div className={styles.goodInfo}>
 
-            <img className={styles.goodImg} src={'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1587601794,489963968&fm=11&gp=0.jpg'}></img>
-            <div className={styles.goodDetail}>
-              <h3 className={styles.goodTitle}>Dior迪奥粉底foreve</h3>
-              <span className={`${styles.price} themeColor`}>￥300</span>
-              <div className={styles.msgLine}>
-                <span className={styles.msgItem}>留言0</span>
-                <span className={styles.msgItem}>留言0</span>
-                <span className={styles.msgItem}>留言0</span>
+                  <img className={styles.goodImg} src={item.imgList[0]}></img>
+                  <div className={styles.goodDetail}>
+                    <h3 className={styles.goodTitle}>{item.title}</h3>
+                    <span className={`${styles.price} themeColor`}>￥{item.price}</span>
+                    <div className={styles.msgLine}>
+                      <span className={styles.msgItem}>收藏{item.collect}</span>
+                      <span className={styles.msgItem}>浏览{item.brose}</span>
+                      {/* <span className={styles.msgItem}>留言0</span> */}
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* <div className={styles.btnWrap}>
+                  <Button type='default' className={styles.concealCollect}  size='small'>编辑</Button>
+                  <Button type='warning' className={styles.concealCollect}  size='small'>编辑</Button>
+                </div> */}
               </div>
-            </div>
+            )
+          })
+        }
 
-          </div>
 
-          {/* <div className={styles.btnWrap}>
-            <Button type='default' className={styles.concealCollect}  size='small'>编辑</Button>
-            <Button type='warning' className={styles.concealCollect}  size='small'>编辑</Button>
-          </div> */}
-        </div>
-        <div className={styles.saledItem}>
-          <div className={styles.goodInfo}>
-
-            <img className={styles.goodImg} src={'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1587601794,489963968&fm=11&gp=0.jpg'}></img>
-            <div className={styles.goodDetail}>
-              <h3 className={styles.goodTitle}>Dior迪奥粉底foreve</h3>
-              <span className={`${styles.price} themeColor`}>￥300</span>
-              <div className={styles.msgLine}>
-                <span className={styles.msgItem}>留言0</span>
-                <span className={styles.msgItem}>留言0</span>
-                <span className={styles.msgItem}>留言0</span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* <div className={styles.btnWrap}>
-            <Button type='default' className={styles.concealCollect}  size='small'>编辑</Button>
-            <Button type='warning' className={styles.concealCollect}  size='small'>编辑</Button>
-          </div> */}
-        </div>
       </div>
     )
   }
@@ -78,4 +80,7 @@ class index extends Component {
     )
   }
 }
-export default index
+const mapStateToProps = (state) =>({
+  saledGoodList: state.mine.saledGoodList,
+})
+export default connect(mapStateToProps)(index)

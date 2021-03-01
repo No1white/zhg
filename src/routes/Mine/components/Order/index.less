@@ -38,25 +38,37 @@
         }
 
       }
-      .goodInfo {
+      .swap {
+        text-align: center;
+        font-size: 20px;
+      }
+      .exchangeGoodInfo {
+        display: flex;
+        align-items: center;
         margin-top: 10px;
-        .imgList {
-          width: 100%;
+        .goodImg{
+          width: 100px;
           height: 100px;
-          display: inline;
-          white-space: nowrap;
-          overflow-x: scroll;
-          float: left;
-          .imgItem {
-            width: 100px;
-            height: 100px;
-            margin-left: 10px;
+        }
+        .goodDetail {
+          margin-left: 10px;
+          text-align: right;
+
+          .goodTitle {
+
           }
+          .price {
+            font-size: 20px;
+          }
+          .msgLine {
+            .msgItem {
+              margin-left: 3px;
+              opacity: .6;
+            }
+          }
+
         }
-        .goodTitle {
-          font-size: 24px;
-          margin-top: 10px;
-        }
+
       }
       .footerWrap {
         text-align:right;
@@ -72,5 +84,8 @@
         }
       }
     }
+  }
+  .tabBarWrap {
+    margin-top: 40px;
   }
 }

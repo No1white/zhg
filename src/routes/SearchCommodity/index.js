@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 14:28:06
- * @LastEditTime: 2021-02-02 19:10:55
+ * @LastEditTime: 2021-02-28 17:34:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\SearchCommodity\index.js
@@ -9,7 +9,7 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
 import { connect } from 'dva'
-import {List, Drawer} from 'antd-mobile'
+import {List, Drawer,Toast} from 'antd-mobile'
 import { Menu, Dropdown } from 'antd';
 import DropdownMenu from './components/DropdownMenu'
 import CommodityList from '../Home/components/CommodityList'
@@ -20,18 +20,19 @@ import styles from './index.less'
  class index extends Component {
   constructor(props) {
     super(props);
+    const {match:{ params:{word}}} =props;
     this.state ={
       queryParams: {
-        category: '0',
         page: 1,
         order: 0,
-        creditFlag: false,
+        word:word,
       },
+      creditFlag: false,
       compositeList : [
         {
           label: '综合',
           value: 0,
-          checked: false,
+          checked: true,
         },
         {
           label: '价格升序',
@@ -48,12 +49,31 @@ import styles from './index.less'
           value: 3,
           checked: false,
         },
-      ]
+      ],
     }
   }
   componentDidMount() {
-    this.getCommodityList()
+    this.handleFilterGoodList()
 
+  }
+
+  handleFilterGoodList = (addFilter = {}) => {
+    const { compositeList =[],queryParams} =this.state;
+    let sort = 0;
+    compositeList.forEach(item => {
+      if(item.checked) {
+        sort = item.value;
+      }
+    })
+    this.props.dispatch({
+      type: 'home/filterGoodList',
+      payload:{
+        ...queryParams,
+        sort,
+        ...addFilter,
+
+      },
+    })
   }
   addPage = ()=> {
     const {queryParams} = this.state;
@@ -62,10 +82,13 @@ import styles from './index.less'
      queryParams
    })
  }
+
   getCommodityList = () => {
     const {queryParams} = this.state;
+    const { location :{pathname}} = this.props;
+    const pathnameList = pathname.split('/')
     this.props.dispatch({
-      type: 'home/getCommodityList',
+      type: 'home/filterGoodList',
       payload: {
         ...queryParams,
 
@@ -94,7 +117,8 @@ import styles from './index.less'
     this.setState({
       queryParams,
       compositeList
-    })
+    });
+    this.handleFilterGoodList()
   }
   onCredit = () => {
     this.setState({
@@ -105,14 +129,46 @@ import styles from './index.less'
   onOpenChange = (...args) => {
     this.setState({ open: !this.state.open });
   }
+  getHotWords = (params) => {
+    // const {quertyParams} = this.state;
+    this.props.dispatch({
+      type: 'home/getHotWords',
+      payload: {
+        word:params
+      },
+    });
+  }
+  handleSearchBtn = (word)=> {
+    // const {quertyParams} = this.state;
+    // this.props.dispatch({
+    //   type: 'home/getCommodityList',
+    //   payload: {
+    //     ...quertyParams,
+    //     word,
+    //   },
+    // });
+    if(word === undefined || word === null) {
+      Toast.info('请输入关键词');
+      return;
+    } else {
+      this.props.history.push(`/search/${word}`)
+    }
+  }
   render() {
-    const { commodityList = [],hasMore,history,loading} = this.props;
+    const { searchCommodityList = [],hasMore,history,loading,location,match,hotWords} = this.props;
+    const {pathname} = location;
+    const { params:{word}} = match;
     const {queryParams,creditFlag,compositeList} = this.state;
     return (
       <div className={styles.searchCommodityWrap}>
         <NavBar history={this.props.history} />
         <div className={styles.searchBar}>
-          <SearchBar ></SearchBar>
+          <SearchBar
+          getHotWords ={this.getHotWords}
+          word={word}
+          options={hotWords}
+          handleSearchBtn= {this.handleSearchBtn}
+          ></SearchBar>
         </div>
         {/* <TabarMenu openDrawer={this.openDrawer}></TabarMenu> */}
         <DropdownMenu
@@ -120,6 +176,7 @@ import styles from './index.less'
           onCredit ={this.onCredit}
           onComposite={this.onComposite}
           compositeList={compositeList}
+          handleFilterGoodList={this.handleFilterGoodList}
 
         ></DropdownMenu>
         <CommodityList
@@ -129,13 +186,17 @@ import styles from './index.less'
           addPage={this.addPage}
           getCommodityList={this.getCommodityList}
           hasMore={hasMore}
-          // commodityList= {commodityList}
+          commodityList= {searchCommodityList}
           zIndexFlag={true}></CommodityList>
       </div>
     )
   }
 }
 const mapStateToProps = (state) =>({
-  commodityList: state.home.commodityList
+  // commodityList: state.home.commodityList,
+  hotWords: state.home.hotWords,
+  searchCommodityList: state.home.searchCommodityList,
+  hasMore: state.home.searchCommodityListHasMore,
+  loading: state.loading.models.home
 })
 export default connect(mapStateToProps)(index)

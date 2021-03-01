@@ -31,12 +31,11 @@ class index extends Component {
           defail: '高速路口对面'
         }
       },
-      remarks: '',
+      remark: '',
       goodList:query,
       userGoodList: userGoodList,
     }
 
-    console.log(query);
   }
   dataList = [
     { url: 'OpHiXAcYzmPQHcdlLFrc', title: '发送给朋友' },
@@ -58,6 +57,13 @@ class index extends Component {
       type: 'goodDetail/getGoodDetailInfo',
       payload: {
         goodId: goodId,
+      }
+    });
+    // 获取用户地址信息
+    this.props.dispatch({
+      type: 'clearing/getAddress',
+      payload: {
+        userId: userInfo.userId,
       }
     });
 
@@ -97,10 +103,25 @@ class index extends Component {
     });
   }
   settleAccounts = () => {
-    const {goodDetailInfo} = this.props;
-    const { remarks} = this.state;
+    const {goodDetailInfo,userGoodList = []} = this.props;
+    const { remark} = this.state;
     const userInfo = storage.get('userInfo');
-    console.log(goodDetailInfo);
+    const addressList = storage.get('addressList') || [];
+    let addressId = '';
+    addressList.forEach(item => {
+      if(item.checked) {
+        addressId = item.addressId
+      }
+    })
+
+    let swapGoodId = '';
+    let swap = 1;  //
+    userGoodList.forEach(item => {
+      if(item.checked === true) {
+        swapGoodId = item.goodId;
+        swap = 0;
+      }
+    })
     this.props.dispatch({
       type:'clearing/createOrder',
       payload: {
@@ -108,13 +129,16 @@ class index extends Component {
         userId: userInfo.userId,
         goodTitle: goodDetailInfo.title,
         goodId: goodDetailInfo.goodId,
-
+        swapGoodId,
+        swap,
+        seller: goodDetailInfo.userId, // 卖家id
+        remark: remark,
+        addressId,
+        price: goodDetailInfo.price,
       },
       callback:(res)=> {
-        console.log(this.props.history);
         window.location.href=res.url;
         // this.props.history.push('/'+res.url)
-        console.log(res);
       }
     })
   //   this.props.dispatch({
@@ -129,7 +153,6 @@ class index extends Component {
   //       console.log(this.props.history);
   //       window.location.href=res.url;
   //       // this.props.history.push('/'+res.url)
-  //       console.log(res);
   //     }
   // })
     // this.props.dispatch({
@@ -160,7 +183,6 @@ class index extends Component {
   delGoods = () => {
   }
   onRemarkChange = (val) => {
-    console.log(val);
     this.setState({
       remark: val,
     })
@@ -209,18 +231,7 @@ class index extends Component {
         </div>
       )
     }
-      // return (
-      //   <div
-      //     className={styles.rightPart}
-      //     onClick={()=>{this.showChangeByProperty('showMange')}}
-      //     >
-
-      //     管理
-      //   </div>
-      // )
-
   }
-
   renderAccount = ()=> {
     const {showMange,totalPrice} = this.state;
     const {goodDetailInfo} = this.props;
@@ -251,25 +262,38 @@ class index extends Component {
     )
   }
   renderAddress = () => {
-    const { userInfo } = this.state;
+    // const { userInfo } = this.state;
+    let addressInfo =  {};
+    storage.get('addressList') && storage.get('addressList').forEach(item =>{
+      if(item.checked) {
+        addressInfo=item;
+      }
+    })
     return (
       <WingBlank>
+
         <div className={styles.addressWrap}>
           <div className={`${styles.addressIcon} `}>
             <sapn className={`${styles.address} bgLinear iconfont icon-dizhi1`}></sapn>
           </div>
 
-          <div className={styles.addressInfo} onClick={()=>{goTo('addressMange',this.props.history)}}>
-            <div className={styles.userInfo}>
-              <p className={`pMargin0 ${styles.userName}`}>{userInfo.userName}</p>
-              <p className={`pMargin0 ${styles.phone}`}>{userInfo.phone}</p>
-            </div>
-            <div className={styles.addressInfo}>
-              {userInfo.address.province}
-              {userInfo.address.city}
-              {userInfo.address.region}
-              {userInfo.address.detail}
-            </div>
+          <div className={styles.addressInfo} onClick={()=>{goTo('/addressMange',this.props.history)}}>
+            {
+              JSON.stringify(addressInfo) === '{}' ? <div>您，还没有添加地址</div>:
+              <div>
+                <div className={styles.userInfo}>
+                  <p className={`pMargin0 ${styles.userName}`}>{addressInfo.userName}</p>
+                  <p className={`pMargin0 ${styles.phone}`}>{addressInfo.phone}</p>
+                </div>
+                <div className={styles.addressInfo}>
+                  {addressInfo.province}
+                  {addressInfo.city}
+                  {addressInfo.region}
+                  {addressInfo.detail}
+                </div>
+              </div>
+            }
+
           </div>
           <div className={`${styles.arrow}  iconfont icon-jiantou1`}></div>
       </div>
@@ -321,7 +345,6 @@ class index extends Component {
     // const {goodList = []} = this.state;
     const {goodDetailInfo} = this.props;
     const {remark,checked}  =this.state;
-    console.log(checked);
     return (
       <div className={styles.clearingWrap}>
         <List>
@@ -344,5 +367,6 @@ const indexWrap = createForm()(index)
 const mapStateToProps = (state)=> ({
   goodDetailInfo: state.goodDetail.goodDetailInfo,
   userGoodList: state.clearing.userGoodList,
+  addressInfo: state.clearing.addressInfo,
 })
 export default connect(mapStateToProps)(indexWrap)

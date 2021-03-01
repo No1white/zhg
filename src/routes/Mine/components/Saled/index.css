@@ -20,6 +20,14 @@
 }
 .saledWrap .saledList .saledItem .goodInfo .goodDetail {
   margin-left: 10px;
+  width: 260px;
+}
+.saledWrap .saledList .saledItem .goodInfo .goodDetail .goodTitle {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .saledWrap .saledList .saledItem .goodInfo .goodDetail .price {
   font-size: 20px;

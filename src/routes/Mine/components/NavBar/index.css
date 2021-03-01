@@ -1,0 +1,27 @@
+.navBarWrap {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  display: flex;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #f2f2f2;
+  background: white;
+}
+.navBarWrap .backBtn {
+  padding: 10px;
+  flex: 1;
+}
+.navBarWrap .backBtn .btn {
+  font-size: 24px;
+}
+.navBarWrap .navBarTitle {
+  flex: 1;
+  font-size: 20px;
+}
+.navBarWrap .rightPart {
+  flex: 1;
+  font-size: 16px;
+  text-align: center;
+}

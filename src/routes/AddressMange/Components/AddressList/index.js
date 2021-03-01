@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-11 16:01:34
- * @LastEditTime: 2021-02-04 17:31:29
+ * @LastEditTime: 2021-02-23 16:56:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\AddressMange\Components\AddressList\index.js
@@ -9,7 +9,10 @@
 import React, { Component } from 'react'
 import {Button} from 'antd-mobile'
 import goTo from '@/utils/goTo'
+import stroage from '@/utils/storage'
+
 import styles from './index.less'
+import storage from '../../../../utils/storage'
 class index extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +32,18 @@ class index extends Component {
       ]
     }
   }
+  handleAddCheck = (addressId) =>{
+    const addressList = storage.get('addressList');
+    addressList.forEach(item => {
+      if(item.addressId === addressId) {
+        item.checked= true;
+      }else {
+        item.checked = false;
+      }
+    })
+    storage.set('addressList',addressList);
+    this.props.history.goBack(-1);
+  }
   render() {
     const {addressList = []} = this.props;
 
@@ -37,16 +52,16 @@ class index extends Component {
         <div className={styles.addressList}>
           {addressList.map(item => {
             return (
-              <div className={styles.addressItem}>
-                <div className={styles.userInfoWrap}>
+              <div className={styles.addressItem}  key={item.addressId}>
+                <div className={styles.userInfoWrap} onClick={()=>this.handleAddCheck(item.addressId)}>
                   <div className={styles.userInfo}>
-                    <sapn className={styles.userName}>{item.userName}</sapn>
-                    <sapn className={styles.userPhone}>{item.phone}</sapn>
+                    <span className={styles.userName}>{item.userName}</span>
+                    <span className={styles.userPhone}>{item.phone}</span>
                   </div>
                   <div className={styles.addressInfo}>
                     {
                       item.defaultAddress === 0 || item.defaultAddress === '0'
-                      ?  <sapn className={`${styles.label}`}>默认 </sapn> : ''
+                      ?  <span className={`${styles.label}`}>默认 </span> : ''
                     }
 
                     <span className={styles.address}>

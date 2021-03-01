@@ -93,8 +93,16 @@ function RouterConfig({ history }) {
     loading: Loading,
   });
 
-  const   ClearingSuccessPage = Loadable({
-    loader: () => import('./routes/Clearing/components/OrderSuccess'),
+  const ClearingSuccessPage = Loadable({
+    loader: () => import('./routes/OrderSuccess'),
+    loading: Loading,
+  });
+  const orderDetail = Loadable({
+    loader: () => import('./routes/OrderDetail'),
+    loading: Loading,
+  });
+  const RefoundGood = Loadable({
+    loader: () => import('./routes/RefoundGood'),
     loading: Loading,
   });
   const AddressMangePage = Loadable({
@@ -166,7 +174,9 @@ function RouterConfig({ history }) {
         <Route path='/search/:word' exact component={SearchPage2} />
         <Route path='/sale' exact component={SalePage} />
         <Route path='/clearing/:goodId' exact component={ClearingPage} />
-        <Route path='/clearing/success' exact component={ClearingSuccessPage} />
+        <Route path='/orderSuccess' exact component={ClearingSuccessPage} />
+        <Route path='/orderDetail/:orderId' exact component={orderDetail} />
+        <Route path='/refoundGood/:orderId' exact component={RefoundGood} />
         <Route path='/addressMange' exact component={AddressMangePage} />
         <Route path='/addAddress' exact component={addAddressPage} />
         <Route path='/success' exact component={successPage} />

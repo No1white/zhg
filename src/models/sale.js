@@ -46,6 +46,7 @@ export default {
       console.log(payload);
       const { data } = yield call(editPublishGood, reqParams);
       callback(data);
+
         // yield put({
         //   type: 'save',
         //   payload: {

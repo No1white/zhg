@@ -13,7 +13,6 @@ class index extends Component {
   autonym = ()=> {
     const { getFieldsValue } = this.props.form;
     const userInfo = storage.get('userInfo');
-    console.log(userInfo);
     const values = getFieldsValue();
     this.props.dispatch({
       type: 'mine/autonym',

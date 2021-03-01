@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-09 19:24:59
- * @LastEditTime: 2021-02-09 19:28:06
+ * @LastEditTime: 2021-02-22 19:32:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\utils\const.js
@@ -111,15 +111,16 @@ const effectsObj = {
   1: '有影响'
 }
 const categoryObj = {
-  0: '服饰',
-  1: '数码',
-  2: '百货',
-  3: '配饰',
-  4: '潮玩',
-  5: '美妆',
-  6: '食品',
-  7: '家居',
-  8: '其他',
+  0: '全部',
+  1: '服饰',
+  2: '数码',
+  3: '百货',
+  4: '配饰',
+  5: '潮玩',
+  6: '美妆',
+  7: '食品',
+  8: '家居',
+  9: '其他',
 }
 const swapObj = {
   0: '置换',

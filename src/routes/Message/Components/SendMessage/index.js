@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 20:39:20
- * @LastEditTime: 2021-02-09 17:50:10
+ * @LastEditTime: 2021-02-22 20:20:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\Components\SendMessage\index.js
@@ -66,7 +66,7 @@ class index extends Component {
   }
   sendMsg = ()=> {
     const { getFieldsValue } = this.props.form;
-    const { message} = this.props;
+    const { message = []} = this.props;
     const values = getFieldsValue();
     const userInfo =  storage.get('userInfo');
     const {match:{params={}}} = this.props;
@@ -163,8 +163,7 @@ class index extends Component {
   }
   // 消息栏
   messageRender = () => {
-    const {messageList} = this.state;
-    const {message} = this.props;
+    const {message = []} = this.props;
     return(
       <div className={styles.messageListWrap}>
         <div className={styles.messageList}>

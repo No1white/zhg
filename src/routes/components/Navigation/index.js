@@ -27,12 +27,12 @@ class index extends React.Component {
         icon: 'icon-jiahao2',
         selectedIcon: 'icon-jiahao1'
       },
-      {
-        title:'购物车',
-        key: 'cart',
-        icon: 'icon-cart-full',
-        selectedIcon: 'icon-cart-Empty-fill'
-      },
+      // {
+      //   title:'购物车',
+      //   key: 'cart',
+      //   icon: 'icon-cart-full',
+      //   selectedIcon: 'icon-cart-Empty-fill'
+      // },
       {
         title:'消息',
         key: 'message',

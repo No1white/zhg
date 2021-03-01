@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-25 10:49:13
+ * @LastEditTime: 2021-02-22 20:02:52
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Home\components\SearchBar\index.js
+ */
 import React, { Component } from 'react';
 import { AutoComplete,Input } from 'antd';
 import styles from './index.less';
@@ -18,7 +26,7 @@ export default class index extends Component {
     };
     const onSelect = (data) => {
       this.setState({
-        word:data,
+        word:encodeURI(data),
       })
     };
     const onChange = (data) => {

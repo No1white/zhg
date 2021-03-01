@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-13 12:58:06
+ * @LastEditTime: 2021-02-18 20:09:47
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Mine\components\Settings\index.js
+ */
 import React, { Component } from 'react'
 import {List, Button} from 'antd-mobile'
 import goTo from '../../../../utils/goTo'
@@ -40,7 +48,7 @@ class index extends Component {
           <Item
             className={`${styles.funcItem}`}
             arrow="horizontal"
-            onClick={() => {goTo('addressMange',this.props.history)}} >我的收货地址</Item>
+            onClick={() => {goTo('/addressMange',this.props.history)}} >我的收货地址</Item>
           <Item className={`${styles.funcItem}`} arrow="horizontal" onClick={() => {}}>账号与安全</Item>
           <Item className={`${styles.funcItem}`} arrow="horizontal" onClick={() => {goTo('/mine/settings/autonym',this.props.history)}}>实名认证</Item>
           <Item className={`${styles.funcItem}`} extra="extra content" arrow="horizontal" onClick={() => {}}>支付设置</Item>

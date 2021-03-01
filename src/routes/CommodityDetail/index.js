@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-02-09 18:34:46
+ * @LastEditTime: 2021-02-22 20:23:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -118,9 +118,9 @@ class index extends Component {
           ￥{goodDetailInfo.price}
         </p>
         <div className={styles.labels}>
-          {labels.map(item => {
+          {labels.map((item,index) => {
             return (
-              <sapn className={styles.label}>{item}</sapn>
+              <span className={styles.label} key={index}>{item} </span>
             )
           })}
           <h3 className={styles.title}>{goodDetailInfo.title}</h3>
@@ -155,9 +155,9 @@ class index extends Component {
         </div>
         <div className={styles.description}>
           {/* <sapn className={styles.descriptionTitle}>详细信息：</sapn> */}
-          {imgList.map(item => {
+          {imgList.map((item,index) => {
             return (
-              <img className={styles.img} src={item}></img>
+              <img className={styles.img} src={item} key={index} ></img>
             )
           })}
 
@@ -184,7 +184,7 @@ class index extends Component {
 
         </div>
         <div className={styles.submitBtn}>
-          <button  className={`${styles.btn}`} onClick={()=>{this.handleJoinCart()}}>加入购物车</button>
+          {/* <button  className={`${styles.btn}`} onClick={()=>{this.handleJoinCart()}}>加入购物车</button> */}
           <button className={`${styles.btn}`} onClick={this.handleBuy}>立即购买</button>
         </div>
       </div>

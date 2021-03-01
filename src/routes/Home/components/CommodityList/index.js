@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 17:30:20
- * @LastEditTime: 2021-02-02 20:14:02
+ * @LastEditTime: 2021-02-28 17:33:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\CommodityList\index.js
@@ -52,7 +52,6 @@ export default class index extends Component {
     // })
   }
   onEndReached = () =>{
-    console.log('1');
     let now = new Date();
     if(this.props.hasMore) {
       this.props.addPage();
@@ -74,7 +73,7 @@ export default class index extends Component {
   row = (row)=>{
     return (
 
-          <div className={styles.commodityItem} onClick={()=> {this.goToDetail(row.goodId)}}>
+          <div className={styles.commodityItem}  onClick={()=> {this.goToDetail(row.goodId)}}>
             <img src={row.url} className={styles.img} />
             <p className={styles.title}>{row.title}</p>
             <div className={styles.goodInfo}>
@@ -83,7 +82,7 @@ export default class index extends Component {
             </div>
             <div className={styles.userInfo}>
               <img className={styles.userAvatar} src={row.avatar}></img>
-              <span className={styles.nickName}>${row.nickName}</span>
+              <span className={styles.nickName}>{row.nickName}</span>
             </div>
           </div>
 
@@ -102,6 +101,7 @@ export default class index extends Component {
   render() {
 
     const {isLoading =true,loading, hotList,commodityList = [],hasMore,getCommodityList,zIndexFlag = false} =  this.props;
+    console.log(commodityList);
     return (
       <div className={`${styles.commodityWrap} ${zIndexFlag ? styles.zIndex :''}`}>
         <ListView

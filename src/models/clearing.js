@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-12 19:46:50
- * @LastEditTime: 2021-02-16 18:58:25
+ * @LastEditTime: 2021-02-24 19:13:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\models\clearing.js
@@ -11,9 +11,13 @@ import {
   trans,
   getUserGoods,
   createOrder,
+  success,
+  getAddress,
+  goToPay,
 } from '../services/clearing'
 const initState = {
-  userGoodList: []
+  userGoodList: [], // 当前用户上架的商品列表
+  addressInfo: {}, //地址信息
 }
 export default {
 
@@ -33,7 +37,6 @@ export default {
     *sendPayRequest({ payload }, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(sendPayRequest, reqParams);
-      console.log(data);
       // yield put({
         //   type: 'save',
         //   payload: {
@@ -45,12 +48,18 @@ export default {
       const reqParams = payload || {};
       const { data } = yield call(trans, reqParams);
       callback(data);
-      // yield put({
-        //   type: 'save',
-        //   payload: {
-        //     hotList: data.list
-        //   },
-        // });
+
+    },
+
+    *getAddress({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getAddress, reqParams);
+      yield put({
+        type: 'save',
+        payload: {
+          addressInfo: data.addressInfo
+        },
+      });
     },
     *createOrder({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
@@ -63,6 +72,8 @@ export default {
         //   },
         // });
     },
+
+
     *getUserGoods({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(getUserGoods, reqParams);
@@ -73,6 +84,27 @@ export default {
           },
         });
     },
+    *success({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(success, reqParams);
+      yield put({
+          type: 'save',
+          payload: {
+            userGoodList: data.userGoodList,
+          },
+        });
+    },
+    *goToPay({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(goToPay, reqParams);
+      callback(data)
+      // yield put({
+      //     type: 'save',
+      //     payload: {
+      //       userGoodList: data.userGoodList,
+      //     },
+      //   });
+    },
   },
 
   reducers: {
@@ -81,10 +113,7 @@ export default {
     },
     userGoodCheck(state,action) {
       const newState = JSON.parse(JSON.stringify(state));
-      console.log(state);
-      console.log(action);
       newState.userGoodList = action.payload.userGoodList;
-      console.log(newState);
       return newState;
     }
   },

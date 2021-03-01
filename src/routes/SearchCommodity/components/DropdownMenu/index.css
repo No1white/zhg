@@ -10,3 +10,80 @@
 .dropdownMenuWap .menuItem .dangerColor {
   color: #ff6f0c !important;
 }
+.dropdownMenuWap .sidebarContainer {
+  width: 300px;
+  height: 100%;
+  background: white;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .labelFilter {
+  padding-top: 10px;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .labelFilter .title {
+  text-align: left;
+  font-size: 16px;
+  margin-left: 10px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .labelFilter .labels {
+  display: flex;
+  margin-top: 10px;
+  flex-flow: row wrap;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .labelFilter .labels .label {
+  display: block;
+  width: 90px;
+  padding: 5px;
+  margin-top: 10px;
+  background: #f4f4f4;
+  margin-left: 10px;
+  border-radius: 3px;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .priceFilter {
+  padding-top: 10px;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .priceFilter .title {
+  text-align: left;
+  font-size: 16px;
+  margin-left: 10px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .priceFilter .labels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .priceFilter .labels .input {
+  width: 90px;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .timeFilter {
+  padding-top: 10px;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .timeFilter .title {
+  text-align: left;
+  font-size: 16px;
+  margin-left: 10px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .timeFilter .labels {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 10px;
+}
+.dropdownMenuWap .sidebarContainer .sidebarWrap .timeFilter .labels .label {
+  display: block;
+  width: 90px;
+  padding: 5px;
+  margin-top: 10px;
+  background: #f4f4f4;
+  margin-left: 10px;
+  border-radius: 3px;
+}
+.dropdownMenuWap .sidebarContainer .btnGroup {
+  width: 100%;
+  display: flex;
+  bottom: 0px ;
+}
+.dropdownMenuWap .sidebarContainer .btnGroup .btn {
+  width: 50%;
+  margin-top: 50px;
+}

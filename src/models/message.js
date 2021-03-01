@@ -80,14 +80,10 @@ export default {
 
   reducers: {
     save(state, action) {
-      console.log('reducers被调用了');
-      console.log(action);
-      console.log(state);
       return { ...state, ...action.payload };
     },
     saveMessage(state, action) {
       let newState = JSON.parse(JSON.stringify(state));
-      console.log(action.payload.message);
       newState.message.push(action.payload.message)
       return newState
     }

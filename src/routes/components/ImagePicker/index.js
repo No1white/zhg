@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-08 19:48:38
- * @LastEditTime: 2021-01-31 19:23:11
+ * @LastEditTime: 2021-02-23 17:19:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\components\ImagePicker\index.js
@@ -36,7 +36,7 @@ class index extends Component {
       const filesList = initialValue.map((item,index) => {
         return (
           {
-            url: this.props.BASE_URL + item,
+            url: item,
             id: index
           }
         )

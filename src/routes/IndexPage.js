@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 10:03:44
- * @LastEditTime: 2021-02-06 16:45:18
+ * @LastEditTime: 2021-02-19 19:14:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\IndexPage.js
@@ -22,7 +22,6 @@ class IndexPage extends Component {
     goTo('/home',this.props.history)
   }
   renderContent = (key)=> {
-    console.log(key);
     // switch(key) {
     //   case 'home':
     //     return (

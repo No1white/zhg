@@ -60,39 +60,39 @@ const effects = [
 const category = [
   {
     label: '服装',
-    value:'0'
-  },
-  {
-    label: '数码',
     value:'1'
   },
   {
-    label: '百货',
+    label: '数码',
     value:'2'
   },
   {
-    label: '配饰',
+    label: '百货',
     value:'3'
   },
   {
-    label: '潮玩',
+    label: '配饰',
     value:'4'
   },
   {
-    label: '美妆',
+    label: '潮玩',
     value:'5'
   },
   {
-    label: '食品',
+    label: '美妆',
     value:'6'
   },
   {
-    label: '家居',
+    label: '食品',
     value:'7'
   },
   {
-    label: '其他',
+    label: '家居',
     value:'8'
+  },
+  {
+    label: '其他',
+    value:'9'
   },
 ]
 let checked = false;

@@ -9,13 +9,25 @@ import {
   getAddressList,
   alterAddress,
   delAddress,
-
+  getOrderList,
+  acceprtExChange,
+  getSaledGood,
+  getOrderDetail,
+  logisticsNumber,
+  getLogisticsInfo,
+  reFound,
+  confirmGood,
 } from '../services/mine'
 import { Toast } from 'antd-mobile'
 import storage from '../utils/storage'
 const initState = {
   BASE_URL: 'http://qn2pi0q2o.hn-bkt.clouddn.com/',
-  levelAddress: []
+  levelAddress: [],  // 城 镇 村 级联
+  orderList: [], // 订单列表
+  saledGoodList: [], //已售出商品列表
+  orderInfo: {}, // 订单详情
+  goodInfo:{}, //订单商品详情
+  addressInfo: {}, //订单地址详情
 }
 export default {
 
@@ -31,6 +43,18 @@ export default {
   effects: {
     *fetch({ payload }, { call, put }) {  // eslint-disable-line
       yield put({ type: 'save' });
+    },
+
+    *getOrderList({ payload }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getOrderList, reqParams);
+
+      yield put({
+        type: 'save',
+        payload: {
+          orderList: data.orderList
+        },
+      });
     },
     // 发送验证码
     *sendVerifyCode({ payload }, { call, put }) {
@@ -162,6 +186,22 @@ export default {
             addressList:data.addressList
           },
         });
+      const addressList  = data.addressList.map(item => {
+        if(item.defaultAddress === 0) {
+          let temp = {
+            ...item,
+            checked:true,
+          };
+          return temp;
+        }else {
+          let temp = {
+            ...item,
+            checked:false,
+          };
+          return temp;
+        }
+      })
+        storage.set('addressList',addressList)
       }else {
         Toast.info(data.msg);
         return ;
@@ -190,6 +230,94 @@ export default {
         return ;
       }
 
+    },
+    *acceprtExChange({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(acceprtExChange, reqParams);
+      callback(data)
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     msg: data.msg,
+      //   },
+      // });
+    },
+    *getSaledGood({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getSaledGood, reqParams);
+      yield put({
+        type: 'save',
+        payload: {
+          saledGoodList: data.goodList,
+        },
+      });
+    },
+
+    *getOrderDetail({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getOrderDetail, reqParams);
+      yield put({
+        type: 'save',
+        payload: {
+          addressInfo: data.addressInfo,
+          goodInfo: data.goodInfo,
+          orderInfo: data.orderInfo
+        },
+      });
+    },
+
+    *logisticsNumber({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(logisticsNumber, reqParams);
+      callback(data);
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     addressInfo: data.addressInfo,
+      //     goodInfo: data.goodInfo,
+      //     orderInfo: data.orderInfo
+      //   },
+      // });
+    },
+
+    // 获取物流信息
+    *getLogisticsInfo({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getLogisticsInfo, reqParams);
+
+
+      yield put({
+        type: 'save',
+        payload: {
+          logisticsInfo: data.logisticsInfo,
+        },
+      });
+    },
+    *reFound({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(reFound, reqParams);
+
+
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     logisticsInfo: data.logisticsInfo,
+      //   },
+      // });
+    },
+    *confirmGood({ payload,callback}, { call, put,select }) {
+      const reqParams = payload || {};
+      const { data } = yield call(confirmGood, reqParams);
+      // 此处代码用于页面刷新作用
+      const thisData1 = yield select(state => state.mine);
+      const {orderList} = thisData1;
+      callback(data)
+      yield put({
+        type: 'save',
+        payload: {
+          orderList
+        },
+      });
     },
   },
 

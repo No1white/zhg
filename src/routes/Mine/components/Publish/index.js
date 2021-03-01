@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 20:57:17
- * @LastEditTime: 2021-01-29 19:36:49
+ * @LastEditTime: 2021-02-23 17:11:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Publish\index.js
@@ -52,7 +52,7 @@ class index extends Component {
             <div className={styles.publishItem} key={item.goodId} >
               <div className={styles.goodInfo} onClick={()=>{this.goToDetail(item.goodId)}}>
                 {console.log()}
-                <img className={styles.goodImg} src={item.imgList ? BASE_URL + item.imgList[0] : ''}></img>
+                <img className={styles.goodImg} src={item.imgList[0]}></img>
                 <div className={styles.goodDetail}>
                   <h3 className={styles.goodTitle}>{item.title}</h3>
                   <span className={`${styles.price} themeColor`}>￥{item.price}</span>

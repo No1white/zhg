@@ -14,7 +14,6 @@ const AgreeItem = Checkbox.AgreeItem;
 // 废弃 没用
 export default class index extends Component {
   onChange = (val) => {
-    console.log(val);
   }
 
 

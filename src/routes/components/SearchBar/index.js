@@ -32,7 +32,7 @@ export default class index extends Component {
 
 
     };
-    const { options = [],handleSearchBtn} = this.props;
+    const { options = [],handleSearchBtn,word} = this.props;
     return (
       <div className={styles.searchBar}>
         <div className={styles.search}>
@@ -43,7 +43,7 @@ export default class index extends Component {
               onSearch={onSearch}
               onChange={onChange}
               className={styles.searchInput}
-              placeholder="请输入关键词"
+              placeholder={word}
             />
           {/* <input type="text" placeholder={'搜索热词'} className={styles.searchInput} /> */}
           <button className={styles.searchBtn}>搜索</button>

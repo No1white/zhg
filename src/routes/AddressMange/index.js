@@ -43,7 +43,6 @@ class index extends Component {
   }
   render() {
     const {addressList} = this.props;
-    console.log(this.props);
     return (
       <div>
         <NavBar

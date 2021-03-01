@@ -25,7 +25,6 @@ export default class index extends Component {
         region: false,
         markFlag: false,
       })
-      console.log(this.state);
     } else {
       newState[key] = !this.state[key];
       this.setState({
@@ -41,7 +40,6 @@ export default class index extends Component {
       credit: false,
       markFlag:false,
     })
-    console.log(this.state);
   }
   openDrawer = () => {
     this.setState({
@@ -49,8 +47,6 @@ export default class index extends Component {
     });
   }
   onOpenChange = (...args) => {
-    console.log(args);
-    console.log('1');
     this.setState({ open: !this.state.open });
   }
   sidebar = () => {

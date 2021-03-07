@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { List, InputItem, WhiteSpace, Button } from 'antd-mobile';
+import { List, InputItem, WhiteSpace, Button, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import goTo from '../../../../utils/goTo'
 import styles from './index.less'
@@ -13,6 +13,7 @@ class index extends Component {
     this.state = {
       hint: '获取验证码',
       codeFlag: false,
+      msg:''
     }
   }
   sendVerifyCode = (phone) => {
@@ -21,8 +22,9 @@ class index extends Component {
       payload: {
         phone
       },
+
     })
-    console.log('1');
+
   }
   goToMine = ()=>{
     console.log('goto');
@@ -33,34 +35,88 @@ class index extends Component {
     const { getFieldsValue } = this.props.form;
     const {codeFlag,hint} = this.state;
     const values = getFieldsValue();
-    console.log(values);
+    var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+    if (!myreg.test(values.phone)) {
+      Toast.info('手机号格式不正确')
+    } else {
+      let i =60;
+      // 判断重复点击
+      if(codeFlag) {
+        return 0;
+      }
 
-    let i =60;
-    // 判断重复点击
-    if(codeFlag) {
-      return 0;
+      setInterval(item =>{
+        if(i>0) {
+          i--;
+          this.setState({
+            hint: `获取验证码(${i})`,
+            codeFlag: true,
+          });
+        } else {
+
+          this.setState({
+            hint: `获取验证码`
+          });
+
+        }
+      },1000);
+      // 发送验证码
+      this.sendVerifyCode(values.phone);
     }
 
-    setInterval(item =>{
-      if(i>0) {
-        i--;
-        this.setState({
-          hint: `获取验证码(${i})`,
-          codeFlag: true,
-        });
-      } else {
-
-        this.setState({
-          hint: `获取验证码`
-        });
-
-      }
-    },1000);
-    // 发送验证码
-    this.sendVerifyCode(values.phone);
 
   }
+  validValue = ()=>{
+    let reg = '';
+    let flag= 0;
+    const { getFieldsValue } = this.props.form;
+    const values = getFieldsValue();
+    Object.keys(values).forEach(item =>{
+      // eslint-disable-next-line default-case
+      switch(item) {
+        case 'phone':
+          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '输入手机号格式错误'
+            });
 
+          }else {
+            flag++;
+
+          }
+          break;
+        case 'password':
+          reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '密码必须大于7位并且包含一位大小写字母及数字'
+            })
+
+          }else {
+            flag++;
+
+          }
+          break;
+        case 'verifyCode':
+          reg = /[0-9]{6}/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '验证码错误'
+            })
+          } else {
+            flag++;
+
+          }
+          break;
+      }
+    });
+    if(flag ===3) {
+      this.regiter();
+    }else {
+      return ;
+    }
+  }
   regiter = () => {
     const { getFieldsValue } = this.props.form;
     const values = getFieldsValue();
@@ -77,7 +133,7 @@ class index extends Component {
   }
   renderLogin = () =>{
     const { getFieldProps } = this.props.form;
-    const {hint,codeFlag}  = this.state;
+    const {hint,codeFlag,msg}  = this.state;
     return (
       <div className={styles.operateWrap}>
           <List className={styles.form} >
@@ -105,8 +161,9 @@ class index extends Component {
             >
               <span className={'iconfont icon-iconfont17'} />
             </InputItem>
+            <p className={styles.info}>{msg}</p>
         </List>
-          <Button className={styles.submitBtn} onClick={this.regiter} onClick={this.regiter}>注册</Button>
+          <Button className={styles.submitBtn} onClick={this.validValue} >注册</Button>
       </div>
 
     )

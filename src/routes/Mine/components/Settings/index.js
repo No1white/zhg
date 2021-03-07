@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-01-13 12:58:06
- * @LastEditTime: 2021-02-18 20:09:47
- * @LastEditors: your name
+ * @LastEditTime: 2021-03-07 11:17:43
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Settings\index.js
  */
@@ -26,13 +26,13 @@ class index extends Component {
     this.props.history.push('/mine')
   }
   renderUserInfo = ()=> {
-    const {userInfo} = this.state;
+    const userInfo = storage.get('userInfo') || {};
     return (
       <div className={styles.userInfoWrap}>
-        <img className={styles.avatar} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fww2.sinaimg.cn%2Fmw690%2F001M3Mcbly1gjvrsyggztj61tm1tr15q02.jpg&refer=http%3A%2F%2Fwww.sina.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=88a19dfd703329099310e27998695735'></img>
+        <img className={styles.avatar || ''} src={userInfo.avatar}></img>
         <div className={styles.userInfo}>
-          <p className={`${styles.userName} pMargin0`}>林5293656</p>
-          <p className={styles.phone}>18060570739</p>
+          <p className={`${styles.userName} pMargin0`}>{userInfo.nickName}</p>
+          <p className={styles.phone}>{userInfo.phone}</p>
         </div>
         <Button
           size='small'

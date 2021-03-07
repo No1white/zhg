@@ -50,6 +50,9 @@ class index extends Component {
         orderId,
         price: goodInfo.price,
         reason: sValue[0],
+      },
+      callback: res=> {
+        window.location.reload();
       }
     })
   }

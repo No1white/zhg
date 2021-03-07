@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 17:42:14
- * @LastEditTime: 2021-02-28 20:05:02
+ * @LastEditTime: 2021-03-02 18:47:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\models\home.js
@@ -122,9 +122,10 @@ export default {
           },
         });
     },
-    *reFound({ payload }, { call, put,select}) {
+    *reFound({ payload,callback}, { call, put,select}) {
       const reqParams = payload || {};
       const { data } = yield call(reFound, reqParams);
+      callback(data)
         // yield put({
         //   type: 'save',
         //   payload: {

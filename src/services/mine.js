@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 20:51:22
- * @LastEditTime: 2021-02-28 20:10:32
+ * @LastEditTime: 2021-03-06 18:33:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\services\mine.js
@@ -11,6 +11,11 @@ import getPath from '../utils/getPath'
 
 
 // 发送验证码
+export const sendVerifyCode = (params) => {
+  return request.get(getPath('/api/mine/sendcode'),params);
+};
+
+// 发送消息
 export const sendMessage = (params) => {
   return request.get(getPath('/api/message/send'),params);
 };
@@ -20,7 +25,7 @@ export const register = (params) => {
   return request.post(getPath('/api/mine/register'),params);
 };
 
-// 发送验证码
+//登录
 export const login = (params) => {
   return request.post(getPath('/api/mine/login'),params);
 };
@@ -89,7 +94,16 @@ export const getLogisticsInfo = (params) => {
 export const confirmGood = (params) => {
   return request.get(getPath('/api/mine/confirmGood'),params);
 };
-// 退款
+// 退款申请
 export const reFound = (params) => {
   return request.post(getPath('/api/mine/reFound'),params);
 };
+// 同意退款
+export const acceptReFound= (params) => {
+  return request.post(getPath('/api/mine/acceptReFound'),params);
+};
+// 修改用户信息
+export const changeUserInfo= (params) => {
+  return request.post(getPath('/api/mine/changeUserInfo'),params);
+};
+

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 17:30:20
- * @LastEditTime: 2021-02-28 17:33:07
+ * @LastEditTime: 2021-03-06 17:24:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\CommodityList\index.js
@@ -77,7 +77,7 @@ export default class index extends Component {
             <img src={row.url} className={styles.img} />
             <p className={styles.title}>{row.title}</p>
             <div className={styles.goodInfo}>
-              <p className={`${styles.price} themeColor`}>{row.price}</p>
+              <p className={`${styles.price} themeColor`}>￥{row.price}</p>
               <p className={styles.brose}>浏览：{row.brose}</p>
             </div>
             <div className={styles.userInfo}>

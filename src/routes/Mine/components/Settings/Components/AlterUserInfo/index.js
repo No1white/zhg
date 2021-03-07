@@ -1,40 +1,117 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-13 19:43:28
+ * @LastEditTime: 2021-03-03 22:32:58
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Mine\components\Settings\Components\AlterUserInfo\index.js
+ */
 import React, { Component } from 'react'
 import {connect} from 'dva'
-import {List,InputItem} from 'antd-mobile'
+import {createForm} from 'rc-form'
+import {List,InputItem,ImagePicker, WingBlank, SegmentedControl,Toast} from 'antd-mobile'
 import NavBar from '../../../../../AddressMange/Components/NavBar'
 import styles from './index.less'
+import storage from '../../../../../../utils/storage'
+
+
+const data = [{
+  url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
+  id: '2121',
+}];
+
 class index extends Component {
   constructor(props) {
     super(props);
+    const userInfo = storage.get('userInfo');
     this.state = {
-
+      files: [{
+        url: userInfo.avatar,
+        id: 1,
+      }],
+      multiple: false,
     }
     console.log(this.props);
   }
+
+  onChange = (files, type, index) => {
+    console.log(files, type, index);
+    const newFiles = [files[1]];
+    // console.log(files);
+    console.log(newFiles);
+    // newFiles.push(files[])
+    this.setState({
+      // files:newFiles,
+      // files
+      files: newFiles
+    });
+  }
+  onSegChange = (e) => {
+    const index = e.nativeEvent.selectedSegmentIndex;
+    this.setState({
+      multiple: index === 1,
+    });
+  }
+  handleChangeUserInfo = () => {
+    const {getFieldsValue} = this.props.form;
+    const values =getFieldsValue();
+    const {files} = this.state;
+    const userInfo = storage.get('userInfo');
+    this.props.dispatch({
+      type: 'mine/changeUserInfo',
+      payload: {
+        ...values,
+        avatar: files[0],
+        userId: userInfo.userId,
+      },
+      callback: res=>{
+        window.location.reload();
+        userInfo.nickName = res.userInfo.nickName;
+        userInfo.avatar = res.userInfo.avatar,
+        storage.set('userInfo',userInfo);
+        Toast.info(res.msg);
+      }
+    })
+  }
+
   renderUserInfo = () => {
+    const userInfo = storage.get('userInfo');
+    const { files } = this.state;
+
+    const { getFieldProps } = this.props.form;
     return (
       <div className={styles.userInfoWrap}>
         <div className={styles.userInfo}>
-          <img className={styles.avatar} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613130562&t=80e6018e2afc8c56f4166a482f658cc8'></img>
-          <List  className={styles.userInfoList}>
-          <InputItem
+          {/* <img  src={userInfo.avatar}></img> */}
+          <WingBlank className={styles.avatar}>
+            <ImagePicker
+              files={files}
+              className={styles.picker}
+              onChange={this.onChange}
+              onImageClick={(index, fs) => console.log(index, fs)}
+              selectable={files.length < 7}
+              multiple={this.state.multiple}
+            />
+          </WingBlank>
+            <List  className={styles.userInfoList}>
+          {/* <InputItem
             className={styles.userInfoItem}
             // {...getFieldProps('autofocus')}
             clear
             placeholder="auto focus"
             ref={el => this.autoFocusInst = el}
-          >账号</InputItem>
+          >账号</InputItem> */}
           <InputItem
             className={styles.userInfoItem}
-            // {...getFieldProps('focus')}
+            {...getFieldProps('nickName')}
             clear
-            placeholder="click the button below to focus"
+            placeholder="请输入要修改的昵称"
             ref={el => this.inputRef = el}
           >昵称</InputItem>
           <List.Item>
             <div
               style={{ width: '100%', color: '#ff6b28', textAlign: 'center' }}
-              onClick={this.handleClick}
+              onClick={()=>{this.handleChangeUserInfo()}}
             >
               修改
             </div>
@@ -53,4 +130,5 @@ class index extends Component {
     )
   }
 }
-export default connect()(index)
+const indexWrap = createForm()(index)
+export default  connect()(indexWrap);

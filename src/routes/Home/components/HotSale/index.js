@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 15:44:12
- * @LastEditTime: 2021-02-22 19:10:40
+ * @LastEditTime: 2021-03-06 17:48:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\HotSale\index.js
@@ -21,10 +21,10 @@ export default class index extends Component {
         <div className={styles.goodsList}>
           {list.map((item,index) =>{
             return (
-              <div className={styles.commodity} key={item.goodId} onClick={()=>{this.props.goToDetail(item.id)}} >
+              <div className={styles.commodity} key={item.goodId} onClick={()=>{this.props.goToDetail(item.goodId)}} >
                 <img src={item.url} className={styles.img} />
                 <p className={styles.title}>{item.title}</p>
-                <p className={styles.price}>{item.price}</p>
+                <p className={styles.price}>￥{item.price}</p>
               </div>
             )
           })}

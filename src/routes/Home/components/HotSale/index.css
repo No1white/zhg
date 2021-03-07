@@ -4,11 +4,14 @@
 }
 .hotSaleWrap .topLine {
   height: 30px;
+  margin-bottom: 10px;
 }
 .hotSaleWrap .topLine .title {
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 700;
   margin: 0px 0px 5px 10px;
   padding-top: 5px;
+  color: #fe4c17;
 }
 .hotSaleWrap .goodsList {
   display: flex;
@@ -27,12 +30,13 @@
   word-break: keep-all;
   white-space: nowrap;
   overflow: hidden;
-  color: #fe2525;
+  color: black;
   text-overflow: ellipsis;
   margin: 0;
 }
 .hotSaleWrap .goodsList .commodity .price {
-  color: #fe2525;
+  color: #ff5500;
   font-size: 20px;
   margin: 3px 0px;
+  text-align: left;
 }

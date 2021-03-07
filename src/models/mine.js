@@ -17,6 +17,8 @@ import {
   getLogisticsInfo,
   reFound,
   confirmGood,
+  acceptReFound,
+  changeUserInfo,
 } from '../services/mine'
 import { Toast } from 'antd-mobile'
 import storage from '../utils/storage'
@@ -59,8 +61,8 @@ export default {
     // 发送验证码
     *sendVerifyCode({ payload }, { call, put }) {
       const reqParams = payload || {};
+      console.log(reqParams);
       const { data } = yield call(sendVerifyCode, reqParams);
-
       // yield put({
         //   type: 'save',
         //   payload: {
@@ -76,6 +78,8 @@ export default {
       storage.set('userInfo',data.userInfo);
       if(data.code === 0 || data.code === '0') {
         callback(data);
+      }else {
+        Toast.info(data.msg);
       }
       yield put({
           type: 'save',
@@ -305,6 +309,19 @@ export default {
       //   },
       // });
     },
+
+    *acceptReFound({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(acceptReFound, reqParams);
+
+
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     logisticsInfo: data.logisticsInfo,
+      //   },
+      // });
+    },
     *confirmGood({ payload,callback}, { call, put,select }) {
       const reqParams = payload || {};
       const { data } = yield call(confirmGood, reqParams);
@@ -319,6 +336,22 @@ export default {
         },
       });
     },
+    *changeUserInfo({ payload,callback}, { call, put,select }) {
+      const reqParams = payload || {};
+      const { data } = yield call(changeUserInfo, reqParams);
+      // 此处代码用于页面刷新作用
+      callback(data)
+      // const thisData1 = yield select(state => state.mine);
+      // const {orderList} = thisData1;
+      // callback(data)
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     orderList
+      //   },
+      // });
+    },
+
   },
 
   reducers: {

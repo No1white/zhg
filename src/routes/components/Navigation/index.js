@@ -58,7 +58,7 @@ class index extends React.Component {
       <div >
         <TabBar
           unselectedTintColor="#949494"
-          tintColor="#33A3F4"
+          tintColor="#ff5f0f"
           barTintColor="white"
           hidden={hiddenFlag}
         >

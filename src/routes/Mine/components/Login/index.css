@@ -33,6 +33,9 @@
 .userPageWrap .formWrap .titleWrap .label .swtichBtn {
   color: #fe5102;
 }
+.userPageWrap .formWrap .operateWrap .form .info {
+  color: red;
+}
 .userPageWrap .formWrap .operateWrap .submitBtn {
   margin-top: 30px;
   color: white;

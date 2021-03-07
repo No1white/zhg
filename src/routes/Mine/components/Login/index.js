@@ -8,6 +8,50 @@ class index extends Component {
   constructor(props) {
     super(props);
     console.log(this.props.history);
+    this.state= {
+      msg: ''
+    }
+  }
+
+  validValue = ()=>{
+    let reg = '';
+    let flag= 0;
+    const { getFieldsValue } = this.props.form;
+    const values = getFieldsValue();
+    Object.keys(values).forEach(item =>{
+      // eslint-disable-next-line default-case
+      switch(item) {
+        case 'phone':
+          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '输入手机号格式错误'
+            });
+
+          }else {
+            flag++;
+
+          }
+          break;
+        case 'password':
+          reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '密码必须大于7位并且包含一位大小写字母及数字'
+            })
+
+          }else {
+            flag++;
+
+          }
+          break;
+      }
+    });
+    if(flag ===2) {
+      this.login();
+    }else {
+      return ;
+    }
   }
   login = ()=> {
     const { getFieldsValue } = this.props.form;
@@ -24,6 +68,7 @@ class index extends Component {
   }
   renderLogin = () =>{
     const { getFieldProps } = this.props.form;
+    const { msg = ''} = this.state;
     return (
       <div className={styles.operateWrap}>
           <List className={styles.form} >
@@ -42,8 +87,11 @@ class index extends Component {
             >
               <span className={'iconfont icon-iconfont17'} />
             </InputItem>
+            <p className={styles.info}>{msg}</p>
+
         </List>
-          <Button className={styles.submitBtn} onClick={this.login}>登陆</Button>
+          <Button className={styles.submitBtn} onClick={this.validValue}>登陆</Button>
+
       </div>
 
     )

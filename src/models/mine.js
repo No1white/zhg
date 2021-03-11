@@ -61,7 +61,6 @@ export default {
     // 发送验证码
     *sendVerifyCode({ payload }, { call, put }) {
       const reqParams = payload || {};
-      console.log(reqParams);
       const { data } = yield call(sendVerifyCode, reqParams);
       // yield put({
         //   type: 'save',

@@ -1,15 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 17:30:20
- * @LastEditTime: 2021-03-10 19:19:19
+ * @LastEditTime: 2021-03-08 12:19:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\CommodityList\index.js
  */
 import React, { Component } from 'react'
 import {ListView,Flex} from 'antd-mobile'
-import ActivityIndicator from '../../../../components/ActivityIndicator'
-import HotSale from '../HotSale'
+import ActivityIndicator from '../../../components/ActivityIndicator'
 import styles from './index.less'
 
 let lastTime = null;
@@ -71,42 +70,53 @@ export default class index extends Component {
   }
 
   row = (row)=>{
-    return (
-
-          <div className={styles.commodityItem}  onClick={()=> {this.goToDetail(row.goodId)}}>
-            <img src={row.url} className={styles.img} />
-            <p className={styles.title}>{row.title}</p>
-            <div className={styles.goodInfo}>
-              <p className={`${styles.price} themeColor`}>￥{row.price}</p>
-              <p className={styles.brose}>浏览：{row.brose}</p>
-            </div>
-            <div className={styles.userInfo}>
-              <img className={styles.userAvatar} src={row.avatar}></img>
-              <span className={styles.nickName}>{row.nickName}</span>
-            </div>
-          </div>
-
-    )
-  }
-  renderHeader = () => {
-    const {header = false,hotList} = this.props;
-    if(header) {
+    const {saleState = 0} = this.props;
+    if(saleState === -1 || saleState === '-1') {
       return (
-        < HotSale list={hotList} goToDetail={this.goToDetail}></ HotSale>
-      )
-    } else {
-      return <div></div>;
+        <div className={styles.commodityItem}  onClick={()=> {this.goToDetail(row.goodId)}}>
+          <img src={row.url} className={styles.img} />
+          <p className={styles.title}>{row.title}</p>
+          <div className={styles.goodInfo}>
+            <p className={`${styles.price} themeColor`}>￥{row.price}</p>
+            <p className={styles.brose}>浏览：{row.brose}</p>
+          </div>
+          {/* <div className={styles.userInfo}>
+            <img className={styles.userAvatar} src={row.avatar}></img>
+            <span className={styles.nickName}>{row.nickName}</span>
+          </div> */}
+        </div>
+      );
+    }else if(saleState === row.saleState){
+      return (
+        <div className={styles.commodityItem}  onClick={()=> {this.goToDetail(row.goodId)}}>
+          <img src={row.url} className={styles.img} />
+          <p className={styles.title}>{row.title}</p>
+          <div className={styles.goodInfo}>
+            <p className={`${styles.price} themeColor`}>￥{row.price}</p>
+            <p className={styles.brose}>浏览：{row.brose}</p>
+          </div>
+          {/* <div className={styles.userInfo}>
+            <img className={styles.userAvatar} src={row.avatar}></img>
+            <span className={styles.nickName}>{row.nickName}</span>
+          </div> */}
+        </div>
+      );
+    }else {
+      return '';
     }
+
   }
+
   render() {
 
-    const {isLoading =true,loading, hotList,commodityList = [],hasMore,getCommodityList,zIndexFlag = false} =  this.props;
+    const {isLoading =true,loading,commodityList = [],hasMore,saleState,getCommodityList,zIndexFlag = false} =  this.props;
+    console.log(commodityList);
     return (
       <div className={`${styles.commodityWrap} ${zIndexFlag ? styles.zIndex :''}`}>
         <ListView
 
           ref={el => this.lv = el}
-          renderHeader={this.renderHeader}
+          // renderHeader={this.renderHeader}
           dataSource={this.state.dataSource.cloneWithRows(commodityList)}
           renderRow={this.row}
           className={styles.commodityList}

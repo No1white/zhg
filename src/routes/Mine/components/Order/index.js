@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 11:20:57
- * @LastEditTime: 2021-03-02 20:15:50
+ * @LastEditTime: 2021-03-11 14:28:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Order\index.js
@@ -126,7 +126,9 @@ class index extends Component {
     const userInfo = storage.get('userInfo');
     let fillLogFlag = 0;
     // 用于判断置换 双方都需填写物流单号
-    if(userInfo.userId === item.seller) {
+    console.log(item.swap === 1);
+    console.log(item.swap);
+    if(userInfo.userId === item.seller || item.swap === '1' || item.swap===1) {
       fillLogFlag = 1;
     }else {
       fillLogFlag = 2;
@@ -136,6 +138,7 @@ class index extends Component {
       type: 'mine/getLogisticsInfo',
       payload:{
         orderId,
+        fillLogFlag
       }
     })
     this.setState({
@@ -158,11 +161,16 @@ class index extends Component {
   }
   // 同意退款
   handleAcceptRefound =(orderId,item) => {
+    console.log(item);
     this.props.dispatch({
       type: 'mine/acceptReFound',
       payload: {
         orderId,
         price: item.price,
+        goodTitle: item.title,
+      },
+      callback: res=>{
+        window.location.reload();
       }
     })
   }
@@ -266,7 +274,10 @@ class index extends Component {
       case 3:
         btnGroup = (
           <div className={styles.btnGroup}>
-            <Button type='danger' className={styles.concealCollect}  size='small'  onClick={this.handleGoToRefound}>退款</Button>
+            {item.seller !== userInfo.userId
+            ?<Button type='danger' className={styles.concealCollect}  size='small'  onClick={()=>this.handleGoToRefound(item.orderId)}>退款</Button>
+            :''
+            }
             <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item.orderId)}} >查看物流</Button>
             {/* <Button type='primary' className={styles.concealCollect}  size='small' onClick={()=>{this.comfirmGood(item.orderId)}}>确认收货</Button> */}
             <Button
@@ -331,6 +342,14 @@ class index extends Component {
             </div>
           );
           break;
+          // eslint-disable-next-line no-duplicate-case
+          case 10:
+            btnGroup = (
+              <div className={styles.btnGroup}>
+                <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item.orderId)}>退款成功</Button>
+              </div>
+            );
+            break;
       default:
 
         btnGroup = '';

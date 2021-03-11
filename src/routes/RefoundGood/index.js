@@ -118,6 +118,7 @@ class index extends Component {
             <WingBlank>
               <div className={styles.resultWrap}>
                 <h3 className={styles.title}>退款，等待商家处理。。。。。</h3>
+                <p className={styles.reason}>退款原因：{orderInfo.reason}</p>
               </div>
             </WingBlank>
           }

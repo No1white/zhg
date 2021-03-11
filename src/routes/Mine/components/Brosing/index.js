@@ -1,5 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-16 17:09:23
+ * @LastEditTime: 2021-03-10 15:51:20
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Mine\components\Brosing\index.js
+ */
 import React, { Component } from 'react'
 import {WingBlank,Button} from 'antd-mobile'
+import storage from '@/utils/storage'
+import {connect} from 'dva';
 import NavBar from '../../../AddressMange/Components/NavBar'
 import styles from './index.less'
 
@@ -8,62 +18,13 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hisoryList: [
-        {
-          date: '2020-1-2',
-          goodList: [
-            {
-              goodId: 1,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            },
-            {
-              goodId: 2,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            },
-            {
-              goodId: 3,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            }
-          ]
-        },
-        {
-          date: '2020-1-3',
-          goodList: [
-            {
-              goodId: 1,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            },
-            {
-              goodId: 2,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            },
-            {
-              goodId: 3,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            },
-            {
-              goodId: 4,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            },
-            {
-              goodId: 5,
-              goodUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117092809_ffwKZ.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613380726&t=89e0d08c28aaff2387e002a49b46ee36',
-              price: 232.5
-            }
-          ]
-        }
-      ]
     }
   }
+  goToDetail = (goodId) => {
+    this.props.history.push(`/commodityDetail/${goodId}`)
+  }
   renderBrosingList = () => {
-    const {hisoryList = []} = this.state;
+    const hisoryList = storage.get('historyGoodList') || [];
     return (
       <div className={styles.brosingList}>
         {hisoryList.map(item => {
@@ -73,8 +34,8 @@ class index extends Component {
               <div className={styles.goodList}>
                 {item.goodList.map(goodItem =>{
                   return (
-                    <div className={styles.goodItem}>
-                      <img className={styles.goodImg} src={goodItem.goodUrl}></img>
+                    <div className={styles.goodItem} onClick={()=>this.goToDetail(goodItem.goodId)}>
+                      <img className={styles.goodImg} src={goodItem.imgList && goodItem.imgList[0]}></img>
                       <p className={`${styles.price} themeColor `}>￥{goodItem.price}</p>
                     </div>
                   )
@@ -98,4 +59,4 @@ class index extends Component {
     )
   }
 }
-export default index
+export default connect()(index);

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-02-22 20:23:13
+ * @LastEditTime: 2021-03-10 19:31:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -23,8 +23,110 @@ class index extends Component {
     }
   }
   componentDidMount(){
-    const {match : {params: {goodId}}} = this.props;
+    const {match : {params: {goodId}},goodDetailInfo} = this.props;
     this.getGoodDetailInfo(goodId);
+    this.addHistoryGood();
+  }
+  //处理 历史记录
+  addHistoryGood = ()=> {
+    const {goodDetailInfo} = this.props;
+    const historyGoodList = storage.get('historyGoodList')||[];
+    setTimeout(()=>{
+    console.log(goodDetailInfo);
+      // const {imgList,price,goodId} = goodDetailInfo;
+      // const date = new Date();
+      // const year = date.getFullYear().toString();
+      // const month = (date.getMonth()+1).toString();
+      // const days = date.getDate().toString();
+      // let tempObj = {
+      //   imgList,
+      //   price,
+      //   goodId,
+      // };
+      // let goodList = historyGoodList.goodList || [];
+      // let flag = 0;
+      // historyGoodList.forEach(item => {
+      //   const dateList = item.date.split('-');
+      //   if(year === dateList[0] && month === dateList[1] && days === dateList[2]) {
+
+      //   }
+      // })
+      // console.log(tempObj);
+      // if(flag ===0) {
+      //   goodList.push(tempObj)
+      //   historyGoodList.push({
+      //     date: `${year}-${month}-${days}`,
+      //     goodList:goodList,
+      //   })
+      // }
+      this.isInGoodList(res=>{
+        console.log(res);
+      storage.set('historyGoodList',res);
+
+      })
+
+    },1000)
+  }
+  isInGoodList = (callback)=> {
+    // 如果历史记录大于20 则删除最后一条记录
+    const {goodDetailInfo} = this.props;
+    const historyGoodList = storage.get('historyGoodList')||[];
+    const newGoodList = historyGoodList[0] && historyGoodList[0].goodList||[];
+    const date = new Date();
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth()+1).toString();
+    const days = date.getDate().toString();
+    const {imgList,price,goodId} = goodDetailInfo;
+    let tempObj = {
+      imgList,
+      price,
+      goodId,
+    };
+    let exist = 1;
+    if(newGoodList.length >=20) {
+        newGoodList.splice(20,1);
+    }else {
+      // 判断商品是否历史记录中
+      historyGoodList.forEach((item,index) =>{
+        item.goodList.forEach((goodItem,goodIndex) =>{
+
+          console.log(goodItem.goodId == goodDetailInfo.goodId);
+          if(goodItem.goodId === goodDetailInfo.goodId) {
+            // 删除历史记录数据中商品记录
+            console.log('333');
+            historyGoodList[index].goodList.splice(goodIndex,1);
+
+            exist = 0;
+          }
+        })
+      })
+    }
+    // 添加到第一条
+    // 如果今天是第一条还需添加日期
+    if(exist === 0) {
+      historyGoodList[0].goodList.push({
+        ...tempObj
+      })
+    }else{
+      let innserFlag = 1;
+      historyGoodList.forEach(item => {
+        const dateList = item.date.split('-');
+        if(year === dateList[0] && month === dateList[1] && days === dateList[2]) {
+          newGoodList.push({...tempObj})
+          console.log('222');
+          innserFlag=0;
+        }
+      })
+      if(innserFlag ===1) {
+        historyGoodList.push({
+          date: `${year}-${month}-${days}`,
+          goodList: [{...tempObj}],
+        })
+      }
+
+    }
+    callback(historyGoodList)
+
   }
   getGoodDetailInfo = (goodId) => {
     this.props.dispatch({
@@ -37,6 +139,12 @@ class index extends Component {
   // 立即购买
   handleBuy = () => {
     const {goodDetailInfo} = this.props;
+    const userInfo = storage.get('userInfo');
+    if(userInfo.userId === goodDetailInfo.userId) {
+      Toast.info('不能购买自己发布的商品')
+    }else {
+      this.props.history.push(`/clearing/${goodDetailInfo.goodId}`)
+    }
     // let tempItem = {
     //   nickName: goodDetailInfo.nickName,
     //   allChecked: false,
@@ -53,7 +161,7 @@ class index extends Component {
     // };
     // let goodList = [];
     // goodList.push(tempItem)
-    this.props.history.push(`/clearing/${goodDetailInfo.goodId}`)
+
     // goTo('/clearing/',this.props.history,goodList);
   }
   //加入购物车
@@ -95,22 +203,35 @@ class index extends Component {
     const userInfo = storage.get('userInfo');
     const {goodDetailInfo} = this.props;
     console.log(goodDetailInfo);
-    this.props.history.push(`/message/sendMessage/${goodDetailInfo.userId}`)
+    if(userInfo.userId === goodDetailInfo.userId) {
+      Toast.info('不能向自己发消息')
+    }else {
+      this.props.history.push(`/message/sendMessage/${goodDetailInfo.userId}`)
+
+    }
   }
   renderUserInfo = () => {
     const { goodDetailInfo } = this.props;
+    const userInfo = storage.get('userInfo');
     return (
       <div className={styles.userInfo}>
         <img className={styles.img} src={goodDetailInfo.avatar} alt=""/>
         <div className={styles.userName}>
           <p>{goodDetailInfo.nickName}</p>
         </div>
+        {goodDetailInfo.userId == userInfo.userId ?
+          <div className={styles.info}>
+          我的商品
+        </div>
+        :''
+        }
       </div>
     )
   }
   renderCommodityInfo = () => {
     const { goodDetailInfo } = this.props;
     const { labels = [],imgList =[]} = goodDetailInfo;
+
     return (
       <div className={styles.commodityInfoWrap}>
         <p className={styles.price}>
@@ -166,6 +287,8 @@ class index extends Component {
     )
   }
   renderBottom = () => {
+    const {goodDetailInfo} =this.props;
+    const userInfo = storage.get('userInfo');
     return (
       <div className={styles.bottomWrap}>
         <div className={styles.collectBtn}>
@@ -185,7 +308,9 @@ class index extends Component {
         </div>
         <div className={styles.submitBtn}>
           {/* <button  className={`${styles.btn}`} onClick={()=>{this.handleJoinCart()}}>加入购物车</button> */}
+
           <button className={`${styles.btn}`} onClick={this.handleBuy}>立即购买</button>
+
         </div>
       </div>
     )

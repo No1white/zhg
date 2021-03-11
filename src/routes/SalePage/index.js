@@ -168,8 +168,6 @@ class index extends Component {
             },
           })
         }
-
-
       }
       else {
 

@@ -73,3 +73,15 @@
 .commodityWrap .commodityList .commodityItem .goodListWrap .goodList .totalWrap .total .price {
   margin-left: 5px;
 }
+.commodityWrap .commodityList .commodityItem .btnWrap {
+  padding-bottom: 30px;
+  margin-right: 20px;
+}
+.commodityWrap .commodityList .commodityItem .btnWrap .btnGroup {
+  display: flex;
+  align-items: right;
+  justify-content: flex-end;
+}
+.commodityWrap .commodityList .commodityItem .btnWrap .btnGroup .concealCollect {
+  margin-left: 5px;
+}

@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-01-13 12:58:06
- * @LastEditTime: 2021-03-07 11:17:43
+ * @LastEditTime: 2021-03-08 12:57:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Settings\index.js
  */
 import React, { Component } from 'react'
-import {List, Button} from 'antd-mobile'
+import {List, Button, Toast} from 'antd-mobile'
 import goTo from '../../../../utils/goTo'
 import storage from '../../../../utils/storage'
 import NavBar from '../../../AddressMange/Components/NavBar'
@@ -19,6 +19,13 @@ class index extends Component {
     const userInfo = storage.get('userInfo') || {};
     this.state = {
       userInfo
+    }
+  }
+  componentDidMount(){
+    const userInfo = storage.get('userInfo') || {};
+    if(JSON.stringify(userInfo) == '{}') {
+      Toast.info('您还未登录,请先登录');
+      this.props.history.push('/mine')
     }
   }
   logOut = ()=> {
@@ -62,8 +69,7 @@ class index extends Component {
   }
   render() {
     const {userInfo} = this.state;
-    console.log(userInfo);
-    console.log(JSON.stringify(userInfo) == '{}');
+
     return (
       <div className={styles.settingsWrap}>
         <NavBar styles={{background: '#white'}} title={'设置'} history={this.props.history}></NavBar>

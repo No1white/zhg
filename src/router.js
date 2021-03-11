@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'dva/router';
+import { Router, Route, Switch,Redirect} from 'dva/router';
 import Loadable from 'react-loadable';
 import Navigation from './routes/components/Navigation'
 import SearchPage from './routes/SearchCommodity'
@@ -132,10 +132,14 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Message/Chart.js'),
     loading: Loading,
   });
+  // 发送消息
+  const SellerInfo = Loadable({
+    loader: () => import('./routes/SellerInfo/index'),
+    loading: Loading,
+  });
   const goTo = (url) => {
     history.push(url)
   }
-
   return (
     <Router history={history}>
       <div>
@@ -185,6 +189,7 @@ function RouterConfig({ history }) {
         {/* 发送消息页面 */}
         <Route path='/message/sendMessage/:receiver' exact component={SendMessagePage} />
         <Route path='/chat' exact component={chatPage} />
+        <Route path='/seller/:userId' exact component={SellerInfo} />
 
         {/* <Route path='/search/:word'  component={SearchPage} /> */}
         </Switch>

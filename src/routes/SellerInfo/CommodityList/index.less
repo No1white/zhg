@@ -1,0 +1,74 @@
+.commodityWrap{
+  margin-top: 45px;
+  height: 100%;
+  background: #f2f2f2;
+  .commodityList {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding-bottom: 70px;
+
+    .commodityItem {
+      background: #ffffff;
+      width: 47%;
+      padding:10px;
+
+      margin-top: 10px;
+      margin-right: 5px;
+      margin-left: 5px;
+      .img{
+        width: 100%;
+        height: auto;
+      }
+      .title {
+        font-size: 20px;
+        overflow:hidden; //超出的文本隐藏
+        text-overflow:ellipsis; //溢出用省略号显示
+        white-space:nowrap; //溢出不换行
+        margin: 2px 0px;
+      }
+      .goodInfo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .price{
+          font-size: 26px;
+          color: #fc3c36;
+          margin: 3px 3px;
+        }
+        .brose {
+          margin: 0;
+        }
+      }
+      .userInfo {
+        .userAvatar {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+        .nickName {
+          margin-left: 5px;
+        }
+      }
+
+    }
+  }
+}
+:global {
+  .list-view-section-body{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .am-list-header{
+    padding:0px;
+  }
+  .am-list-view-scrollview-content{
+    width: 100%;
+  }
+}
+.zIndex {
+  z-index: -1;
+}

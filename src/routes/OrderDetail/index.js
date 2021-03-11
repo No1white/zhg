@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
-import {Checkbox,WingBlank,Switch,List,ActionSheet,Toast, WhiteSpace} from 'antd-mobile'
+import {Checkbox,WingBlank,Switch,List,ActionSheet,Toast,Button,WhiteSpace} from 'antd-mobile'
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
 import ExchangeCommodity from './components/exchangeCommodity'
@@ -95,6 +95,7 @@ class index extends Component {
       });
     });
   }
+
   settleAccounts = () => {
     const {goodDetailInfo,userGoodList = []} = this.props;
     const { remark} = this.state;
@@ -274,6 +275,7 @@ class index extends Component {
       </WingBlank>
     )
   }
+
   renderExchange = ()=> {
     const {userGoodList} = this.props;
 
@@ -295,7 +297,7 @@ class index extends Component {
   }
   render() {
     // const {goodList = []} = this.state;
-    const {goodInfo} = this.props;
+    const {goodInfo,orderInfo,history} = this.props;
     const {remark,checked}  =this.state;
     console.log(goodInfo);
     return (
@@ -306,9 +308,13 @@ class index extends Component {
           {this.renderSwitch()}
           <CommodityList
           goodList={ [{...goodInfo}]}
+          orderInfo={orderInfo}
           changeTotalPrice={this.changeTotalPrice}
           remark={remark}
+          history={history}
           onRemarkChange={this.onRemarkChange}></CommodityList>
+          <div className={styles.btnGroup}>
+          </div>
         </List>
       </div>
     )

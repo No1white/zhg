@@ -86,12 +86,24 @@ class index extends Component {
 
           }
           break;
-        case 'password':
-          reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+        case 'newPhone':
+          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
           if(!reg.test(values[item])) {
             this.setState({
-              msg: '密码必须大于7位并且包含一位大小写字母及数字'
-            })
+              msg: '输入手机号格式错误'
+            });
+
+          }else {
+            flag++;
+
+          }
+          break;
+        case 'newPhone2':
+          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '输入手机号格式错误'
+            });
 
           }else {
             flag++;
@@ -111,7 +123,7 @@ class index extends Component {
           break;
       }
     });
-    if(flag ===3) {
+    if(flag ===4) {
       this.regiter();
     }else {
       return ;
@@ -119,17 +131,23 @@ class index extends Component {
   }
   regiter = () => {
     const { getFieldsValue } = this.props.form;
+    const {match:{params:{flag}}} = this.props;
     const values = getFieldsValue();
-    this.props.dispatch({
-      type: 'mine/register',
-      payload: {
-        ...values,
-      },
-      callback: (res)=> {
-        console.log(res);
-        goTo('/mine',this.props.history)
-      },
-    })
+    if(values.newPhone === values.newPhone2) {
+      this.props.dispatch({
+        type: 'mine/updatePhone',
+        payload: {
+          ...values,
+        },
+        callback: (res)=> {
+          console.log(res);
+          goTo('/mine',this.props.history)
+        },
+      })
+    }else {
+      Toast.info('两次密码不一致');
+    }
+
   }
   renderLogin = () =>{
     const { getFieldProps } = this.props.form;
@@ -154,33 +172,41 @@ class index extends Component {
               <span className={`${styles.btnVerify} themeColor ${codeFlag ? 'disableBtn' : 'ableBtn'}`} onClick={this.handleGetCode}>{hint}</span>
             </div>
             <InputItem
-              {...getFieldProps('password')}
-              type="password"
-              placeholder="请输入密码"
+              {...getFieldProps('newPhone')}
+              placeholder="请输入新手机号"
               className={'userName'}
             >
-              <span className={'iconfont icon-iconfont17'} />
+              <span className={`iconfont icon-shouji ${styles.inputIcon}`} />
             </InputItem>
+            <InputItem
+              {...getFieldProps('newPhone2')}
+              placeholder="请再次输入手机号"
+              className={'userName'}
+            >
+              <span className={`iconfont icon-shouji ${styles.inputIcon}`} />
+            </InputItem>
+
+
             <p className={styles.info}>{msg}</p>
         </List>
-          <Button className={styles.submitBtn} onClick={this.validValue} >注册</Button>
+          <Button className={styles.submitBtn} onClick={this.validValue} >修改</Button>
       </div>
 
     )
   }
   render() {
+    const {match:{params:{flag}}} = this.props;
     return (
       <div className={styles.userPageWrap}>
         <div className={styles.closeBtn} onClick={()=> {this.props.history.goBack(-1)}}>
           <span className={`iconfont icon-guanbi ${styles.close}`}></span>
         </div>
-        <div className={styles.appTitle}>置换购</div>
+        <div className={styles.appTitle}>{flag ==1 ? '修改密码':'修改手机号'}</div>
         <div className={styles.formWrap}>
           <div className={styles.titleWrap}>
-            <h2 className={styles.title}>亲，欢迎注册</h2>
-            <p className={styles.label}>已有账号，
+            {/* <p className={styles.label}>已有账号，
               <span className={styles.swtichBtn} onClick={()=>{goTo('login',this.props.history)}}>去登录</span>
-            </p>
+            </p> */}
           </div>
           {this.renderLogin()}
         </div>

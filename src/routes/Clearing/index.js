@@ -122,6 +122,11 @@ class index extends Component {
         swap = 0;
       }
     })
+
+    if(addressId==='') {
+      Toast.info('您还未选择地址');
+      return ;
+    }
     this.props.dispatch({
       type:'clearing/createOrder',
       payload: {
@@ -137,43 +142,14 @@ class index extends Component {
         price: goodDetailInfo.price,
       },
       callback:(res)=> {
-        window.location.href=res.url;
-        // this.props.history.push('/'+res.url)
+        if(res.code === 2 || res.code === '2') {
+          goTo('/success',this.props.history,{msg: res.msg})
+        }else {
+          window.location.href=res.url;
+        }
       }
     })
-  //   this.props.dispatch({
-  //     type:'clearing/trans',
-  //     payload: {
-  //       amount:goodDetailInfo.price,
-  //       type: 1,  //支付宝
-  //       goodId: goodDetailInfo.goodId,
 
-  //     },
-  //     callback:(res)=> {
-  //       console.log(this.props.history);
-  //       window.location.href=res.url;
-  //       // this.props.history.push('/'+res.url)
-  //     }
-  // })
-    // this.props.dispatch({
-    //     type:'clearing/sendPayRequest',
-    //     payload: {
-    //       userId: userInfo.userId,
-
-    //     },
-
-
-    // })
-    // this.props.dispatch({
-    //   type: 'clearing/',
-    //   payload: {
-    //     sellter: goodDetailInfo.userId, //卖家id
-    //     buyer: userInfo.userId,
-    //     goodId: goodDetailInfo.goodId,
-    //     price: goodDetailInfo.price,
-    //     remarks: remarks,
-    //   }
-    // })
   }
   changeTotalPrice = (totalPrice) => {
     this.setState({
@@ -233,7 +209,7 @@ class index extends Component {
     }
   }
   renderAccount = ()=> {
-    const {showMange,totalPrice} = this.state;
+    const {showMange,totalPrice,checked} = this.state;
     const {goodDetailInfo} = this.props;
     return (
       <div className={styles.accountWrap}>
@@ -242,11 +218,17 @@ class index extends Component {
         {
           showMange && (
             <div className={styles.btnWrap}>
-            {/* <sapn className={styles.goodNum}>共X件</sapn> */}
+            {/* <span className={styles.goodNum}>共X件</span> */}
               <span className={styles.account}>
-                合计： <span className={styles.num}>￥{goodDetailInfo && goodDetailInfo.price}</span>
+                {!checked
+                  ?<span className={styles.num}> 合计： ￥{goodDetailInfo && goodDetailInfo.price}</span>
+                  :''
+                }
               </span>
-              <button className={`circleBtn ${styles.btn}`} onClick={this.settleAccounts}>结算</button>
+              {!checked
+              ? <button className={`circleBtn ${styles.btn}`} onClick={this.settleAccounts}>结算</button>
+              :<button className={`circleBtn ${styles.btn}`} onClick={this.settleAccounts}>置换</button>
+              }
             </div>
           )
         }
@@ -274,7 +256,7 @@ class index extends Component {
 
         <div className={styles.addressWrap}>
           <div className={`${styles.addressIcon} `}>
-            <sapn className={`${styles.address} bgLinear iconfont icon-dizhi1`}></sapn>
+            <span className={`${styles.address} bgLinear iconfont icon-dizhi1`}></span>
           </div>
 
           <div className={styles.addressInfo} onClick={()=>{goTo('/addressMange',this.props.history)}}>

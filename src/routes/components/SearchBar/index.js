@@ -15,7 +15,6 @@ export default class index extends Component {
       })
     };
     const onChange = (data) => {
-      console.log(data);
       if(timeOut) {
         clearTimeout(timeOut)
       }

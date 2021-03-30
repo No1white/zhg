@@ -17,12 +17,14 @@
   justify-content: center;
   align-items: center;
 }
-.attentionWrap .attentionList .attentionItem .userInfo .avatar {
+.attentionWrap .attentionList .attentionItem .userInfo .userInfoContainer {
+  flex: 2;
+}
+.attentionWrap .attentionList .attentionItem .userInfo .userInfoContainer .avatar {
   width: 70px;
   height: 70px;
 }
-.attentionWrap .attentionList .attentionItem .userInfo .userName {
-  flex: 1;
+.attentionWrap .attentionList .attentionItem .userInfo .userInfoContainer .userName {
   margin-left: 10px;
   font-size: 20px;
 }

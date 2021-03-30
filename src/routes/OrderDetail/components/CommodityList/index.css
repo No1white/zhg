@@ -76,10 +76,13 @@
 .commodityWrap .commodityList .commodityItem .btnWrap {
   padding-bottom: 30px;
   margin-right: 20px;
-}
-.commodityWrap .commodityList .commodityItem .btnWrap .btnGroup {
   display: flex;
   align-items: right;
+}
+.commodityWrap .commodityList .commodityItem .btnWrap .flex1 {
+  flex: 1;
+}
+.commodityWrap .commodityList .commodityItem .btnWrap .btnGroup {
   justify-content: flex-end;
 }
 .commodityWrap .commodityList .commodityItem .btnWrap .btnGroup .concealCollect {

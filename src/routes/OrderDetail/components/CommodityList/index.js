@@ -4,6 +4,7 @@ import { createForm } from 'rc-form';
 import {connect} from 'dva'
 import storage from '@/utils/storage'
 import constObj from '@/utils/constObj.js'
+import BtnGroup from '../../../Mine/components/BtnGroup'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -416,35 +417,41 @@ class index extends Component {
                               <div className={`${styles.dealList}`}>
                                 <div className={`${styles.dealItem}`}>
                                   <span className={`${styles.title} ${styles.flex1}`}>交易方式:</span>
-                                  <sapn className={`${styles.content} ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}</sapn>
-                                  {/* <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<sapn className={'iconfont  icon-jiantou1'}></sapn></div> */}
+                                  <span className={`${styles.content} ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}</span>
+                                  {/* <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<span className={'iconfont  icon-jiantou1'}></span></div> */}
                                 </div>
                                 <div className={`${styles.dealItem}`}>
                                   <span className={`${styles.title} ${styles.flex1}`}>订单备注:</span>
-                                  <sapn className={`${styles.content} ${styles.flex1}`}>{i.dep}</sapn>
-                                  {/* <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<sapn className={'iconfont  icon-jiantou1'}></sapn></div> */}
+                                  <span className={`${styles.content} ${styles.flex1}`}>{i.dep}</span>
+                                  {/* <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<span className={'iconfont  icon-jiantou1'}></span></div> */}
                                 </div>
                               </div>
                               {/* <div className={`${styles.dealList}`}>
                                 <div className={`${styles.dealItem}`}>
                                   <span className={`${styles.title} ${styles.flex1}`}>配送方式</span>
-                                  <sapn className={`${styles.content} ${styles.flex1}`}>普通配送</sapn>
-                                  <div className={`value ${styles.flex1}`}>快递<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+                                  <span className={`${styles.content} ${styles.flex1}`}>普通配送</span>
+                                  <div className={`value ${styles.flex1}`}>快递<span className={'iconfont  icon-jiantou1'}></span></div>
                                 </div>
                               </div> */}
 
                             </div>
                             <div className={styles.totalWrap}>
                               <div className={styles.total}>
-                                <sapn className={styles.num}>共计1件</sapn>
+                                <span className={styles.num}>共计1件</span>
                                 <span className={`${styles.price} themeColor`}>￥{goodList && goodList[0].price}</span>
                               </div>
                             </div>
                           </WingBlank>
                       </div>
                     </div>
+
                     <div className={styles.btnWrap}>
-                      {this.renderBtnGroup(orderInfo.state,orderInfo)}
+                        <div className={styles.flex1}></div>
+                        <BtnGroup
+                          orderInfo ={orderInfo}
+                          history={this.props.history}
+                        ></BtnGroup>
+                      {/* {this.renderBtnGroup(orderInfo.state,orderInfo)} */}
                     </div>
                   </div>
                 )

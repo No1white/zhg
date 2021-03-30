@@ -106,7 +106,7 @@ class index extends Component {
 
                             {/* <div className={styles.totalWrap}>
                               <div className={styles.total}>
-                                <sapn className={styles.num}>共计1件</sapn>
+                                <span className={styles.num}>共计1件</span>
                                 <span className={`${styles.price} themeColor`}>￥{goodList && goodList[0].price}</span>
                               </div>
                             </div> */}

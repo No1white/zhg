@@ -3,12 +3,29 @@
   display: flex;
   border-bottom: 2px solid #f2f2f2;
 }
-.commodityWrap .userInfo .img {
+.commodityWrap .userInfo .userInfoContainer {
+  display: flex;
+  align-items: center;
+}
+.commodityWrap .userInfo .userInfoContainer .img {
   width: 50px;
   height: 50px;
 }
+.commodityWrap .userInfo .btn {
+  border: 1px solid #f34336;
+  border-radius: 30px;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-top: 5px;
+  width: 65px;
+  height: 35px;
+  line-height: 35px;
+  color: #f34336;
+}
 .commodityWrap .userInfo .userName {
+  font-size: 18px;
   margin-left: 20px;
+  margin-top: 3px;
 }
 .commodityWrap .userInfo .info {
   position: absolute;
@@ -71,9 +88,33 @@
   font-size: 16px;
 }
 .commodityWrap .bottomWrap .collectBtn .like {
-  margin: 0px 10px;
+  margin: 0px 5px;
+}
+.commodityWrap .bottomWrap .collectBtn .like .bottomIcon {
+  font-size: 20px;
+  text-align: center;
 }
 .commodityWrap .bottomWrap .collectBtn .like .font {
+  font-size: 10px;
+}
+.commodityWrap .bottomWrap .collectBtn .collect {
+  margin: 5px 5px;
+}
+.commodityWrap .bottomWrap .collectBtn .collect .bottomIcon {
+  font-size: 20px;
+  text-align: center;
+}
+.commodityWrap .bottomWrap .collectBtn .collect .font {
+  font-size: 10px;
+}
+.commodityWrap .bottomWrap .collectBtn .contact {
+  margin: 5px 10px;
+}
+.commodityWrap .bottomWrap .collectBtn .contact .bottomIcon {
+  font-size: 20px;
+  text-align: center;
+}
+.commodityWrap .bottomWrap .collectBtn .contact .font {
   font-size: 10px;
 }
 .commodityWrap .bottomWrap .submitBtn .btn {

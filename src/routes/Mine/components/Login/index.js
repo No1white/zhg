@@ -54,6 +54,9 @@ class index extends Component {
     // }
     this.login()
   }
+  goToForGet = ()=>{
+    goTo('/mine/forget',this.props.history);
+  }
   login = ()=> {
     const { getFieldsValue } = this.props.form;
     const values = getFieldsValue();
@@ -91,6 +94,7 @@ class index extends Component {
             <p className={styles.info}>{msg}</p>
 
         </List>
+        <p className={styles.forgetPassword} onClick={this.goToForGet}>忘记密码?</p>
           <Button className={styles.submitBtn} onClick={this.validValue}>登陆</Button>
 
       </div>
@@ -108,7 +112,7 @@ class index extends Component {
           <div className={styles.titleWrap}>
             <h2 className={styles.title}>亲，欢迎登陆</h2>
             <p className={styles.label}>没有账户？
-              <sapn className={styles.swtichBtn} onClick={()=>{goTo('register',this.props.history)}}>立即注册</sapn>
+              <span className={styles.swtichBtn} onClick={()=>{goTo('register',this.props.history)}}>立即注册</span>
             </p>
           </div>
           {this.renderLogin()}

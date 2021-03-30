@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-03-10 19:31:02
+ * @LastEditTime: 2021-03-30 18:35:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -15,54 +15,77 @@ import goTo from '@/utils/goTo'
 import filedType from '@/routes/Config/const.js'
 import NavBar from '../../components/NavBar'
 import styles from './index.less'
+import goodDetail from '../../models/goodDetail'
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      likeFlag: false,
+      collectFlag: false,
+      attentionFlag:false,
     }
   }
   componentDidMount(){
-    const {match : {params: {goodId}},goodDetailInfo} = this.props;
+    const {match : {params: {goodId}}} = this.props;
     this.getGoodDetailInfo(goodId);
     this.addHistoryGood();
+    this.addBrose(goodId);
+    setTimeout(()=>{
+      this.getCollectFlag();
+    },100)
+    // this.getAttention();
+  }
+  componentWillUnmount(){
+  }
+  getCollectFlag = ()=>{
+    const {goodDetailInfo} = this.props;
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      return;
+    }else {
+      this.props.dispatch({
+        type: 'goodDetail/getCollectFlag',
+        payload: {
+          userId:userInfo.userId,
+          goodId:goodDetailInfo.goodId,
+          sellerId: goodDetailInfo.userId,
+        },
+        callback: result => {
+          this.setState({
+            collectFlag: result.collectFlag,
+            attentionFlag: result.attentionFlag,
+          })
+        }
+      })
+    }
+  }
+  getAttention = () => {
+    const {goodDetailInfo} = this.props;
+    const userInfo = storage.get('userInfo');
+    this.props.dispatch({
+      type: 'goodDetail/getAttentionFlag',
+      payload: {
+        sellerId:goodDetailInfo.userId,
+        userId:userInfo.userId,
+      }
+    })
+  }
+  addBrose = (goodId)=> {
+    // const {goodDetailInfo} = this.props;
+    this.props.dispatch({
+      type: 'goodDetail/addBrouse',
+      payload: {
+        goodId: goodId,
+      }
+    })
   }
   //处理 历史记录
   addHistoryGood = ()=> {
     const {goodDetailInfo} = this.props;
     const historyGoodList = storage.get('historyGoodList')||[];
     setTimeout(()=>{
-    console.log(goodDetailInfo);
-      // const {imgList,price,goodId} = goodDetailInfo;
-      // const date = new Date();
-      // const year = date.getFullYear().toString();
-      // const month = (date.getMonth()+1).toString();
-      // const days = date.getDate().toString();
-      // let tempObj = {
-      //   imgList,
-      //   price,
-      //   goodId,
-      // };
-      // let goodList = historyGoodList.goodList || [];
-      // let flag = 0;
-      // historyGoodList.forEach(item => {
-      //   const dateList = item.date.split('-');
-      //   if(year === dateList[0] && month === dateList[1] && days === dateList[2]) {
-
-      //   }
-      // })
-      // console.log(tempObj);
-      // if(flag ===0) {
-      //   goodList.push(tempObj)
-      //   historyGoodList.push({
-      //     date: `${year}-${month}-${days}`,
-      //     goodList:goodList,
-      //   })
-      // }
       this.isInGoodList(res=>{
-        console.log(res);
       storage.set('historyGoodList',res);
-
       })
 
     },1000)
@@ -83,48 +106,49 @@ class index extends Component {
       goodId,
     };
     let exist = 1;
-    if(newGoodList.length >=20) {
-        newGoodList.splice(20,1);
-    }else {
-      // 判断商品是否历史记录中
-      historyGoodList.forEach((item,index) =>{
-        item.goodList.forEach((goodItem,goodIndex) =>{
-
-          console.log(goodItem.goodId == goodDetailInfo.goodId);
-          if(goodItem.goodId === goodDetailInfo.goodId) {
-            // 删除历史记录数据中商品记录
-            console.log('333');
-            historyGoodList[index].goodList.splice(goodIndex,1);
-
-            exist = 0;
-          }
-        })
-      })
-    }
-    // 添加到第一条
-    // 如果今天是第一条还需添加日期
-    if(exist === 0) {
-      historyGoodList[0].goodList.push({
-        ...tempObj
-      })
-    }else{
-      let innserFlag = 1;
+    let newRecord = 1;
+    // 如果还没有记录
+    if(historyGoodList.length>0) {
+      historyGoodList.splice(3,1);
       historyGoodList.forEach(item => {
         const dateList = item.date.split('-');
+        // 如果今天已经有浏览记录了则插入
         if(year === dateList[0] && month === dateList[1] && days === dateList[2]) {
-          newGoodList.push({...tempObj})
-          console.log('222');
-          innserFlag=0;
+          //今天已经有浏览器记录了
+          //判断今天是否已经浏览过
+          let flag = 0;
+          newRecord = 0;
+          item.goodList.forEach((goodItem,goodIndex) => {
+            if(goodItem.goodId === goodDetailInfo.goodId) {
+              //如果已经浏览过删除记录，添加到数组第一条,
+              flag =1;
+              console.log(goodIndex);
+              item.goodList.splice(goodIndex,1);
+              item.goodList.unshift(tempObj);
+            }
+          });
+
+          if(flag ===0) {
+            newGoodList.unshift(tempObj);
+          }
+        }else {
+
         }
+
       })
-      if(innserFlag ===1) {
-        historyGoodList.push({
-          date: `${year}-${month}-${days}`,
-          goodList: [{...tempObj}],
+      if(newRecord ===1) {
+        historyGoodList.unshift({
+          date:`${year}-${month}-${days}`,
+          goodList: [{...tempObj}]
         })
       }
-
+    }else {
+      historyGoodList.unshift({
+        date:`${year}-${month}-${days}`,
+        goodList: [{...tempObj}]
+      })
     }
+
     callback(historyGoodList)
 
   }
@@ -134,42 +158,29 @@ class index extends Component {
       payload: {
         goodId: goodId
       }
-    })
+    });
+  }
+  goToSellerInfo = (sellerId) => {
+    this.props.history.push(`/seller/${sellerId}`)
   }
   // 立即购买
   handleBuy = () => {
     const {goodDetailInfo} = this.props;
-    const userInfo = storage.get('userInfo');
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录')
+      return;
+    }
     if(userInfo.userId === goodDetailInfo.userId) {
       Toast.info('不能购买自己发布的商品')
     }else {
       this.props.history.push(`/clearing/${goodDetailInfo.goodId}`)
     }
-    // let tempItem = {
-    //   nickName: goodDetailInfo.nickName,
-    //   allChecked: false,
-    //   userId: goodDetailInfo.userId,
-    //   goodList: [
-    //     {
-    //       goodId: goodDetailInfo.goodId,
-    //       title: goodDetailInfo.title,
-    //       price: goodDetailInfo.price,
-    //       url: goodDetailInfo.imgList[0],
-    //       checked: false,
-    //     }
-    //   ]
-    // };
-    // let goodList = [];
-    // goodList.push(tempItem)
-
-    // goTo('/clearing/',this.props.history,goodList);
   }
   //加入购物车
   handleJoinCart = () => {
     const { goodDetailInfo} = this.props;
-    console.log(goodDetailInfo);
     const cartGoodList = storage.get('cartGoodList');
-    console.log(cartGoodList);
     goodDetailInfo.checked =false;
     let tempItem = {
       nickName: goodDetailInfo.nickName,
@@ -199,10 +210,57 @@ class index extends Component {
     Toast.info('成功加入购物车！');
     // storage.set('')
   }
+  handleLike = (goodId) => {
+    const likeList = storage.get('likeList')||[];
+    const index = likeList.indexOf(goodId);
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录');
+      return;
+    }
+
+    if(index!==-1) {
+      likeList.splice(index,1);
+    }else {
+      likeList.push(goodId);
+    }
+    this.setState({
+      likeFlag: likeList.indexOf(goodId)!==-1,
+    })
+    storage.set('likeList',likeList);
+  }
+  handleAttention = (sellerId)=> {
+    const userInfo = storage.get('userInfo')||{};
+    const {attentionFlag} = this.state;
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录');
+      return;
+    }
+    if(userInfo.userId === this.props.goodDetailInfo.userId) {
+      Toast.info('不能关注自己')
+      return ;
+    }
+    this.props.dispatch({
+      type:'goodDetail/attentionUser',
+      payload: {
+        sellerId,
+        userId:userInfo.userId,
+        attentionFlag,
+      },
+      callback: result => {
+        this.setState({
+          attentionFlag:result.attentionFlag,
+        })
+      }
+    })
+  }
   handleGoToSendMessage = () => {
-    const userInfo = storage.get('userInfo');
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录');
+      return;
+    }
     const {goodDetailInfo} = this.props;
-    console.log(goodDetailInfo);
     if(userInfo.userId === goodDetailInfo.userId) {
       Toast.info('不能向自己发消息')
     }else {
@@ -210,16 +268,49 @@ class index extends Component {
 
     }
   }
+  handleCollect = (goodId) => {
+    const userInfo = storage.get('userInfo')||{};
+    const {collectFlag} = this.state;
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录');
+      return;
+    }
+
+    if(userInfo.userId === this.props.goodDetailInfo.userId) {
+      Toast.info('不能收藏自己的商品')
+      return ;
+    }
+    this.props.dispatch({
+      type:'goodDetail/collectGood',
+      payload: {
+        goodId,
+        userId:userInfo.userId,
+        collectFlag,
+      },
+      callback: result => {
+        this.setState({
+          collectFlag:result.collectFlag,
+        })
+      }
+    })
+  }
   renderUserInfo = () => {
-    const { goodDetailInfo } = this.props;
-    const userInfo = storage.get('userInfo');
+    const { goodDetailInfo,collectFlag=false,attentionFlag=false } = this.props;
+    const userInfo = storage.get('userInfo')||{};
     return (
-      <div className={styles.userInfo}>
-        <img className={styles.img} src={goodDetailInfo.avatar} alt=""/>
-        <div className={styles.userName}>
-          <p>{goodDetailInfo.nickName}</p>
+      <div className={styles.userInfo} >
+        <div className={styles.userInfoContainer} onClick={()=>{this.goToSellerInfo(goodDetailInfo.userId)}}>
+          <img className={styles.img} src={goodDetailInfo.avatar} alt=""/>
+          <div className={styles.userName}>
+            <p>{goodDetailInfo.nickName}</p>
+          </div>
         </div>
-        {goodDetailInfo.userId == userInfo.userId ?
+
+        {
+          this.state.attentionFlag ?<Button type='default' className={`${styles.btn}`} onClick={()=>this.handleAttention(goodDetailInfo.userId)} >已关注</Button>
+          : <Button type='default' className={`${styles.btn}`} onClick={()=>this.handleAttention(goodDetailInfo.userId)}>关注他</Button>
+        }
+        { goodDetailInfo.userId == userInfo.userId ?
           <div className={styles.info}>
           我的商品
         </div>
@@ -275,7 +366,7 @@ class index extends Component {
           </div>
         </div>
         <div className={styles.description}>
-          {/* <sapn className={styles.descriptionTitle}>详细信息：</sapn> */}
+          {/* <span className={styles.descriptionTitle}>详细信息：</span> */}
           {imgList.map((item,index) => {
             return (
               <img className={styles.img} src={item} key={index} ></img>
@@ -287,21 +378,23 @@ class index extends Component {
     )
   }
   renderBottom = () => {
-    const {goodDetailInfo} =this.props;
+    const {goodDetailInfo,collectFlag=false} =this.props;
     const userInfo = storage.get('userInfo');
     return (
       <div className={styles.bottomWrap}>
         <div className={styles.collectBtn}>
           <div className={styles.like}>
-            <p className={`iconfont icon-dianzan1 pMargin0`}></p>
+            <p className={`iconfont ${this.state.likeFlag ? 'icon-dianzan' : 'icon-dianzan1'}  pMargin0 ${styles.bottomIcon}`} onClick={()=>this.handleLike(goodDetailInfo.goodId)}></p>
             <p className={`pMargin0 ${styles.font}`}>点赞</p>
           </div>
           <div className={styles.collect}>
-            <p className={'iconfont icon-collection pMargin0'}></p>
+            <p
+            className={`iconfont  ${this.state.collectFlag ? 'icon-collection-fill' :'icon-collection'} pMargin0  ${styles.bottomIcon}`}
+            onClick={()=>this.handleCollect(goodDetailInfo.goodId)}></p>
             <p className={`pMargin0 ${styles.font}`}>收藏</p>
           </div>
           <div className={styles.contact} onClick={()=>{this.handleGoToSendMessage()}}>
-            <p className={'iconfont   icon-xiaoxi1 pMargin0'}></p>
+            <p className={`iconfont   icon-xiaoxi1 pMargin0  ${styles.bottomIcon}`}></p>
             <p className={`pMargin0 ${styles.font}`}>联系商家</p>
           </div>
 
@@ -327,6 +420,8 @@ class index extends Component {
   }
 }
 const mapStateToProps = (state) =>({
-  goodDetailInfo: state.goodDetail.goodDetailInfo
+  goodDetailInfo: state.goodDetail.goodDetailInfo,
+  collectFlag: state.goodDetail.collectFlag,
+  attentionFlag: state.goodDetail.attentionFlag,
 })
 export default connect(mapStateToProps)(index)

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-08 19:48:38
- * @LastEditTime: 2021-02-23 17:19:38
+ * @LastEditTime: 2021-03-21 21:48:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\components\ImagePicker\index.js
@@ -24,8 +24,6 @@ class index extends Component {
     files: data,
   }
   onChange = (files, type, index) => {
-    console.log(files);
-    console.log(files, type, index);
     this.setState({
       files,
     });

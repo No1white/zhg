@@ -19,6 +19,15 @@ import {
   confirmGood,
   acceptReFound,
   changeUserInfo,
+  concealOrder,
+  delOrder,
+  forget,
+  fillAliPayId,
+  updatePwd,
+  updatePhone,
+  getCollectListInfo,
+  getAttentionListInfo,
+  getCountAll,
 } from '../services/mine'
 import { Toast } from 'antd-mobile'
 import storage from '../utils/storage'
@@ -30,6 +39,8 @@ const initState = {
   orderInfo: {}, // 订单详情
   goodInfo:{}, //订单商品详情
   addressInfo: {}, //订单地址详情
+  collectListInfo:[], //收藏列表
+  attentionListInfo: [], //关注的人
 }
 export default {
 
@@ -70,6 +81,38 @@ export default {
         // });
     },
 
+    *updatePhone({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(updatePhone, reqParams);
+      if(data.code === 0 || data.code === '0') {
+        Toast.info(data.msg);
+        callback(data);
+      }else {
+        Toast.info(data.msg);
+      }
+      yield put({
+          type: 'save',
+          payload: {
+            userInfo: data.userInfo
+          },
+        });
+    },
+    *updatePwd({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(updatePwd, reqParams);
+      if(data.code === 0 || data.code === '0') {
+        Toast.info(data.msg);
+        callback(data);
+      }else {
+        Toast.info(data.msg);
+      }
+      yield put({
+          type: 'save',
+          payload: {
+            userInfo: data.userInfo
+          },
+        });
+    },
     *register({ payload,callback }, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(register, reqParams);
@@ -86,6 +129,56 @@ export default {
             userInfo: data.userInfo
           },
         });
+    },
+
+    *getCollectListInfo({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getCollectListInfo, reqParams);
+      yield put({
+        type: 'save',
+        payload: {
+          collectListInfo: data.collectListInfo,
+        },
+      });
+    },
+    *fillAliPayId({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(fillAliPayId, reqParams);
+
+      if(data.code === 0 || data.code === '0') {
+        const userInfo = storage.get('userInfo');
+        userInfo.aliPayId = data.aliPayId;
+        // callback(data);
+        storage.set('userInfo',userInfo)
+        Toast.info(data.msg);
+      }else {
+        Toast.info(data.msg);
+      }
+
+    },
+
+    *getCountAll({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getCountAll, reqParams);
+      if(data.code === 0 || data.code ==='0') {
+        callback(data)
+      }else {
+        Toast.info(data.msg);
+      }
+
+    },
+    // 忘记密码
+    *forget({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(forget, reqParams);
+
+      if(data.code === 0 || data.code === '0') {
+        callback(data);
+        Toast.info(data.msg);
+      }else {
+        Toast.info(data.msg);
+      }
+
     },
     *login({ payload,callback }, { call, put }) {
       const reqParams = payload || {};
@@ -181,7 +274,6 @@ export default {
     *getAddressList({ payload,callback }, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(getAddressList, reqParams);
-      console.log(data);
       if(data.code === 0 || data.code === '0') {
         yield put({
           type: 'save',
@@ -234,10 +326,61 @@ export default {
       }
 
     },
+    // 取消订单
+    *concealOrder({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(concealOrder, reqParams);
+      if(data.code === 0 || data.code ==='0') {
+        callback(data)
+      }else {
+        Toast.info(data.msg);
+      }
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     msg: data.msg,
+      //   },
+      // });
+    },
+    *delOrder({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(delOrder, reqParams);
+      if(data === 0 || data ==='0') {
+        callback(data)
+      }else {
+        Toast.info(data.msg);
+      }
+      // yield put({
+      //   type: 'save',
+      //   payload: {
+      //     msg: data.msg,
+      //   },
+      // });
+    },
+
+    *getAttentionListInfo({ payload,callback}, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getAttentionListInfo, reqParams);
+      // if(data === 0 || data ==='0') {
+      //   callback(data)
+      // }else {
+      //   Toast.info(data.msg);
+      // }
+      yield put({
+        type: 'save',
+        payload: {
+          attentionListInfo: data.attentionListInfo,
+        },
+      });
+    },
     *acceprtExChange({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(acceprtExChange, reqParams);
-      callback(data)
+      if(data === 0 || data ==='0') {
+        callback(data)
+      }else {
+        Toast.info(data.msg);
+      }
       // yield put({
       //   type: 'save',
       //   payload: {
@@ -299,8 +442,12 @@ export default {
     *reFound({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(reFound, reqParams);
+      if(data.code ===0) {
+        callback(data);
 
-
+      }else {
+        Toast.info(data.msg);
+      }
       // yield put({
       //   type: 'save',
       //   payload: {

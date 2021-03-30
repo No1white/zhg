@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 11:20:57
- * @LastEditTime: 2021-03-11 14:28:38
+ * @LastEditTime: 2021-03-16 16:51:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Order\index.js
@@ -30,6 +30,7 @@ class index extends Component {
       modal1: false,
       filterOrder: 0,
     }
+    console.log(props);
   }
   componentDidMount() {
     const userInfo = storage.get('userInfo');
@@ -126,8 +127,6 @@ class index extends Component {
     const userInfo = storage.get('userInfo');
     let fillLogFlag = 0;
     // 用于判断置换 双方都需填写物流单号
-    console.log(item.swap === 1);
-    console.log(item.swap);
     if(userInfo.userId === item.seller || item.swap === '1' || item.swap===1) {
       fillLogFlag = 1;
     }else {
@@ -161,7 +160,6 @@ class index extends Component {
   }
   // 同意退款
   handleAcceptRefound =(orderId,item) => {
-    console.log(item);
     this.props.dispatch({
       type: 'mine/acceptReFound',
       payload: {
@@ -184,6 +182,8 @@ class index extends Component {
     })
   }
   renderTabBar = () => {
+    const {match} = this.props;
+    const {params:{tabPage}} = match;
     const tabs = [
       {
         title: '全部',
@@ -202,7 +202,7 @@ class index extends Component {
     ];
     return (
       <div className={styles.tabBarWrap}>
-        <TabBar  tabs={tabs} handleTabClick={this.handleTabClick} renderContent={this.renderOrderList}  />
+        <TabBar initialPage={tabPage}  tabs={tabs} handleTabClick={this.handleTabClick} renderContent={this.renderOrderList}  />
       </div>
     )
 
@@ -291,8 +291,6 @@ class index extends Component {
             >
               确认收货
             </Button>
-
-
           </div>
         );
         break;
@@ -307,17 +305,21 @@ class index extends Component {
       case 6:
         btnGroup = (
           <div className={styles.btnGroup}>
-            <Button
-              type='primary'
-              className={styles.concealCollect}
-              size='small'
-              onClick={() =>
-        alert('置换','确定置换吗', [
-          { text: '取消', onPress: () => console.log('cancel') },
-          { text: '确定', onPress: () => this.handleAcceptExchange(item.orderId) },
-        ])
-      }
+            {
+              userInfo.userId === item.seller
+              ? <Button
+                        type='primary'
+                        className={styles.concealCollect}
+                        size='small'
+                        onClick={() =>
+                  alert('置换','确定置换吗', [
+                    { text: '取消', onPress: () => console.log('cancel') },
+                    { text: '确定', onPress: () => this.handleAcceptExchange(item.orderId) },
+                  ])
+                }
               >确认置换</Button>
+              : ''
+            }
           </div>
         );
         break;
@@ -363,8 +365,6 @@ class index extends Component {
     return (
       <div className={styles.orderList}>
         {orderList.map(item => {
-          console.log(item.state)
-          console.log(item.state === filterOrder)
           if(filterOrder == 0) {
 
             return (
@@ -398,16 +398,17 @@ class index extends Component {
                   实付款：<span className={`${styles.price} themeColor`}>￥5.o</span>
                 </div> */}
                 <div className={styles.contact}>
-                  {/* <sapn className={`iconfont icon-pinglun1`}></sapn>
+                  {/* <span className={`iconfont icon-pinglun1`}></span>
                   联系卖家 */}
                 </div>
-                {
+                {/* {
                   this.renderBtnGroup(item.state,item)
-                }
+                } */}
+                <BtnGroup
+                orderInfo ={item}
+                history={this.props.history}
+                ></BtnGroup>
                 {/* <div className={styles.btnGroup}>
-                <Button type='default' className={styles.concealCollect}  size='small'>查看物流</Button>
-                <Button type='warning' className={styles.concealCollect}  size='small'>确认收货</Button>
-                <Button type='warning' className={styles.concealCollect}  size='small'>评价</Button>
                 </div> */}
               </div>
             </div> )
@@ -443,7 +444,7 @@ class index extends Component {
                   实付款：<span className={`${styles.price} themeColor`}>￥5.o</span>
                 </div> */}
                 <div className={styles.contact}>
-                  {/* <sapn className={`iconfont icon-pinglun1`}></sapn>
+                  {/* <span className={`iconfont icon-pinglun1`}></span>
                   联系卖家 */}
                 </div>
                 {

@@ -84,7 +84,6 @@ export default {
     *filterGoodList({ payload }, { call, put,select}) {
       const reqParams = payload || {};
       const { data } = yield call(filterGoodList, reqParams);
-      // console.log(data);
       const thisData1 = yield select(state => state.home);
       const oldList = thisData1.searchCommodityList;
       const oldParams = thisData1.searchCommodityParams;

@@ -98,6 +98,18 @@ class index extends Component {
 
           }
           break;
+          case 'password2':
+            reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+            if(!reg.test(values[item])) {
+              this.setState({
+                msg: '密码必须大于7位并且包含一位大小写字母及数字'
+              })
+
+            }else {
+              flag++;
+
+            }
+            break;
         case 'verifyCode':
           reg = /[0-9]{6}/;
           if(!reg.test(values[item])) {
@@ -111,7 +123,7 @@ class index extends Component {
           break;
       }
     });
-    if(flag ===3) {
+    if(flag ===4) {
       this.regiter();
     }else {
       return ;
@@ -119,17 +131,25 @@ class index extends Component {
   }
   regiter = () => {
     const { getFieldsValue } = this.props.form;
+    const {match:{params:{flag}}} = this.props;
     const values = getFieldsValue();
-    this.props.dispatch({
-      type: 'mine/register',
-      payload: {
-        ...values,
-      },
-      callback: (res)=> {
-        console.log(res);
-        goTo('/mine',this.props.history)
-      },
-    })
+    console.log(values.password);
+    console.log(values.password2);
+    if(values.password === values.password2) {
+      this.props.dispatch({
+        type: 'mine/updatePwd',
+        payload: {
+          ...values,
+        },
+        callback: (res)=> {
+          console.log(res);
+          goTo('/mine',this.props.history)
+        },
+      })
+    }else {
+      Toast.info('两次密码不一致');
+    }
+
   }
   renderLogin = () =>{
     const { getFieldProps } = this.props.form;
@@ -153,17 +173,27 @@ class index extends Component {
               />
               <span className={`${styles.btnVerify} themeColor ${codeFlag ? 'disableBtn' : 'ableBtn'}`} onClick={this.handleGetCode}>{hint}</span>
             </div>
-            <InputItem
+           <InputItem
               {...getFieldProps('password')}
               type="password"
-              placeholder="请输入密码"
+              placeholder="请输入新密码"
               className={'userName'}
             >
               <span className={'iconfont icon-iconfont17'} />
             </InputItem>
+            <InputItem
+              {...getFieldProps('password2')}
+              type="password"
+              placeholder="再次输入新密码"
+              className={'userName'}
+            >
+              <span className={'iconfont icon-iconfont17'} />
+            </InputItem>
+
+
             <p className={styles.info}>{msg}</p>
         </List>
-          <Button className={styles.submitBtn} onClick={this.validValue} >注册</Button>
+          <Button className={styles.submitBtn} onClick={this.validValue} >修改</Button>
       </div>
 
     )
@@ -174,13 +204,12 @@ class index extends Component {
         <div className={styles.closeBtn} onClick={()=> {this.props.history.goBack(-1)}}>
           <span className={`iconfont icon-guanbi ${styles.close}`}></span>
         </div>
-        <div className={styles.appTitle}>置换购</div>
+        <div className={styles.appTitle}>修改密码</div>
         <div className={styles.formWrap}>
           <div className={styles.titleWrap}>
-            <h2 className={styles.title}>亲，欢迎注册</h2>
-            <p className={styles.label}>已有账号，
+            {/* <p className={styles.label}>已有账号，
               <span className={styles.swtichBtn} onClick={()=>{goTo('login',this.props.history)}}>去登录</span>
-            </p>
+            </p> */}
           </div>
           {this.renderLogin()}
         </div>

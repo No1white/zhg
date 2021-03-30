@@ -1,19 +1,23 @@
+import { Toast } from 'antd-mobile';
 import React, { Component } from 'react'
 import goTo from '../../utils/goTo'
+import {connect} from 'dva';
 import storage from '../../utils/storage'
 import styles from './index.less'
-export default class index extends Component {
+class index extends Component {
   constructor(props) {
     super(props);
     const sUserInfo = storage.get('userInfo') || {};
-    console.log('mine');
-    console.log(sUserInfo);
+
     this.state = {
       userInfo: {
         userId: sUserInfo.userId ,
         nickName: sUserInfo.nickName,
-        avatar: `${sUserInfo.avatar || 'http://qn2pi0q2o.hn-bkt.clouddn.com/image/activity/avatar.png'}`, //此处设置默认头像
-        phone: sUserInfo.phone
+        avatar: `${sUserInfo.avatar || 'http://qqguw56d8.hn-bkt.clouddn.com/image/activity/avatar.jpg'}`, //此处设置默认头像
+        phone: sUserInfo.phone,
+        collectCount: 0,
+        attentionCount: 0,
+        brosingHistoryCount: 0,
       }
       // userInfo: {
       //   userId: '林5293656',
@@ -26,13 +30,60 @@ export default class index extends Component {
     }
   }
   componentDidMount(){
+    this.getCountAll();
+    this.getCountHistory();
+  }
+  authLogin = (url) => {
+    const userInfo = storage.get('userInfo') ||{};
+    if(JSON.stringify(userInfo) !== '{}'){
+      goTo(url,this.props.history)
+    }else {
+      return ;
+    }
+  }
+  getCountHistory= () => {
+    const historyGoodList = storage.get('historyGoodList') || [];
+    let brosingHistoryCount = 0;
+    historyGoodList.forEach(item => {
+      brosingHistoryCount = brosingHistoryCount + item.goodList.length;
+    })
+    this.setState({
+      brosingHistoryCount
+    })
+  }
+  getCountAll = () => {
+    const userInfo = storage.get('userInfo') ||{};
+    if(JSON.stringify(userInfo) !== '{}') {
+      this.props.dispatch({
+        type: 'mine/getCountAll',
+        payload: {
+          userId:userInfo.userId,
+        },
+        callback: result=>{
+          this.setState({
+            collectCount: result.collectCount,
+            attentionCount: result.attentionCount,
+          })
+        }
+      })
+    }
 
+  }
+  authLogin = (path) => {
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      Toast.info('您还没登录，请先登录');
+      return;
+    }else {
+      goTo(path,this.props.history);
+    }
   }
   renderUserInfo = ()=> {
     const userInfo = storage.get('userInfo') || {};
     const {autonym} = userInfo;
     const { avatar = 'image/activity/avatar.png' } = userInfo;
-    const {nickName,userId,collectNum =0,attentionNum =0, brosingHistoryNum = 0} = userInfo;
+    const {nickName,userId} = userInfo;
+    const {collectCount,attentionCount,brosingHistoryCount} = this.state;
     return (
       <div className={styles.userInfoWrap}>
         <div className={styles.settingIconWrap} onClick={()=>{goTo('/mine/settings',this.props.history)}}>
@@ -44,7 +95,7 @@ export default class index extends Component {
           <div className={`${styles.userName} ${JSON.stringify(userInfo) == '{}' ? 'hideEle' :'showEle' }`} >
             <p className={styles.userId}>
               {userId}
-              <sapn className={`${styles.label} ${autonym == '1' ? 'showEle' :'hideEle'}`} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}}>未实名</sapn>
+              <span className={`${styles.label} ${autonym == '1' ? 'showEle' :'hideEle'}`} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}}>未实名</span>
               <span className={`${styles.label} ${autonym != '1' ? 'showEle' :'hideEle'}`} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}} onClick={()=>{goTo('/mine/settings/autonym',this.props.history)}}>已实名</span>
             </p>
             <p className={styles.nickName}>昵称：{nickName}</p>
@@ -55,22 +106,22 @@ export default class index extends Component {
           </div>
         </div>
         <div className={styles.userStateBar}>
-          <div className={styles.batItem} onClick={()=>{goTo('mine/collect',this.props.history)}}>
-            <p className={styles.num}>{collectNum}</p>
+          <div className={styles.batItem} onClick={()=>{this.authLogin('mine/collect')}}>
+            <p className={styles.num}>{collectCount || 0}</p>
             <p className={styles.title}>收藏</p>
           </div>
-          <div className={styles.batItem}  onClick={()=>{goTo('mine/attention',this.props.history)}}>
-            <p className={styles.num}>{attentionNum}</p>
+          <div className={styles.batItem}  onClick={()=>{this.authLogin('mine/attention')}}>
+            <p className={styles.num}>{attentionCount || 0}</p>
             <p className={styles.title}>关注</p>
           </div>
           <div className={styles.batItem} onClick={()=>{goTo('mine/history',this.props.history)}}>
-            <p className={styles.num}>{brosingHistoryNum}</p>
+            <p className={styles.num}>{brosingHistoryCount}</p>
             <p className={styles.title}>历史浏览</p>
           </div>
-          <div className={styles.batItem}>
+          {/* <div className={styles.batItem}>
             <p className={styles.num}>7</p>
             <p className={styles.title}>收藏</p>
-          </div>
+          </div> */}
         </div>
       </div>
     )
@@ -83,13 +134,13 @@ export default class index extends Component {
             发布与卖出
           </h2>
           <div className={styles.info}>
-            <div className={styles.sale} onClick={()=>{goTo('mine/publish',this.props.history)}}>
+            <div className={styles.sale} onClick={()=>{this.authLogin('mine/publish')}}>
               <p  className={`iconfont icon-fabu ${styles.saleIcon}`}></p>
-              <p className={styles.saleFont}>我发布的 0</p>
+              <p className={styles.saleFont}>我发布的</p>
             </div>
-            <div className={styles.sale} onClick={()=>{goTo('mine/saled',this.props.history)}}>
+            <div className={styles.sale} onClick={()=>{this.authLogin('mine/saled')}}>
               <p className={`iconfont icon-fabu ${styles.saleIcon}`}></p>
-              <p className={styles.saleFont}>我卖出的 0</p>
+              <p className={styles.saleFont}>我卖出的</p>
             </div>
           </div>
         </div>
@@ -104,17 +155,17 @@ export default class index extends Component {
             我的订单
           </h2>
           <div className={styles.info}>
-            <div className={styles.order} onClick={()=>{goTo('mine/order',this.props.history)}}>
+            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/1')}}>
               <p  className={`iconfont icon-daifahuo ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>待发货</p>
             </div>
-            <div className={styles.order}>
+            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/2')}}>
               <p  className={`iconfont icon-wuliu ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>待收货</p>
             </div>
-            <div className={styles.order}>
+            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/3')}}>
               <p  className={`iconfont icon-pingjia ${styles.orderIcon}`}></p>
-              <p className={styles.orderFont}>评价</p>
+              <p className={styles.orderFont}>已完成</p>
             </div>
 
           </div>
@@ -132,3 +183,7 @@ export default class index extends Component {
     )
   }
 }
+const mapStateToProps = (state)=>({
+
+})
+export default connect(mapStateToProps)(index);

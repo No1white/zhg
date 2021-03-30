@@ -4,12 +4,31 @@
     padding:10px;
     display: flex;
     border-bottom: 2px solid #f2f2f2;
-    .img {
-      width: 50px;
-      height: 50px;
+
+    .userInfoContainer {
+      display: flex;
+      align-items: center;
+      .img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .btn {
+      border: 1px solid #f34336;
+      border-radius: 30px;
+      font-size: 15px;
+      margin-left: 10px;
+      margin-top: 5px;
+      width: 65px;
+      height: 35px;
+      line-height: 35px;
+      color: #f34336;
     }
     .userName {
+      font-size: 18px;
       margin-left: 20px;
+      margin-top: 3px;
     }
     .info {
       position: absolute;
@@ -79,11 +98,36 @@
       text-align: center;
       font-size: 16px;
       .like{
-        margin: 0px 10px;
+        margin: 0px 5px;
+        .bottomIcon{
+          font-size: 20px;
+          text-align: center;
+        }
         .font{
           font-size: 10px;
         }
       }
+      .collect{
+        margin: 5px 5px;
+        .bottomIcon{
+          font-size: 20px;
+          text-align: center;
+        }
+        .font{
+          font-size: 10px;
+        }
+      }
+      .contact {
+        margin: 5px 10px;
+        .bottomIcon{
+          font-size: 20px;
+          text-align: center;
+        }
+        .font{
+          font-size: 10px;
+        }
+      }
+
     }
     .submitBtn {
       .btn {

@@ -7,6 +7,7 @@ import ExchangeCommodity from './components/exchangeCommodity'
 import goTo from '../../utils/goTo'
 import storage from '@/utils/storage'
 import CommodityList from './components/CommodityList'
+import BtnGroup from '../components/BtnGroup'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -51,7 +52,6 @@ class index extends Component {
   componentDidMount() {
     const {match:{params}} = this.props;
     const { orderId = ''} = params;
-    console.log(this.props);
     const userInfo = storage.get('userInfo');
     this.props.dispatch({
       type: 'mine/getOrderDetail',
@@ -108,8 +108,6 @@ class index extends Component {
       }
     })
 
-    console.log(goodDetailInfo);
-    console.log(remark);
     let swapGoodId = '';
     let swap = 1;  //
     userGoodList.forEach(item => {
@@ -132,7 +130,6 @@ class index extends Component {
         addressId
       },
       callback:(res)=> {
-        console.log(this.props.history);
         window.location.href=res.url;
         // this.props.history.push('/'+res.url)
       }
@@ -228,14 +225,14 @@ class index extends Component {
   }
   renderAddress = () => {
     // const { userInfo } = this.state;
-    const { addressInfo } = this.props;
+    const { addressInfo ={}} = this.props;
     // let addressInfo =  {};
     return (
       <WingBlank>
 
         <div className={styles.addressWrap}>
           <div className={`${styles.addressIcon} `}>
-            <sapn className={`${styles.address} bgLinear iconfont icon-dizhi1`}></sapn>
+            <span className={`${styles.address} bgLinear iconfont icon-dizhi1`}></span>
           </div>
 
           <div className={styles.addressInfo} >
@@ -299,7 +296,6 @@ class index extends Component {
     // const {goodList = []} = this.state;
     const {goodInfo,orderInfo,history} = this.props;
     const {remark,checked}  =this.state;
-    console.log(goodInfo);
     return (
       <div className={styles.clearingWrap}>
         <List>

@@ -138,36 +138,39 @@ class index extends Component {
         const { location } = history;
         const { query = {} } = location;
         const { goodInfo = {}} = query;
-        // obj.imgList = this.state.files;
-        if(JSON.stringify(goodInfo) !== '{}') {
-          //edit
-          this.props.dispatch({
-            type: 'sale/editPublishGood',
-            payload: {
-              ...obj,
-              userId: userInfo.userId,
-              imgList: this.state.files,
-              swap: this.state.checked ? 1 : 0,
-              goodId: goodInfo.goodId,
-            },
-            callback: (res)=> {
-              goTo('/success',this.props.history,{msg: res.msg})
-            },
-          })
-        } else {
-          this.props.dispatch({
-            type: 'sale/publishGood',
-            payload: {
-              ...obj,
-              userId: userInfo.userId,
-              imgList: this.state.files,
-              swap: this.state.checked ? 1 : 0,
-            },
-            callback: (res)=> {
-              goTo('/success',this.props.history,{msg: res.msg})
-            },
-          })
-        }
+        utils.authLogin(userInfo,this.props.history,res=>{
+                  // obj.imgList = this.state.files;
+          if(JSON.stringify(goodInfo) !== '{}') {
+            //edit
+            this.props.dispatch({
+              type: 'sale/editPublishGood',
+              payload: {
+                ...obj,
+                userId: userInfo.userId,
+                imgList: this.state.files,
+                swap: this.state.checked ? 1 : 0,
+                goodId: goodInfo.goodId,
+              },
+              callback: (res)=> {
+                goTo('/success',this.props.history,{msg: res.msg})
+              },
+            })
+          } else {
+            this.props.dispatch({
+              type: 'sale/publishGood',
+              payload: {
+                ...obj,
+                userId: userInfo.userId,
+                imgList: this.state.files,
+                swap: this.state.checked ? 1 : 0,
+              },
+              callback: (res)=> {
+                goTo('/success',this.props.history,{msg: res.msg})
+              },
+            })
+          }
+        });
+
       }
       else {
 

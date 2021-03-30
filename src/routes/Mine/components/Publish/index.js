@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 20:57:17
- * @LastEditTime: 2021-02-23 17:11:08
+ * @LastEditTime: 2021-03-16 15:38:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Publish\index.js
@@ -41,6 +41,14 @@ class index extends Component {
       }
     })
   }
+  saleOut = (goodInfo)=>{
+    this.props.dispatch({
+      type:'sale/saleOut',
+      payload:{
+        goodId:goodInfo.goodId,
+      }
+    })
+  }
   renderPublishList = () => {
     const { publishGoodList = [],BASE_URL } = this.props;
     console.log(publishGoodList);
@@ -66,7 +74,7 @@ class index extends Component {
               </div>
 
               <div className={styles.btnWrap}>
-                <Button type='default' className={styles.concealCollect}  size='small'>下架</Button>
+                <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.saleOut(item)}>下架</Button>
                 <Button type='warning' className={styles.concealCollect}  size='small' onClick={()=>{this.goToEdit(item)}}>编辑</Button>
               </div>
             </div>

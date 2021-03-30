@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 21:27:06
- * @LastEditTime: 2021-02-23 19:08:11
+ * @LastEditTime: 2021-03-22 21:56:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Saled\index.js
@@ -34,7 +34,7 @@ class index extends Component {
     this.props.history.push(`/commodityDetail/${goodId}`)
   }
   renderSaledList = () => {
-    const { saledGoodList } = this.props;
+    const { saledGoodList=[] } = this.props;
     return (
       <div className={styles.saledList}>
         {

@@ -1,7 +1,18 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-16 16:50:43
+ * @LastEditTime: 2021-03-22 11:07:39
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ *
+ * @FilePath: \react-shop-admin-masterf:\zhg\zhg\src\routes\Mine\components\Attention\index.js
+ */
 import React, { Component } from 'react'
-import {WingBlank,Button} from 'antd-mobile'
+import {WingBlank,Button,Toast} from 'antd-mobile'
 import NavBar from '../../../AddressMange/Components/NavBar'
 import styles from './index.less'
+import { connect} from 'dva';
+import storage from '../../../../utils/storage';
 
 // 收藏夹
 class index extends Component {
@@ -11,19 +22,65 @@ class index extends Component {
 
     }
   }
+  componentDidMount(){
+    this.getAttentionListInfo();
+  }
+
+  getAttentionListInfo = () => {
+    const userInfo = storage.get('userInfo');
+    this.props.dispatch({
+      type:'mine/getAttentionListInfo',
+      payload: {
+        userId:userInfo.userId
+      }
+    })
+  }
+  concealAttention = (sellerId) => {
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录');
+      return;
+    }
+    this.props.dispatch({
+      type:'goodDetail/attentionUser',
+      payload: {
+        sellerId,
+        userId:userInfo.userId,
+        attentionFlag:true,
+      },
+      callback: result => {
+        this.getAttentionListInfo();
+      }
+    })
+  }
+  goToSellerInfo = (userId) => {
+    this.props.history.push(`/seller/${userId}`)
+  }
   renderAttentionList = () => {
+    const {attentionListInfo=[]} = this.props;
     return (
       <div className={styles.attentionList}>
-        <div className={styles.attentionItem}>
-          <div className={styles.userInfo}>
-            <img className={styles.avatar} src={'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1587601794,489963968&fm=11&gp=0.jpg'}></img>
-            <sapn className={styles.userName}>昵称123123123</sapn>
-            <Button type={'default'} className={`${styles.concealAttention} themeColor`}  size='small' >取消收藏</Button>
-            {/* <span className={`${styles.price} themeColor`}>￥700</span> */}
-          </div>
+        {
+          attentionListInfo.map(item => {
+            return (
+              <div className={styles.attentionItem} key={item.userId}>
+                <div className={styles.userInfo}>
+                  <div className={styles.userInfoContainer} onClick={()=>this.goToSellerInfo(item.userId)}>
+                    <img className={styles.avatar} src={item.avatar}></img>
+                    <span className={styles.userName}>昵称:{item.nickName}</span>
+                  </div>
+                  <Button
+                    type={'default'}
+                    className={`${styles.concealAttention} themeColor`}
+                    size='small'
+                    onClick={()=>this.concealAttention(item.userId)}>取消关注</Button>
+                  {/* <span className={`${styles.price} themeColor`}>￥700</span> */}
+                </div>
 
-        </div>
-
+              </div>
+            )
+          })
+        }
       </div>
     )
   }
@@ -38,4 +95,7 @@ class index extends Component {
     )
   }
 }
-export default index
+const  mapStateToProps = (state)=>({
+  attentionListInfo: state.mine.attentionListInfo,
+})
+export default connect(mapStateToProps)(index)

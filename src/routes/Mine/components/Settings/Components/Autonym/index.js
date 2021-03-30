@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-20 21:15:18
+ * @LastEditTime: 2021-03-22 12:33:32
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \zhg\src\routes\Mine\components\Settings\Components\Autonym\index.js
+ */
 import React, { Component } from 'react'
 import { List, InputItem, WhiteSpace, Button } from 'antd-mobile';
 import { createForm } from 'rc-form';
@@ -44,6 +52,18 @@ class index extends Component {
             >
               <span className={'iconfont icon-iconfontwo'} />
             </InputItem>
+            <InputItem
+              {...getFieldProps('aliPayId')}
+              placeholder="请输入支付宝Uid"
+              className={'userName'}
+            >
+              <span className={'iconfont icon-zhifu-01'} />
+            </InputItem>
+            <div className={styles.info}>
+              <p className={styles.textMsg}>例如:2088621955303871</p>
+              <p className={styles.textMsg}>UID极为重要,用于收付款</p>
+              <p className={styles.textMsg}>后续可在个人中心设置</p>
+            </div>
         </List>
           <Button className={styles.submitBtn} onClick={this.autonym}>认证</Button>
       </div>

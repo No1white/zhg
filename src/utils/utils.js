@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-24 19:24:54
- * @LastEditTime: 2021-01-24 19:52:12
+ * @LastEditTime: 2021-03-29 11:26:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\utils\utils.js
@@ -13,6 +13,8 @@
  * @param {Object} obj  getValueFromObjectArr
  * @return {Object} rObj
  */
+import {Toast} from 'antd-mobile'
+import goTo from './goTo'
 const getValueFromObjectArr = (obj)=> {
   const rObj = {};
   Object.keys(obj).forEach(item => {
@@ -27,6 +29,22 @@ const getValueFromObjectArr = (obj)=> {
   return rObj
 }
 
+const authLogin = (obj,history,callback)=> {
+  console.log(obj);
+  console.log(history);
+  if(JSON.stringify(obj) === '{}') {
+    Toast.info('您还未登录');
+    goTo('/mine/login',history);
+    return ;
+  }else if(obj.autonym === 1) {
+    Toast.info('您还未实名,请先实名');
+    goTo('/mine/settings/autonym',history);
+    return ;
+  }else {
+    callback();
+  }
+}
 export default {
-  getValueFromObjectArr
+  getValueFromObjectArr,
+  authLogin
 }

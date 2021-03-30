@@ -20,8 +20,6 @@ export default class index extends Component {
    render() {
 
     const {goodInfo={},goodList} = this.props;
-    console.log(goodInfo);
-    console.log(goodList);
     return (
       <div className={styles.goodListWrap} >
         <div className={styles.goodList}>
@@ -41,15 +39,15 @@ export default class index extends Component {
                 <div className={`${styles.dealList}`}>
                   <div className={`${styles.dealItem}`}>
                     <span className={`${styles.title} ${styles.flex1}`}>交易方式</span>
-                    <sapn className={`${styles.content} ${styles.flex1}`}>普通配送</sapn>
-                    <div className={`value ${styles.flex1}`}>快递<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+                    <span className={`${styles.content} ${styles.flex1}`}>普通配送</span>
+                    <div className={`value ${styles.flex1}`}>快递<span className={'iconfont  icon-jiantou1'}></span></div>
                   </div>
                 </div>
                 <div className={`${styles.dealList}`}>
                   <div className={`${styles.dealItem}`}>
                     <span className={`${styles.title} ${styles.flex1}`}>配送方式</span>
-                    <sapn className={`${styles.content} ${styles.flex1}`}>普通配送</sapn>
-                    <div className={`value ${styles.flex1}`}>快递<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+                    <span className={`${styles.content} ${styles.flex1}`}>普通配送</span>
+                    <div className={`value ${styles.flex1}`}>快递<span className={'iconfont  icon-jiantou1'}></span></div>
                   </div>
                 </div>
                 <div className={`${styles.dealList}`}>
@@ -66,7 +64,7 @@ export default class index extends Component {
               </div>
               <div className={styles.totalWrap}>
                 <div className={styles.total}>
-                  <sapn className={styles.num}>共计1件</sapn>
+                  <span className={styles.num}>共计1件</span>
                   <span className={`${styles.price} themeColor`}>￥69.00</span>
                 </div>
               </div>
@@ -112,15 +110,15 @@ export default class index extends Component {
   //               <div className={`${styles.dealList}`}>
   //                 <div className={`${styles.dealItem}`}>
   //                   <span className={`${styles.title} ${styles.flex1}`}>交易方式</span>
-  //                   <sapn className={`${styles.content} ${styles.flex1}`}>普通配送</sapn>
-  //                   <div className={`value ${styles.flex1}`}>快递<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+  //                   <span className={`${styles.content} ${styles.flex1}`}>普通配送</span>
+  //                   <div className={`value ${styles.flex1}`}>快递<span className={'iconfont  icon-jiantou1'}></span></div>
   //                 </div>
   //               </div>
   //               <div className={`${styles.dealList}`}>
   //                 <div className={`${styles.dealItem}`}>
   //                   <span className={`${styles.title} ${styles.flex1}`}>配送方式</span>
-  //                   <sapn className={`${styles.content} ${styles.flex1}`}>普通配送</sapn>
-  //                   <div className={`value ${styles.flex1}`}>快递<sapn className={'iconfont  icon-jiantou1'}></sapn></div>
+  //                   <span className={`${styles.content} ${styles.flex1}`}>普通配送</span>
+  //                   <div className={`value ${styles.flex1}`}>快递<span className={'iconfont  icon-jiantou1'}></span></div>
   //                 </div>
   //               </div>
   //               <div className={`${styles.dealList}`}>
@@ -137,7 +135,7 @@ export default class index extends Component {
   //             </div>
   //             <div className={styles.totalWrap}>
   //               <div className={styles.total}>
-  //                 <sapn className={styles.num}>共计1件</sapn>
+  //                 <span className={styles.num}>共计1件</span>
   //                 <span className={`${styles.price} themeColor`}>￥69.00</span>
   //               </div>
   //             </div>

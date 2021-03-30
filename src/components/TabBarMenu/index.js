@@ -75,7 +75,7 @@ export default class index extends Component {
               <div className={styles.labels}>
                 {labels.map(item => {
                   return (
-                    <sapn className={styles.label}>{item.label}</sapn>
+                    <span className={styles.label}>{item.label}</span>
                   )
                 })}
               </div>
@@ -88,7 +88,7 @@ export default class index extends Component {
                   // {...getFieldProps('preice')}
                   placeholder="最低价"
                 ></InputItem>
-                <sapn>-</sapn>
+                <span>-</span>
                 <InputItem
                   // {...getFieldProps('preice')}
                   className={styles.input}
@@ -101,7 +101,7 @@ export default class index extends Component {
               <div className={styles.labels}>
               {timeLabels.map(item => {
                   return (
-                    <sapn className={styles.label}>{item.label}</sapn>
+                    <span className={styles.label}>{item.label}</span>
                   )
                 })}
               </div>
@@ -156,7 +156,7 @@ export default class index extends Component {
                     onClick={()=>{this.filterChoice(item.key)}}>
                       {item.title}
                       {item.child.length>0
-                        ? <sapn className={'iconfont icon-jiantou2'}></sapn>
+                        ? <span className={'iconfont icon-jiantou2'}></span>
                         : ''
                       }
                   </div>
@@ -168,7 +168,7 @@ export default class index extends Component {
             onClick={this.openDrawer}
             >
               筛选
-              <sapn className={'iconfont icon-shaixuan'}></sapn>
+              <span className={'iconfont icon-shaixuan'}></span>
           </div>
 
         </div>

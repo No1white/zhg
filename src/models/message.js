@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-04 21:41:04
- * @LastEditTime: 2021-02-08 21:56:28
+ * @LastEditTime: 2021-03-12 19:47:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\models\message.js
@@ -16,8 +16,9 @@ import storage from '../utils/storage'
 const initState = {
   BASE_URL: 'http://qn2pi0q2o.hn-bkt.clouddn.com/',
   receiverInfo: {},
-  messageList: [],
   message: [],
+  messageList: [],
+
 }
 export default {
 
@@ -68,7 +69,6 @@ export default {
         });
     },
     *addMessage({ payload }, { call, put }) {
-      console.log(payload);
       yield put({
           type: 'save',
           payload: {
@@ -84,7 +84,9 @@ export default {
     },
     saveMessage(state, action) {
       let newState = JSON.parse(JSON.stringify(state));
-      newState.message.push(action.payload.message)
+      const message = newState.message || [];
+      message.push(action.payload.message);
+      newState.message = message
       return newState
     }
   }

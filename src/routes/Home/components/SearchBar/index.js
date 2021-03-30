@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 10:49:13
- * @LastEditTime: 2021-02-22 20:02:52
- * @LastEditors: your name
+ * @LastEditTime: 2021-03-22 10:07:37
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\SearchBar\index.js
  */
@@ -30,7 +30,6 @@ export default class index extends Component {
       })
     };
     const onChange = (data) => {
-      console.log(data);
       if(timeOut) {
         clearTimeout(timeOut)
       }

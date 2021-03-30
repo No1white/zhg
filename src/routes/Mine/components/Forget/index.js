@@ -121,13 +121,13 @@ class index extends Component {
     const { getFieldsValue } = this.props.form;
     const values = getFieldsValue();
     this.props.dispatch({
-      type: 'mine/register',
+      type: 'mine/forget',
       payload: {
         ...values,
       },
       callback: (res)=> {
         console.log(res);
-        goTo('/mine',this.props.history)
+        goTo('/mine/login',this.props.history)
       },
     })
   }
@@ -163,7 +163,7 @@ class index extends Component {
             </InputItem>
             <p className={styles.info}>{msg}</p>
         </List>
-          <Button className={styles.submitBtn} onClick={this.validValue} >注册</Button>
+          <Button className={styles.submitBtn} onClick={this.validValue} >修改密码</Button>
       </div>
 
     )

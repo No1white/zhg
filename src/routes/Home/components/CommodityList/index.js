@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 17:30:20
- * @LastEditTime: 2021-03-10 19:19:19
+ * @LastEditTime: 2021-03-21 13:47:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\CommodityList\index.js
@@ -35,11 +35,8 @@ export default class index extends Component {
     };
   }
   throttle =(func, wait) =>{
-    console.log('节流函数中');
     // let lastTime = null;// 为了避免每次调用lastTime都被清空，利用js的闭包返回一个function;此外声明为全局变量也可以
     return function() {
-      console.log(lastTime);
-        console.log(now - lastTime - wait > 0);
         let now = new Date();
         // 如果上次执行的时间和这次触发的时间大于一个执行周期，则执行
         if (now - lastTime - wait > 0) {
@@ -55,17 +52,14 @@ export default class index extends Component {
     let now = new Date();
     if(this.props.hasMore) {
       this.props.addPage();
-      console.log('节流开始');
       this.props.getCommodityList(this.props.page+1);
       // this.throttle(()=>{
-      //   console.log('节流结束');
       //   this.props.addPage();
       //   this.props.getCommodityList(this.props.page+1);
       // },500)();
     }
   }
   goToDetail = (goodId) =>{
-    // console.log(this.props);
     // this.props.history.push()
     this.props.history.push(`/commodityDetail/${goodId}`)
   }

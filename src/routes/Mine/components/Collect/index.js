@@ -1,7 +1,18 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-12 20:15:11
+ * @LastEditTime: 2021-03-29 16:53:14
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \react-shop-admin-masterf:\zhg\zhg\src\routes\Mine\components\Collect\index.js
+ */
 import React, { Component } from 'react'
-import {WingBlank,Button} from 'antd-mobile'
+import {WingBlank,Button,Toast} from 'antd-mobile'
+import {connect} from 'dva';
+import goTo from '@/utils/goTo'
 import NavBar from '../../../AddressMange/Components/NavBar'
 import styles from './index.less'
+import storage from '../../../../utils/storage';
 
 // 收藏夹
 class index extends Component {
@@ -11,54 +22,82 @@ class index extends Component {
 
     }
   }
+  componentDidMount(){
+    this.getCollectListInfo();
+  }
+  getCollectListInfo = () => {
+    const userInfo = storage.get('userInfo');
+    this.props.dispatch({
+      type:'mine/getCollectListInfo',
+      payload:{
+        userId:userInfo.userId,
+      }
+    })
+  }
+  handleCollect = (goodId) => {
+    const userInfo = storage.get('userInfo')||{};
+    if(!userInfo.userId) {
+      Toast.info('您还未登录，请先登录');
+      return;
+    }
+    this.props.dispatch({
+      type:'goodDetail/collectGood',
+      payload: {
+        goodId,
+        userId:userInfo.userId,
+        collectFlag:true,
+      },
+      callback: result => {
+        this.getCollectListInfo();
+      }
+    })
+  }
+  goToDetail = (goodId) =>{
+    // this.props.history.push()
+    this.props.history.push(`/commodityDetail/${goodId}`)
+  }
   renderCollectList = () => {
+    const {collectListInfo=[]} = this.props;
     return (
       <div className={styles.collectList}>
-        <div className={styles.collectItem}>
-          <div className={styles.userInfo}>
-            <img className={styles.avatar} src={'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1587601794,489963968&fm=11&gp=0.jpg'}></img>
-            <sapn className={styles.userName}>昵称123123123</sapn>
-            <span className={`${styles.price} themeColor`}>￥700</span>
-          </div>
-          <div className={styles.goodInfo}>
-            <div className={styles.imgList}>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-            </div>
-            <div className={styles.goodTitle}>
-              '小米8 64g 64gb'
-            </div>
-          </div>
-          <div className={styles.btnWrap}>
-            <div></div>
-            <Button className={styles.concealCollect}  size='small' icon={<span className={'iconfont icon-collection'}></span>}>取消收藏</Button>
-          </div>
-        </div>
-        <div className={styles.collectItem}>
-          <div className={styles.userInfo}>
-            <img className={styles.avatar} src={'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1587601794,489963968&fm=11&gp=0.jpg'}></img>
-            <sapn className={styles.userName}>昵称123123123</sapn>
-            <span className={`${styles.price} themeColor`}>￥700</span>
-          </div>
-          <div className={styles.goodInfo}>
-            <div className={styles.imgList}>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-              <img className={styles.imgItem} src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx1.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jwjhikj20p00p0q4l.jpg&refer=http%3A%2F%2Fwx1.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613101033&t=74ba277221fa436673ac595d9119ae39'></img>
-            </div>
-            <div className={styles.goodTitle}>
-              '小米8 64g 64gb'
-            </div>
-          </div>
-          <div className={styles.btnWrap}>
-            <Button className={styles.concealCollect}  size='small' icon={<span className={'iconfont icon-collection'}></span>}>取消收藏</Button>
-          </div>
-        </div>
+        {
+          collectListInfo.map(item => {
+            return (
+              <div className={styles.collectItem} key={item.goodId}>
+                <div className={styles.userInfo}>
+
+                  <img className={styles.avatar} src={item.avatar}></img>
+                  <span className={styles.userName}>{item.nickName}</span>
+                  <span className={`${styles.price} themeColor`}>￥{item.price}</span>
+                </div>
+                <div className={styles.goodInfo} onClick={()=>this.goToDetail(item.goodId)}>
+                  <div className={styles.goodTitle}>
+                    {item.title}
+                  </div>
+                  <div className={styles.imgList}>
+                    {
+                      item.imgList.map((imgItem,imgIndex)=>{
+                        return(
+                          <img className={styles.imgItem} src={imgItem} key={imgIndex}></img>
+                        )
+                      })
+                    }
+
+                  </div>
+
+                </div>
+                <div className={styles.btnWrap}>
+                  <div></div>
+                  <Button
+                  className={styles.concealCollect}
+                  size='small'
+                  icon={<span className={'iconfont icon-collection'}></span>}
+                  onClick={()=>this.handleCollect(item.goodId)}>取消收藏</Button>
+                </div>
+              </div>
+            )
+          })
+        }
       </div>
     )
   }
@@ -73,4 +112,7 @@ class index extends Component {
     )
   }
 }
-export default index
+const mapStateToProps = (state)=>({
+  collectListInfo: state.mine.collectListInfo,
+});
+export default connect(mapStateToProps)(index)

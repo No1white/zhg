@@ -1,0 +1,16 @@
+.btnGroupWrap .btnGroupContainer .btnGroup {
+  display: flex;
+}
+.btnGroupWrap .btnGroupContainer .btnGroup .concealCollect {
+  margin-left: 5px;
+}
+.btnGroupWrap .btnGroupContainer .btnGroup .info {
+  color: red;
+}
+.btnGroupWrap .btnGroupContainer .btnGroup .btn {
+  display: flex;
+  justify-content: space-between;
+}
+.btnGroupWrap .btnGroupContainer .btnGroup .conceal {
+  margin-right: 5px;
+}

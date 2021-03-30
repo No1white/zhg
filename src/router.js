@@ -56,9 +56,24 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Mine/components/Login'),
     loading: Loading,
   });
+  // 忘记密码
+  const ForgetPage = Loadable({
+    loader: () => import('./routes/Mine/components/Forget'),
+    loading: Loading,
+  });
   // 注册页面
   const RegisterPage = Loadable({
     loader: () => import('./routes/Mine/components/Register'),
+    loading: Loading,
+  });
+  // 修改密码页面
+  const UpdatePwdPage = Loadable({
+    loader: () => import('./routes/Mine/components/UpdatePwd'),
+    loading: Loading,
+  });
+  // 修改手机号页面
+  const UpdatePhonePage = Loadable({
+    loader: () => import('./routes/Mine/components/UpdatePhone'),
     loading: Loading,
   });
   // 设置页面
@@ -127,16 +142,17 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Message/Components/SendMessage'),
     loading: Loading,
   });
-  // 发送消息
+  // 聊天页面
   const chatPage = Loadable({
     loader: () => import('./routes/Message/Chart.js'),
     loading: Loading,
   });
-  // 发送消息
+  // 卖家详细信息
   const SellerInfo = Loadable({
     loader: () => import('./routes/SellerInfo/index'),
     loading: Loading,
   });
+
   const goTo = (url) => {
     history.push(url)
   }
@@ -163,19 +179,28 @@ function RouterConfig({ history }) {
         {/* 已卖出 */}
         <Route path='/mine/saled' exact component={SaledPage} />
         {/* 订单页面 */}
-        <Route path='/mine/order' exact component={OrderPage} />
+        <Route path='/mine/order/:tabPage' exact component={OrderPage} />
+        {/* 修改密码 */}
+        <Route path='/mine/updatePwd' exact component={UpdatePwdPage} />
+        {/* 修改手机号码 */}
+        <Route path='/mine/updatePhone' exact component={UpdatePhonePage} />
         {/* 登录页面 */}
         <Route path="/mine/login" exact component={LoginPage} />
         {/* 设置页面 */}
         <Route path='/mine/settings' exact component={settingsPage} />
+        {/* 忘记密码 */}
+        <Route path='/mine/forget' exact component={ForgetPage} />
         {/* 修改用户信息 */}
         <Route path='/mine/settings/alterUserInfo' exact component={alterUserInfoPage} />
         {/* 实名认证页面 */}
         <Route path="/mine/settings/autonym" exact component={autonymPage} />
         {/* 注册页面 */}
         <Route path="/mine/register" exact component={RegisterPage} />
+        {/* 商品详细页面 */}
         <Route path='/commodityDetail/:goodId' exact component={CommodityPage} />
+        {/* 搜索页面 */}
         <Route path='/search/:word' exact component={SearchPage2} />
+        {/* 发布闲置 */}
         <Route path='/sale' exact component={SalePage} />
         <Route path='/clearing/:goodId' exact component={ClearingPage} />
         <Route path='/orderSuccess' exact component={ClearingSuccessPage} />

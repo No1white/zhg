@@ -16,6 +16,23 @@
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
   }
+  .verifyCodeInput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    .inputIcon {
+    }
+    .verifyInput {
+      text-indent: 60px;
+      flex:1;
+    }
+    .btnVerify {
+      flex: 1;
+      text-align: center;
+    }
+
+  }
   .formWrap {
     position: absolute;
     width: 95%;
@@ -25,6 +42,7 @@
     .titleWrap {
       .title {
         font-weight: 400;
+        color: #fe5102;
       }
       .label{
         color:rgba(0,0,0,0.3);
@@ -33,10 +51,6 @@
         }
       }
 
-    }
-    .forgetPassword {
-      color: #ff6f08;
-      text-align: right;
     }
     .operateWrap{
       .form {

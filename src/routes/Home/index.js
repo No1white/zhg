@@ -161,7 +161,7 @@ class index extends Component {
               />
           </div>
         </div>
-        <TabBar tabs={tabs} handleTabClick={this.handleTabClick} renderContent={this.renderContent} />
+        <TabBar history={this.props.history} tabs={tabs} handleTabClick={this.handleTabClick} renderContent={this.renderContent} />
       </div>
     );
   }

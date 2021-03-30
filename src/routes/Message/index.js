@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 19:44:25
- * @LastEditTime: 2021-02-19 19:15:05
+ * @LastEditTime: 2021-03-21 13:49:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\index.js
@@ -22,7 +22,7 @@ class index extends Component {
     }
   }
   componentDidMount() {
-    const userInfo = storage.get('userInfo');
+    const userInfo = storage.get('userInfo')||{};
     this.props.dispatch({
       type:'message/getMessageList',
       payload: {

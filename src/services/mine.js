@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 20:51:22
- * @LastEditTime: 2021-03-06 18:33:33
+ * @LastEditTime: 2021-03-22 11:22:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\services\mine.js
@@ -25,6 +25,10 @@ export const register = (params) => {
   return request.post(getPath('/api/mine/register'),params);
 };
 
+// 忘记密码
+export const forget = (params) => {
+  return request.post(getPath('/api/mine/forget'),params);
+};
 //登录
 export const login = (params) => {
   return request.post(getPath('/api/mine/login'),params);
@@ -106,4 +110,36 @@ export const acceptReFound= (params) => {
 export const changeUserInfo= (params) => {
   return request.post(getPath('/api/mine/changeUserInfo'),params);
 };
+// 取消订单
+export const concealOrder= (params) => {
+  return request.post(getPath('/api/mine/concealOrder'),params);
+};
+// 删除订单
+export const delOrder= (params) => {
+  return request.post(getPath('/api/mine/delOrder'),params);
+};
+// 填写支付宝id
+export const fillAliPayId= (params) => {
+  return request.get(getPath('/api/mine/fillAliPayId'),params);
+};
 
+// 修改密码
+export const updatePwd= (params) => {
+  return request.post(getPath('/api/mine/updatePwd'),params);
+};
+// 修改手机号
+export const updatePhone= (params) => {
+  return request.post(getPath('/api/mine/updatePhone'),params);
+};
+// 获取收藏列表
+export const getCollectListInfo= (params) => {
+  return request.post(getPath('/api/mine/getCollectListInfo'),params);
+};
+// 获取关注的人
+export const getAttentionListInfo= (params) => {
+  return request.post(getPath('/api/mine/getAttentionListInfo'),params);
+};
+// 获取Count
+export const getCountAll= (params) => {
+  return request.get(getPath('/api/mine/getCountAll'),params);
+};

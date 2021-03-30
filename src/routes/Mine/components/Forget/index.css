@@ -17,6 +17,20 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.userPageWrap .verifyCodeInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+}
+.userPageWrap .verifyCodeInput .verifyInput {
+  text-indent: 60px;
+  flex: 1;
+}
+.userPageWrap .verifyCodeInput .btnVerify {
+  flex: 1;
+  text-align: center;
+}
 .userPageWrap .formWrap {
   position: absolute;
   width: 95%;
@@ -32,10 +46,6 @@
 }
 .userPageWrap .formWrap .titleWrap .label .swtichBtn {
   color: #fe5102;
-}
-.userPageWrap .formWrap .forgetPassword {
-  color: #ff6f08;
-  text-align: right;
 }
 .userPageWrap .formWrap .operateWrap .form .info {
   color: red;

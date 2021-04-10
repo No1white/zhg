@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-24 16:42:27
- * @LastEditTime: 2021-03-30 20:07:55
+ * @LastEditTime: 2021-04-10 18:36:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\BtnGroup\index.js
@@ -321,6 +321,9 @@ class index extends Component {
         );
         break;
       case 3:
+        console.log(item.seller !== userInfo.userId);
+        console.log(item);
+        console.log(item.swap ===0 && item.swapGoodId !== '');
         btnGroup = (
           <div className={styles.btnGroup}>
             {item.seller !== userInfo.userId
@@ -330,8 +333,9 @@ class index extends Component {
             <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item)}} >查看物流</Button>
             {/* <Button type='primary' className={styles.concealCollect}  size='small' onClick={()=>{this.comfirmGood(item.orderId)}}>确认收货</Button> */}
             {
-              item.seller !== userInfo.userId || item.swap ===0
-              ? <Button
+              item.seller !== userInfo.userId || item.swap ===0 && item.swapGoodId !== ''
+              ?
+              <Button
               type='primary' className={styles.concealCollect} size='small'
               onClick={() =>
                 alert('确认收货', '你确认收货？', [

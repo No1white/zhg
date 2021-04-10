@@ -46,6 +46,11 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Mine/components/Saled'),
     loading: Loading,
   });
+  // 下架商品
+  const SoldOutPage = Loadable({
+    loader: () => import('./routes/Mine/components/SaldOut'),
+    loading: Loading,
+  });
   // 订单页面
   const OrderPage = Loadable({
     loader: () => import('./routes/Mine/components/Order'),
@@ -178,6 +183,8 @@ function RouterConfig({ history }) {
         <Route path='/mine/publish' exact component={PublishPage} />
         {/* 已卖出 */}
         <Route path='/mine/saled' exact component={SaledPage} />
+        {/* 下架商品 */}
+        <Route path='/mine/soleOut' exact component={SoldOutPage} />
         {/* 订单页面 */}
         <Route path='/mine/order/:tabPage' exact component={OrderPage} />
         {/* 修改密码 */}

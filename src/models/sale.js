@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-24 19:54:33
- * @LastEditTime: 2021-03-22 10:07:30
+ * @LastEditTime: 2021-04-10 15:56:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\models\sale.js
@@ -45,7 +45,9 @@ export default {
     *saleOut({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(saleOut, reqParams);
-
+      if(data.code === 0) {
+        callback();
+      }
         // yield put({
         //   type: 'save',
         //   payload: {

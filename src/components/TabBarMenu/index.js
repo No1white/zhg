@@ -49,6 +49,9 @@ export default class index extends Component {
   onOpenChange = (...args) => {
     this.setState({ open: !this.state.open });
   }
+  handleReset = () => {
+    console.log('reset');
+  }
   sidebar = () => {
     const labels = [
       {label:  '全新', value: 'new'},
@@ -108,7 +111,7 @@ export default class index extends Component {
             </div>
         </List>
           <div className={styles.btnGroup}>
-            <Button className={styles.btn} type="default" inline size="larger" style={{ marginRight: '4px' }}>重置</Button>
+            <Button className={styles.btn} type="default" inline size="larger" style={{ marginRight: '4px' }} onClick={this.handleReset}>重置</Button>
             <Button className={styles.btn} type="primary" inline size="largar" style={{ marginRight: '4px' }}>确定</Button>
           </div>
       </div>

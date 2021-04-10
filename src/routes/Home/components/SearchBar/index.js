@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 10:49:13
- * @LastEditTime: 2021-03-22 10:07:37
+ * @LastEditTime: 2021-04-10 16:14:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\SearchBar\index.js
@@ -51,7 +51,7 @@ export default class index extends Component {
       <div className={styles.searchBar}>
         <div className={styles.search}>
             <AutoComplete
-            options={options}
+            // options={options}
             // style={{ width: 200 }}
             onSelect={onSelect}
             onSearch={onSearch}

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-01 19:10:55
- * @LastEditTime: 2021-02-28 17:39:44
+ * @LastEditTime: 2021-04-10 16:31:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\components\DropdownMenu\index.js
@@ -79,6 +79,7 @@ class index extends Component {
   }
   resetLabels = () => {
     const { labels, timeLabels} =this.state;
+    const { setFieldsValue } = this.props.form;
     labels.forEach(item => {
       item.checked = false;
     })
@@ -88,7 +89,10 @@ class index extends Component {
     this.setState({
       labels,
       timeLabels,
-    })
+      lowPrice:null,
+      highPrice:null,
+    });
+    setFieldsValue({lowPrice:0,highPrice:0,})
   }
   handleCheckLabel =(label,property) => {
     const labels = this.state[property];
@@ -103,6 +107,7 @@ class index extends Component {
       [property]: labels
     })
   }
+
   sidebarRender = () => {
     const {labels =[], timeLabels=[]} = this.state;
     const {getFieldProps} = this.props.form;
@@ -161,7 +166,8 @@ class index extends Component {
       <Menu style={{width:'100%'}}>
         {compositeList.map((item,index) => {
           return (
-            <Menu.Item key={index} danger={item.checked} onClick={()=>{this.setState({compositeLabel:item.label});onComposite(item.value)}}>
+            <Menu.Item key={index} danger={item.checked} onClick={()=>{
+              this.setState({compositeLabel:item.label});onComposite(item.value)}}>
               {item.label}
             </Menu.Item>
           )
@@ -207,16 +213,16 @@ class index extends Component {
         <Dropdown
           overlay={menu}
           overlayStyle={{width:'100%'}}
-
+          trigger={['click']}
           >
-          <a className={`${styles.menuItem} "ant-dropdown-link" themeColor`} >
+          <a className={`${styles.menuItem} "ant-dropdown-link" themeColor`}  >
             {compositeLabel}<span className={`icon-jiantou2 iconfont`}></span>
           </a>
         </Dropdown>
         <a className={`${styles.menuItem} "ant-dropdown-link" ${creditFlag ? 'themeColor' : ''}`} onClick={()=>{onCredit()}}>
           信用
         </a>
-        <Dropdown
+        {/* <Dropdown
           overlay={menu2}
           overlayStyle={{width:'100%'}}
         >
@@ -226,7 +232,7 @@ class index extends Component {
             }}>
             综合<span className={`icon-jiantou2 iconfont`}></span>
           </a>
-        </Dropdown>
+        </Dropdown> */}
         <a className={`${styles.menuItem} "ant-dropdown-link"`} onClick={this.openDrawer}>
             筛选<span className={`icon-shaixuan iconfont`}></span>
         </a>

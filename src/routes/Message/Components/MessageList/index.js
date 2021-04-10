@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 19:49:14
- * @LastEditTime: 2021-02-07 20:42:56
+ * @LastEditTime: 2021-04-10 16:54:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\Components\MessageList\index.js
@@ -68,7 +68,7 @@ class index extends Component {
           <p className={styles.timer}>{row.createTime}</p>
         </div>
         <div className={styles.messageNum}>
-          <Badge text={row.unreadNum} overflowCount={55} />
+          {/* <Badge text={row.unreadNum} overflowCount={55} /> */}
         </div>
 
       </div>

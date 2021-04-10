@@ -14,45 +14,45 @@ class index extends Component {
   }
 
   validValue = ()=>{
-    // let reg = '';
-    // let flag= 0;
-    // const { getFieldsValue } = this.props.form;
-    // const values = getFieldsValue();
-    // Object.keys(values).forEach(item =>{
-    //   // eslint-disable-next-line default-case
-    //   switch(item) {
-    //     case 'phone':
-    //       reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
-    //       if(!reg.test(values[item])) {
-    //         this.setState({
-    //           msg: '输入手机号格式错误'
-    //         });
+    let reg = '';
+    let flag= 0;
+    const { getFieldsValue } = this.props.form;
+    const values = getFieldsValue();
+    Object.keys(values).forEach(item =>{
+      // eslint-disable-next-line default-case
+      switch(item) {
+        case 'phone':
+          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '输入手机号格式错误'
+            });
 
-    //       }else {
-    //         flag++;
+          }else {
+            flag++;
 
-    //       }
-    //       break;
-    //     case 'password':
-    //       reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
-    //       if(!reg.test(values[item])) {
-    //         this.setState({
-    //           msg: '密码必须大于7位并且包含一位大小写字母及数字'
-    //         })
+          }
+          break;
+        case 'password':
+          reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+          if(!reg.test(values[item])) {
+            this.setState({
+              msg: '密码必须大于7位并且包含一位大小写字母及数字'
+            })
 
-    //       }else {
-    //         flag++;
+          }else {
+            flag++;
 
-    //       }
-    //       break;
-    //   }
-    // });
-    // if(flag ===2) {
-    //   this.login();
-    // }else {
-    //   return ;
-    // }
-    this.login()
+          }
+          break;
+      }
+    });
+    if(flag ===2) {
+      this.login();
+    }else {
+      return ;
+    }
+    // this.login()
   }
   goToForGet = ()=>{
     goTo('/mine/forget',this.props.history);

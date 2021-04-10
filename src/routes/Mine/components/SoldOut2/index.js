@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 20:57:17
- * @LastEditTime: 2021-04-10 16:00:55
+ * @LastEditTime: 2021-04-10 15:12:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Publish\index.js
@@ -12,7 +12,6 @@ import { connect } from 'dva';
 import storage from '@/utils/storage'
 import NavBar from '../../../AddressMange/Components/NavBar'
 import styles from './index.less'
-import goTo from '../../../../utils/goTo';
 
 // 收藏夹
 class index extends Component {
@@ -24,10 +23,9 @@ class index extends Component {
   componentDidMount() {
     const userInfo = storage.get('userInfo');
     this.props.dispatch({
-      type: 'mine/getPublishGoodList',
+      type: 'mine/getSoldList',
       payload: {
         userId: userInfo.userId,
-        saleState: 1,
       }
     });
 
@@ -48,14 +46,10 @@ class index extends Component {
       type:'sale/saleOut',
       payload:{
         goodId:goodInfo.goodId,
-        saleState:2,
-      },
-      callback: res=> {
-        window.location.reload();
       }
     })
   }
-  renderPublishList = () => {
+  renderSoldOut = () => {
     const { publishGoodList = [],BASE_URL } = this.props;
     console.log(publishGoodList);
     console.log(this.props);
@@ -131,19 +125,12 @@ class index extends Component {
       </div>
     )
   }
-  renderRight = () => {
-    return (
-      <div>
-        <p onClick={()=>goTo('/mine/soleOut',this.props.history)}>下架列表</p>
-      </div>
-    )
-  }
   render() {
     return (
 
         <div className={styles.publishWrap}>
-          <NavBar history={this.props.history} title={'我发布的'} renderRight={this.renderRight}></NavBar>
-          {this.renderPublishList()}
+          <NavBar history={this.props.history} title={'下架商品'}></NavBar>
+          {this.renderSoldOut()}
         </div>
 
     )

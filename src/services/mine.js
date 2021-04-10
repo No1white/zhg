@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 20:51:22
- * @LastEditTime: 2021-03-22 11:22:24
+ * @LastEditTime: 2021-04-10 15:14:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\services\mine.js
@@ -72,6 +72,11 @@ export const getOrderList = (params) => {
 // 接收置换
 export const acceprtExChange = (params) => {
   return request.get(getPath('/api/clearing/acceprtExChange'),params);
+};
+
+// 获取已下架商品
+export const getSoldList = (params) => {
+  return request.get(getPath('/api/mine/getSoldList'),params);
 };
 
 // 获取已售出商品

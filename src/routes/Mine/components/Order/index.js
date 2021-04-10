@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 11:20:57
- * @LastEditTime: 2021-03-16 16:51:45
+ * @LastEditTime: 2021-04-10 17:41:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Order\index.js
@@ -60,6 +60,7 @@ class index extends Component {
     })
   }
   handleTabClick = (data) =>{
+    goTo(`/mine/order/${data}`,this.props.history)
     this.setState({
       filterOrder:data.type
     })
@@ -193,10 +194,10 @@ class index extends Component {
         type: '1',
       },
       { title: '待收货',
-        type: '2',
-      },
-      { title: '评价',
         type: '3',
+      },
+      { title: '已完成',
+        type: '4',
       }
 
     ];
@@ -447,9 +448,10 @@ class index extends Component {
                   {/* <span className={`iconfont icon-pinglun1`}></span>
                   联系卖家 */}
                 </div>
-                {
-                  this.renderBtnGroup(item.state,item)
-                }
+                <BtnGroup
+                orderInfo ={item}
+                history={this.props.history}
+                ></BtnGroup>
                 {/* <div className={styles.btnGroup}>
                 <Button type='default' className={styles.concealCollect}  size='small'>查看物流</Button>
                 <Button type='warning' className={styles.concealCollect}  size='small'>确认收货</Button>

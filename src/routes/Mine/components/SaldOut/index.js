@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 20:57:17
- * @LastEditTime: 2021-04-10 16:00:55
+ * @LastEditTime: 2021-04-10 15:55:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Publish\index.js
@@ -27,7 +27,7 @@ class index extends Component {
       type: 'mine/getPublishGoodList',
       payload: {
         userId: userInfo.userId,
-        saleState: 1,
+        saleState: 2,
       }
     });
 
@@ -48,7 +48,7 @@ class index extends Component {
       type:'sale/saleOut',
       payload:{
         goodId:goodInfo.goodId,
-        saleState:2,
+        saleState:1,
       },
       callback: res=> {
         window.location.reload();
@@ -80,8 +80,7 @@ class index extends Component {
               </div>
 
               <div className={styles.btnWrap}>
-                <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.saleOut(item)}>下架</Button>
-                <Button type='warning' className={styles.concealCollect}  size='small' onClick={()=>{this.goToEdit(item)}}>编辑</Button>
+                <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.saleOut(item)}>上架</Button>
               </div>
             </div>
           )
@@ -142,7 +141,7 @@ class index extends Component {
     return (
 
         <div className={styles.publishWrap}>
-          <NavBar history={this.props.history} title={'我发布的'} renderRight={this.renderRight}></NavBar>
+          <NavBar history={this.props.history} title={'下架列表'} ></NavBar>
           {this.renderPublishList()}
         </div>
 

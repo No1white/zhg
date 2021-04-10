@@ -28,6 +28,7 @@ import {
   getCollectListInfo,
   getAttentionListInfo,
   getCountAll,
+  getSoldList,
 } from '../services/mine'
 import { Toast } from 'antd-mobile'
 import storage from '../utils/storage'
@@ -219,6 +220,26 @@ export default {
             userInfo: data.userInfo
           },
         });
+    },
+
+    // 获取下架的商品
+    *getSoldList({ payload,callback }, { call, put }) {
+      const reqParams = payload || {};
+      const { data } = yield call(getSoldList, reqParams);
+
+      // storage.set('userInfo',data.userInfo);
+      if(data.code === 0 || data.code === '0') {
+        yield put({
+          type: 'save',
+          payload: {
+            soldOutGoodList:data.goodList
+          },
+        });
+      }else {
+        Toast.info(data.msg);
+        return ;
+      }
+
     },
     // 获取发布的商品
     *getPublishGoodList({ payload,callback }, { call, put }) {

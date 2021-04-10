@@ -13,7 +13,7 @@ class index extends Component {
       userInfo: {
         userId: sUserInfo.userId ,
         nickName: sUserInfo.nickName,
-        avatar: `${sUserInfo.avatar || 'http://qqguw56d8.hn-bkt.clouddn.com/image/activity/avatar.jpg'}`, //此处设置默认头像
+        avatar: `${sUserInfo.avatar}`,
         phone: sUserInfo.phone,
         collectCount: 0,
         attentionCount: 0,
@@ -81,7 +81,8 @@ class index extends Component {
   renderUserInfo = ()=> {
     const userInfo = storage.get('userInfo') || {};
     const {autonym} = userInfo;
-    const { avatar = 'image/activity/avatar.png' } = userInfo;
+    const { avatar = 'http://qqguw56d8.hn-bkt.clouddn.com/image/activity/avatar2.jpg'} = userInfo;
+    console.log(avatar);
     const {nickName,userId} = userInfo;
     const {collectCount,attentionCount,brosingHistoryCount} = this.state;
     return (
@@ -159,11 +160,11 @@ class index extends Component {
               <p  className={`iconfont icon-daifahuo ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>待发货</p>
             </div>
-            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/2')}}>
+            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/3')}}>
               <p  className={`iconfont icon-wuliu ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>待收货</p>
             </div>
-            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/3')}}>
+            <div className={styles.order} onClick={()=>{this.authLogin('mine/order/4')}}>
               <p  className={`iconfont icon-pingjia ${styles.orderIcon}`}></p>
               <p className={styles.orderFont}>已完成</p>
             </div>

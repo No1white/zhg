@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 14:28:06
- * @LastEditTime: 2021-02-28 17:34:22
+ * @LastEditTime: 2021-04-10 16:09:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\SearchCommodity\index.js
@@ -27,7 +27,7 @@ import styles from './index.less'
         order: 0,
         word:word,
       },
-      creditFlag: false,
+      creditFlag: true,
       compositeList : [
         {
           label: '综合',

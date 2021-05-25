@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 17:09:23
- * @LastEditTime: 2021-03-10 15:51:20
+ * @LastEditTime: 2021-05-21 13:31:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Brosing\index.js
@@ -27,14 +27,14 @@ class index extends Component {
     const hisoryList = storage.get('historyGoodList') || [];
     return (
       <div className={styles.brosingList}>
-        {hisoryList.map(item => {
+        {hisoryList.map((item,index) => {
           return (
-            <div className={styles.brosingItem}>
+            <div className={styles.brosingItem} key={index}>
               <span className={styles.date}>{item.date}</span>
               <div className={styles.goodList}>
                 {item.goodList.map(goodItem =>{
                   return (
-                    <div className={styles.goodItem} onClick={()=>this.goToDetail(goodItem.goodId)}>
+                    <div className={styles.goodItem} onClick={()=>this.goToDetail(goodItem.goodId)} key={goodItem.goodId}>
                       <img className={styles.goodImg} src={goodItem.imgList && goodItem.imgList[0]}></img>
                       <p className={`${styles.price} themeColor `}>￥{goodItem.price}</p>
                     </div>

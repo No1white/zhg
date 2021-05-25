@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-17 11:20:57
- * @LastEditTime: 2021-04-10 17:41:01
+ * @LastEditTime: 2021-05-21 13:33:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Order\index.js
@@ -26,11 +26,12 @@ const Step = Steps.Step;
 class index extends Component {
   constructor(props) {
     super(props);
+    const {match:{params}} = props;
+    console.log(props);
     this.state = {
       modal1: false,
-      filterOrder: 0,
+      filterOrder: params.tabPage,
     }
-    console.log(props);
   }
   componentDidMount() {
     const userInfo = storage.get('userInfo');
@@ -60,10 +61,10 @@ class index extends Component {
     })
   }
   handleTabClick = (data) =>{
-    goTo(`/mine/order/${data}`,this.props.history)
+    goTo(`/mine/order/${data.type}`,this.props.history)
     this.setState({
       filterOrder:data.type
-    })
+    });
   }
   handleGoToDetail = (orderId)=> {
     this.props.history.push(`/orderDetail/${orderId}`)
@@ -82,13 +83,6 @@ class index extends Component {
       },
       callback: res=> {
         this.getOrderList(userInfo.userId);
-        // this.setState({
-        //   msg:'test'
-        // })
-        // setTimeout(()=>{
-        // },300);
-        // this.props.history.push('/mine/order')
-        // this.forceUpdate();
       }
     })
   }
@@ -208,158 +202,6 @@ class index extends Component {
     )
 
   }
-  // 渲染订单操作栏
-  renderBtnGroup = (state,item)=> {
-    const userInfo = storage.get('userInfo');
-    const fillLogisticsFlag = item.swap===0 ? true : false;
-    let btnGroup = '';
-    switch(state) {
-      // 0 未支付  显示支付按钮
-      case 0:
-          btnGroup = (
-            <div className={styles.btnGroup}>
-              <Button type='warning' className={styles.concealCollect}  size='small' onClick={()=>this.goToPay(item.orderId)}>去支付</Button>
-            </div>
-          )
-          break;
-      // 已支付 退款 卖家显示 填写物流
-      case 1:
-
-        btnGroup = (
-          <div className={styles.btnGroup}>
-            <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item.orderId)}>退款</Button>
-
-            {/* 判断如果是置换 买家也要填写物流 */}
-            {
-              item.buyer === userInfo.userId && item.swap === 0 && item.logisticsState != 2
-              ?<Button  type='default' className={styles.concealCollect}  size='small'
-                    onClick={() => prompt('填写物流单号', '物流单号', [
-                    { text: '取消' },
-                    { text: '确定', onPress: value => this.handleFillLogistics(value,item.orderId,item)},
-                  ], 'default', null,['快递单号'])}
-                  >填写物流</Button>
-            : ''
-            }
-
-            {item.seller === userInfo.userId && item.logisticsState != 1
-            ?   <Button  type='default' className={styles.concealCollect}  size='small'
-                    onClick={() => prompt('填写物流单号', '物流单号', [
-                    { text: '取消' },
-                    { text: '确定', onPress: value => this.handleFillLogistics(value,item.orderId,item)},
-                  ], 'default', null,['快递单号'])}
-                  >填写物流</Button>
-            : ''}
-            {
-              item.seller === userInfo.userId && item.logisticsState === 1 ?
-              <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item.orderId)}} >查看物流</Button>
-              : ''
-            }
-            {
-              item.buyer === userInfo.userId && item.logisticsState === 2 ?
-              <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item.orderId)}} >查看物流</Button>
-              : ''
-            }
-
-          </div>
-        );
-        break;
-      case 2:
-        btnGroup = (
-          <div className={styles.btnGroup}>
-            <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item.orderId)}>退款</Button>
-            <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item.orderId,item)}} >查看物流</Button>
-
-          </div>
-        )
-        break;
-      case 3:
-        btnGroup = (
-          <div className={styles.btnGroup}>
-            {item.seller !== userInfo.userId
-            ?<Button type='danger' className={styles.concealCollect}  size='small'  onClick={()=>this.handleGoToRefound(item.orderId)}>退款</Button>
-            :''
-            }
-            <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item.orderId)}} >查看物流</Button>
-            {/* <Button type='primary' className={styles.concealCollect}  size='small' onClick={()=>{this.comfirmGood(item.orderId)}}>确认收货</Button> */}
-            <Button
-              type='primary' className={styles.concealCollect} size='small'
-              onClick={() =>
-                alert('确认收货', '你确认收货？', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确认', onPress: () => this.comfirmGood(item.orderId) },
-                ])
-              }
-            >
-              确认收货
-            </Button>
-          </div>
-        );
-        break;
-      //  订单已完成 显示删除订单按钮
-      case 4:
-        btnGroup = (
-          <div className={styles.btnGroup}>
-            <Button type='default' className={styles.concealCollect}  size='small'>删除订单</Button>
-          </div>
-        );
-        break;
-      case 6:
-        btnGroup = (
-          <div className={styles.btnGroup}>
-            {
-              userInfo.userId === item.seller
-              ? <Button
-                        type='primary'
-                        className={styles.concealCollect}
-                        size='small'
-                        onClick={() =>
-                  alert('置换','确定置换吗', [
-                    { text: '取消', onPress: () => console.log('cancel') },
-                    { text: '确定', onPress: () => this.handleAcceptExchange(item.orderId) },
-                  ])
-                }
-              >确认置换</Button>
-              : ''
-            }
-          </div>
-        );
-        break;
-        case 9:
-          btnGroup = (
-            <div className={styles.btnGroup}>
-              { item.seller !== userInfo.userId
-              ?<Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item.orderId)}>退款中</Button>
-              :
-              <Button
-                type='primary'
-                className={styles.concealCollect}
-                size='small'
-                onClick={() =>
-                  alert('退款','确定同意退款吗', [
-                    { text: '取消', onPress: () => console.log('cancel') },
-                    { text: '确定', onPress: () => this.handleAcceptRefound(item.orderId,item) },
-                  ])
-                }
-                >同意退款</Button>
-              }
-            </div>
-          );
-          break;
-          // eslint-disable-next-line no-duplicate-case
-          case 10:
-            btnGroup = (
-              <div className={styles.btnGroup}>
-                <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item.orderId)}>退款成功</Button>
-              </div>
-            );
-            break;
-      default:
-
-        btnGroup = '';
-
-    }
-    return btnGroup;
-  }
   renderOrderList = (tab) => {
     const {orderList =[]} = this.props;
     const {filterOrder} = this.state;
@@ -367,9 +209,8 @@ class index extends Component {
       <div className={styles.orderList}>
         {orderList.map(item => {
           if(filterOrder == 0) {
-
             return (
-            <div className={styles.orderItem}>
+            <div className={styles.orderItem} key={item.orderId}>
               <div className={styles.goodInfo} onClick={()=>{this.handleGoToDetail(item.orderId)}}>
                 <img className={styles.goodImg} src={item.imgUrl}></img>
                 <div className={styles.goodDetail}>
@@ -383,7 +224,7 @@ class index extends Component {
               }
               {
                 item.swap === 0 &&
-                <div className={styles.exchangeGoodInfo} onClick={()=>{this.handleGoToDetail(item.exchangeGoodInfo.goodId)}}>
+                <div className={styles.exchangeGoodInfo} onClick={()=>{this.handleGoToDetail(item.orderId)}}>
                   <img className={styles.goodImg} src={item.exchangeGoodInfo.imgUrl}></img>
                   <div className={styles.goodDetail}>
                     <h3 className={styles.goodTitle}>{item.exchangeGoodInfo.title}</h3>
@@ -413,9 +254,9 @@ class index extends Component {
                 </div> */}
               </div>
             </div> )
-          } else if(item.state == filterOrder) {
+          } else if(item.state == filterOrder || item.state === 7 ) {
             return (
-            <div className={styles.orderItem}>
+            <div className={styles.orderItem} key={item.orderId}>
               <div className={styles.goodInfo} onClick={()=>{this.handleGoToDetail(item.orderId)}}>
                 <img className={styles.goodImg} src={item.imgUrl}></img>
                 <div className={styles.goodDetail}>
@@ -500,7 +341,7 @@ class index extends Component {
     return (
 
         <div className={styles.orderWrap}>
-          <NavBar history={this.props.history} title={'我的订单'}></NavBar>
+          <NavBar history={this.props.history} title={'我的订单'} backUrl={'/mine'}></NavBar>
           {this.renderTabBar()}
           {/* {this.renderOrderList()} */}
           {this.renderModal()}

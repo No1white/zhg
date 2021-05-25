@@ -4,12 +4,12 @@ import { List, InputItem, WhiteSpace, Button, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import goTo from '../../../../utils/goTo'
 import styles from './index.less'
+import Password from 'antd/lib/input/Password';
 
 const Item = List.Item;
 class index extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.history);
     this.state = {
       hint: '获取验证码',
       codeFlag: false,
@@ -27,7 +27,6 @@ class index extends Component {
 
   }
   goToMine = ()=>{
-    console.log('goto');
     goTo('mine',this.props.history)
   }
   // 处理点击事件
@@ -86,6 +85,15 @@ class index extends Component {
 
           }
           break;
+        case 'password2':
+          if(values.password !== values.password2) {
+            this.setState({
+              msg:'两次密码不一致,请重新输入',
+            })
+          }else {
+            flag++;
+          }
+          break;
         case 'password':
           reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
           if(!reg.test(values[item])) {
@@ -111,7 +119,7 @@ class index extends Component {
           break;
       }
     });
-    if(flag ===3) {
+    if(flag ===4) {
       this.regiter();
     }else {
       return ;
@@ -126,7 +134,6 @@ class index extends Component {
         ...values,
       },
       callback: (res)=> {
-        console.log(res);
         goTo('/mine',this.props.history)
       },
     })
@@ -157,6 +164,14 @@ class index extends Component {
               {...getFieldProps('password')}
               type="password"
               placeholder="请输入密码"
+              className={'userName'}
+            >
+              <span className={'iconfont icon-iconfont17'} />
+            </InputItem>
+            <InputItem
+              {...getFieldProps('password2')}
+              type="password"
+              placeholder="请再次输入密码"
               className={'userName'}
             >
               <span className={'iconfont icon-iconfont17'} />

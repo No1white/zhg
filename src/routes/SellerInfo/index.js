@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-03-08 12:20:13
+ * @LastEditTime: 2021-05-18 21:18:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -67,9 +67,7 @@ class index extends Component {
   //加入购物车
   handleJoinCart = () => {
     const { goodDetailInfo} = this.props;
-    console.log(goodDetailInfo);
     const cartGoodList = storage.get('cartGoodList');
-    console.log(cartGoodList);
     goodDetailInfo.checked =false;
     let tempItem = {
       nickName: goodDetailInfo.nickName,
@@ -102,7 +100,6 @@ class index extends Component {
   handleGoToSendMessage = () => {
     const userInfo = storage.get('userInfo');
     const {goodDetailInfo} = this.props;
-    console.log(goodDetailInfo);
     this.props.history.push(`/message/sendMessage/${goodDetailInfo.userId}`)
   }
   renderUserInfo = () => {
@@ -142,7 +139,7 @@ class index extends Component {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'auto', backgroundColor: '#fff' }}>
               <CommodityList
                 header = {true}
-                saleState={0}
+                saleState={1}
                 // page={quertyParams.page}
                 // loading={loading}
                 history={history}
@@ -155,7 +152,7 @@ class index extends Component {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'auto', backgroundColor: '#fff' }}>
               <CommodityList
                 header = {true}
-                saleState={1}
+                saleState={0}
                 // page={quertyParams.page}
                 // loading={loading}
                 history={history}

@@ -9,7 +9,6 @@ const Item = List.Item;
 class index extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.history);
     this.state = {
       hint: '获取验证码',
       codeFlag: false,
@@ -27,7 +26,6 @@ class index extends Component {
 
   }
   goToMine = ()=>{
-    console.log('goto');
     goTo('mine',this.props.history)
   }
   // 处理点击事件
@@ -133,8 +131,6 @@ class index extends Component {
     const { getFieldsValue } = this.props.form;
     const {match:{params:{flag}}} = this.props;
     const values = getFieldsValue();
-    console.log(values.password);
-    console.log(values.password2);
     if(values.password === values.password2) {
       this.props.dispatch({
         type: 'mine/updatePwd',
@@ -142,7 +138,6 @@ class index extends Component {
           ...values,
         },
         callback: (res)=> {
-          console.log(res);
           goTo('/mine',this.props.history)
         },
       })

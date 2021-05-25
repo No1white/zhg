@@ -30,8 +30,6 @@ const getValueFromObjectArr = (obj)=> {
 }
 
 const authLogin = (obj,history,callback)=> {
-  console.log(obj);
-  console.log(history);
   if(JSON.stringify(obj) === '{}') {
     Toast.info('您还未登录');
     goTo('/mine/login',history);

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-25 19:01:14
- * @LastEditTime: 2021-02-19 19:14:02
+ * @LastEditTime: 2021-04-29 22:19:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\SuccessPage\index.js
@@ -17,7 +17,6 @@ const Item = List.Item;
 class index extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.history);
     this.state = {
       hint: '获取验证码',
       codeFlag: false,

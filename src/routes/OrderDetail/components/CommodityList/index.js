@@ -97,7 +97,6 @@ class index extends Component {
   }
   showLogisticsInfo =(orderId,item)=>{
     const userInfo = storage.get('userInfo');
-    console.log(item);
     let fillLogFlag = 0;
     // 用于判断置换 双方都需填写物流单号
     if(userInfo.userId === item.seller  || item.swap === '1' || item.swap===1) {
@@ -133,7 +132,6 @@ class index extends Component {
   }
   // 同意退款
   handleAcceptRefound =(orderId,item) => {
-    console.log(item);
     this.props.dispatch({
       type: 'mine/acceptReFound',
       payload: {
@@ -387,7 +385,8 @@ class index extends Component {
   }
   render() {
     const { getFieldProps} = this.props.form;
-    const {goodList = [],onRemarkChange,remark,orderInfo} = this.props;
+    const {goodList = [],onRemarkChange,remark,orderInfo,exchangeGoodInfo} = this.props;
+    console.log(exchangeGoodInfo);
     return (
 
       <WingBlank>
@@ -413,6 +412,20 @@ class index extends Component {
 
                                 </div>
                               </div>
+                              {exchangeGoodInfo && <div className={`${styles.exChangeTitle} themeColor`}>置换</div>}
+                              {
+                                exchangeGoodInfo &&
+                                <div className={styles.goodItem}>
+
+                                  <img className={styles.goodImg} src={exchangeGoodInfo.imgUrl} alt=""/>
+                                  <div className={styles.goodInfo}>
+                                    <p className={`${styles.p} ${styles.goodTitle}`}>{exchangeGoodInfo.title}</p>
+                                    <p className={`${styles.p} ${styles.specification}`}>{exchangeGoodInfo.specification}</p>
+                                    <p className={`${styles.p} ${styles.price} themeColor`}>￥{exchangeGoodInfo.price}</p>
+
+                                  </div>
+                                </div>
+                              }
                             <div className={styles.dealInfo}>
                               <div className={`${styles.dealList}`}>
                                 <div className={`${styles.dealItem}`}>

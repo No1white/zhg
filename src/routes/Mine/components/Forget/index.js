@@ -98,6 +98,18 @@ class index extends Component {
 
           }
           break;
+        case 'password2':
+
+        if(values.password !== values.password2) {
+          this.setState({
+            msg: '两次输入的密码不一致，请重新输入'
+          })
+
+        }else {
+          flag++;
+
+        }
+        break;
         case 'verifyCode':
           reg = /[0-9]{6}/;
           if(!reg.test(values[item])) {
@@ -111,7 +123,7 @@ class index extends Component {
           break;
       }
     });
-    if(flag ===3) {
+    if(flag ===4) {
       this.regiter();
     }else {
       return ;
@@ -157,6 +169,14 @@ class index extends Component {
               {...getFieldProps('password')}
               type="password"
               placeholder="请输入密码"
+              className={'userName'}
+            >
+              <span className={'iconfont icon-iconfont17'} />
+            </InputItem>
+            <InputItem
+              {...getFieldProps('password2')}
+              type="password"
+              placeholder="请再次输入密码"
               className={'userName'}
             >
               <span className={'iconfont icon-iconfont17'} />

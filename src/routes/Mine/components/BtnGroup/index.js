@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-24 16:42:27
- * @LastEditTime: 2021-04-10 18:36:45
+ * @LastEditTime: 2021-05-20 15:05:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\BtnGroup\index.js
@@ -60,29 +60,52 @@ class index extends Component {
       this.props.history.push(`/orderDetail/${orderId}`)
     }
     handleGoToRefound = (item) => {
+      console.log(item);
       this.props.history.push(`/refoundGood/${item.orderId}`)
     }
     handleAcceptExchange = (item,state) => {
           // this.forceUpdate();
       const userInfo = storage.get('userInfo');
+      //如果是线下交易直接跳转到发货
+      if(item.dealWay === 0) {
+        this.props.dispatch({
+          type: 'mine/acceprtExChange',
+          payload :{
+            orderId: item.orderId,
+            state: 3,
+          },
+          callback: res=> {
+            console.log('2222');
+            window.location.reload();
+            // this.setState({
+            //   msg:'test'
+            // })
+            // setTimeout(()=>{
+            // },300);
+            // this.props.history.push('/mine/order')
+            // this.forceUpdate();
+          }
+        })
+      }else {
+        this.props.dispatch({
+          type: 'mine/acceprtExChange',
+          payload :{
+            orderId: item.orderId,
+            state,
+          },
+          callback: res=> {
+            window.location.reload();
+            // this.setState({
+            //   msg:'test'
+            // })
+            // setTimeout(()=>{
+            // },300);
+            // this.props.history.push('/mine/order')
+            // this.forceUpdate();
+          }
+        })
+      }
 
-      this.props.dispatch({
-        type: 'mine/acceprtExChange',
-        payload :{
-          orderId: item.orderId,
-          state,
-        },
-        callback: res=> {
-          window.location.reload();
-          // this.setState({
-          //   msg:'test'
-          // })
-          // setTimeout(()=>{
-          // },300);
-          // this.props.history.push('/mine/order')
-          // this.forceUpdate();
-        }
-      })
     }
     showModal = key => (e) => {
       e.preventDefault(); // 修复 Android 上点击穿透
@@ -196,6 +219,9 @@ class index extends Component {
         }
       })
     }
+    // 退货处理
+    handleGoToRefoundGood = (item) => {
+    }
     // 退款
     refundGood = (item)=>{
       const userInfo = storage.get('userInfo');
@@ -273,7 +299,11 @@ class index extends Component {
       case 1:
         btnGroup = (
           <div className={styles.btnGroup}>
-            <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item)}>退款</Button>
+            {
+              item.buyer === userInfo.userId ?
+              <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>this.handleGoToRefound(item)}>退款</Button>
+              :''
+            }
 
             {/* 判断如果是置换 买家也要填写物流 */}
             {
@@ -321,16 +351,14 @@ class index extends Component {
         );
         break;
       case 3:
-        console.log(item.seller !== userInfo.userId);
-        console.log(item);
-        console.log(item.swap ===0 && item.swapGoodId !== '');
+        const checkLogFlag = item.swap ===0 && item.dealWay === 0;
         btnGroup = (
           <div className={styles.btnGroup}>
             {item.seller !== userInfo.userId
-            ?<Button type='danger' className={styles.concealCollect}  size='small'  onClick={()=>this.handleGoToRefound(item.orderId)}>退款</Button>
+            ?<Button type='danger' className={styles.concealCollect}  size='small'  onClick={()=>this.handleGoToRefound(item)}>退款</Button>
             :''
             }
-            <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item)}} >查看物流</Button>
+            {checkLogFlag ? '' : <Button type='default' className={styles.concealCollect}  size='small' onClick={()=>{this.showLogisticsInfo(item)}} >查看物流</Button>}
             {/* <Button type='primary' className={styles.concealCollect}  size='small' onClick={()=>{this.comfirmGood(item.orderId)}}>确认收货</Button> */}
             {
               item.seller !== userInfo.userId || item.swap ===0 && item.swapGoodId !== ''
@@ -390,16 +418,16 @@ class index extends Component {
                 }
                 >拒绝置换</Button>
                <Button
-                          type='primary'
-                          className={styles.concealCollect}
-                          size='small'
-                          onClick={() =>
+                    type='primary'
+                    className={styles.concealCollect}
+                    size='small'
+                    onClick={() =>
                     alert('置换','确定置换吗', [
                       { text: '取消', onPress: () => console.log('cancel') },
                       { text: '确定', onPress: () => this.handleAcceptExchange(item,7) },
                     ])
-                  }
-                          >确认置换</Button>
+                }
+              >确认置换</Button>
 
               </div>
             );
@@ -426,10 +454,14 @@ class index extends Component {
           if(item.logisticsState === '0' || item.logisticsState === 0) {
             btnGroup = (
               <div className={styles.btnGroup}>
-                <Button type='danger'
-                className={styles.concealCollect}
-                size='small'
-                 onClick={()=>this.handleGoToRefound(item.orderId)}>退货</Button>
+                {
+                  item.buyer === userInfo.userId ?
+                    <Button type='danger'
+                  className={styles.concealCollect}
+                  size='small'
+                  onClick={()=>this.handleGoToRefound(item)}>退货</Button>
+                  :''
+                }
                 <Button  type='default' className={styles.concealCollect}  size='small'
                     onClick={() => prompt('填写物流单号', '物流单号', [
                     { text: '取消' },
@@ -598,12 +630,28 @@ class index extends Component {
     }
     return btnGroup;
   }
+  renderFreeze = () => {
+    return (
+      <div className={styles.freezeWrap}>
+        <span>订单状态：<span className={styles.info}>冻结订单</span></span>
+      </div>
+    )
+  }
   render() {
-    const {orderInfo} = this.props;
+    const {orderInfo={}} = this.props;
     return (
       <div className={styles.btnGroupWrap}>
+        {
+          orderInfo.swap === 0 && orderInfo.reFound !== 0 ?
+          <div className={`${styles.addPrice}`}>
+            <span className={`${styles.label} themeColor`}>补差价：</span> <span className={`${styles.price} themeColor`}>￥{orderInfo.reFound}</span>
+          </div> :''
+        }
         <div className={styles.btnGroupContainer}>
-        {this.renderBtnGroup(orderInfo)}
+        {
+          orderInfo.orderState === 0
+          ? this.renderBtnGroup(orderInfo) : this.renderFreeze(orderInfo)
+        }
         </div>
         {this.renderModal()}
       </div>

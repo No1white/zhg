@@ -17,6 +17,13 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.userPageWrap .img {
+  width: 100%;
+}
+.userPageWrap .title {
+  margin-top: 10px;
+  color: #ff600c;
+}
 .userPageWrap .formWrap {
   position: absolute;
   width: 95%;

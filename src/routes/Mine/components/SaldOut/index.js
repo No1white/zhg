@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 20:57:17
- * @LastEditTime: 2021-04-10 15:55:06
+ * @LastEditTime: 2021-04-29 22:17:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Publish\index.js
@@ -57,15 +57,12 @@ class index extends Component {
   }
   renderPublishList = () => {
     const { publishGoodList = [],BASE_URL } = this.props;
-    console.log(publishGoodList);
-    console.log(this.props);
     return (
       <div className={styles.publishList}>
         {publishGoodList.map(item =>{
           return (
             <div className={styles.publishItem} key={item.goodId} >
               <div className={styles.goodInfo} onClick={()=>{this.goToDetail(item.goodId)}}>
-                {console.log()}
                 <img className={styles.goodImg} src={item.imgList[0]}></img>
                 <div className={styles.goodDetail}>
                   <h3 className={styles.goodTitle}>{item.title}</h3>

@@ -1,7 +1,7 @@
 /*
  * @Author: lsp
  * @Date: 2021-01-25 20:39:20
- * @LastEditTime: 2021-02-22 20:20:21
+ * @LastEditTime: 2021-05-18 20:38:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Message\Components\SendMessage\index.js
@@ -29,7 +29,8 @@ class index extends Component {
     this.state = {
       messageList: [
 
-      ]
+      ],
+      msg:''
     }
   }
   componentDidMount() {
@@ -65,9 +66,10 @@ class index extends Component {
   // });
   }
   sendMsg = ()=> {
-    const { getFieldsValue } = this.props.form;
+    const { getFieldsValue,setField} = this.props.form;
     const { message = []} = this.props;
-    const values = getFieldsValue();
+    const { msg } = this.state;
+    // const values = getFieldsValue();
     const userInfo =  storage.get('userInfo');
     const {match:{params={}}} = this.props;
 
@@ -81,7 +83,7 @@ class index extends Component {
       avatar: userInfo.avatar,
       nickName: userInfo.nickName,
       receiver: params.receiver,
-      msg: values.msg,
+      msg: msg,
       senderOrReceiver: 0,
       // sender: '5',
       // receiver: '4',
@@ -112,7 +114,9 @@ class index extends Component {
           }
         })
       });
-      window.scrollTo(0, document.body.scrollHeight)
+      window.scrollTo(0, document.body.scrollHeight);
+      // this.props.form.setFieldValues({msg:''})
+
       // socket.on('reply_private_chat',this.getMessage);
       // message.push({
       //   nickName: userInfo.nickName,
@@ -135,11 +139,9 @@ class index extends Component {
     //   socket.emit('message', message, data => {
     //     console.log('data');
     //   });
-
+      this.setState({msg:''})
   }
   getMessage =(data) => {
-    console.log('服务端的返回的数据');
-    console.log(data);
     // const {messageList} = this.state;
     let messageList = [];
     let msgItem = {
@@ -213,6 +215,7 @@ class index extends Component {
   // 底部工具栏
   bottomBtnRender = ()=> {
     const { getFieldProps } = this.props.form;
+    const {msg} = this.state;
     return (
       <div className={styles.bottomBtnWrap}>
         <List className={styles.btnGroup}>
@@ -220,6 +223,8 @@ class index extends Component {
           <InputItem
             {...getFieldProps('msg')}
             placeholder="请输入信息"
+            value={msg}
+            onChange={(e)=>this.setState({msg:e})}
             className={styles.msgInput}
           />
           <Button type={'primary'} size='small' className={styles.sendMsgBtn}

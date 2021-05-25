@@ -112,7 +112,6 @@ class index extends Component {
     const { location } = history;
     const { query = {} } = location;
     const { goodInfo = {}} = query;
-    console.log(files);
     // 普通方法
     if (editFlag) {
     }else {
@@ -124,6 +123,43 @@ class index extends Component {
     this.setState({
       files: files,
     });
+  }
+  handleGetAddress = () => {
+    const userInfo = storage.get('userInfo');
+    const { checked} = this.state;
+    if(userInfo) {
+      this.props.dispatch({
+        type: 'mine/getAddressList',
+        payload: {
+          userId: userInfo.userId
+        },
+        callback: res=>{
+          if(res.code ===0) {
+            // this.setState(()=>{
+            //     return {
+            //       checked: !this.state.checked,
+            //     }
+            // });
+            this.setState({
+              checked: !checked,
+            })
+            setTimeout(()=>{
+            })
+          }else {
+
+            Toast.info('置换需要填写自身的地址');
+            this.setState({
+              checked: false
+            })
+            return;
+
+          }
+        }
+      });
+      this.setState({
+        checked: !this.state.checked,
+      });
+    }
   }
   publish = ()=> {
 
@@ -235,7 +271,7 @@ class index extends Component {
               />
             </List.Item>
             <Picker data={degreeList} cols={1} {...getFieldProps('degree',{
-                initialValue: [`${goodInfo.degree}`] ,
+                initialValue: [`${goodInfo.degree || 0}`] ,
                 rules: [
                   { required: true, message: '请选择新旧程度' },
                 ],
@@ -243,7 +279,7 @@ class index extends Component {
               <List.Item arrow="horizontal"><span className={'must'}>*</span>新旧程度</List.Item>
             </Picker>
             <Picker data={category} cols={1} {...getFieldProps('category',{
-                initialValue: [`${goodInfo.category}`],
+                initialValue: [`${goodInfo.category || 1}`],
                 // rules: [
                 //   { required: true, message: '请选择商品种类' },
                 // ],
@@ -251,7 +287,7 @@ class index extends Component {
               <List.Item arrow="horizontal"><span className={'must'}>*</span>商品种类</List.Item>
             </Picker>
             <Picker data={effects} cols={1} {...getFieldProps('effect',{
-                initialValue: [`${goodInfo.effect}`],
+                initialValue: [`${goodInfo.effect || 0}`],
                 // rules: [
                 //   { required: true, message: '请选择有无影响使用' },
                 // ],
@@ -267,7 +303,7 @@ class index extends Component {
               ref={el => this.autoFocusInst = el}
             >原因</InputItem>
             <Picker data={dealWays} cols={1} {...getFieldProps('dealWay',{
-                 initialValue: [`${goodInfo.dealWay}`],
+                 initialValue: [`${goodInfo.dealWay || 2}`],
                 //  rules: [
                 //   { required: true, message: '请选择交易方式' },
                 // ],
@@ -288,12 +324,11 @@ class index extends Component {
                 extra={<Switch
 
                   checked={this.state.checked}
-                  onChange={() => {
+                  onChange={
+                    this.handleGetAddress
                     // checked = !checked
-                    this.setState({
-                      checked: !this.state.checked,
-                    });
-                  }}
+
+                  }
                 />}
               >是否接受置换</List.Item>
             <ImagePicker files={this.state.files} initialValue={goodInfo.imgList} onChange={this.ImagePickeronChange}></ImagePicker>

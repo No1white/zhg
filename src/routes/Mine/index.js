@@ -81,7 +81,7 @@ class index extends Component {
   renderUserInfo = ()=> {
     const userInfo = storage.get('userInfo') || {};
     const {autonym} = userInfo;
-    const { avatar = 'http://qqguw56d8.hn-bkt.clouddn.com/image/activity/avatar2.jpg'} = userInfo;
+    const { avatar = 'http://qtlmj290t.hn-bkt.clouddn.com/image/activity/avatar.jpg'} = userInfo;
     console.log(avatar);
     const {nickName,userId} = userInfo;
     const {collectCount,attentionCount,brosingHistoryCount} = this.state;

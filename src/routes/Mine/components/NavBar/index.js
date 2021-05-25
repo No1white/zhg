@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-02-23 16:53:38
+ * @LastEditTime: 2021-05-19 14:45:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \zhgServerf:\zhg\zhg\src\routes\Mine\components\NavBar\index.js
+ */
 import React, { Component } from 'react'
 // import history from '../../utils/history'
 import styles from './index.less'
@@ -10,7 +18,11 @@ class index extends Component {
   }
   goBack = ()=>{
     console.log(this.props);
-    this.props.history.goBack()
+    if(this.props.backUrl) {
+      this.props.history.push(this.props.backUrl)
+    }else {
+      this.props.history.goBack()
+    }
   }
   // goTo = ()=>{
   //   this.props.history.push('')

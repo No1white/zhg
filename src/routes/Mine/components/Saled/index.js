@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-16 21:27:06
- * @LastEditTime: 2021-03-22 21:56:28
+ * @LastEditTime: 2021-05-21 13:30:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Saled\index.js
@@ -40,7 +40,7 @@ class index extends Component {
         {
           saledGoodList.map(item => {
             return (
-              <div className={styles.saledItem} onClick={()=>this.goToDetail(item.goodId)}>
+              <div className={styles.saledItem} onClick={()=>this.goToDetail(item.goodId)} key={item.goodId}>
                 <div className={styles.goodInfo}>
 
                   <img className={styles.goodImg} src={item.imgList[0]}></img>

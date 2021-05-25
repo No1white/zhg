@@ -14,3 +14,12 @@
 .btnGroupWrap .btnGroupContainer .btnGroup .conceal {
   margin-right: 5px;
 }
+.btnGroupWrap .addPrice .label {
+  font-size: 20px;
+}
+.btnGroupWrap .addPrice .price {
+  font-size: 24px;
+}
+.btnGroupWrap .freezeWrap .info {
+  color: red;
+}

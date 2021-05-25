@@ -44,7 +44,6 @@ class index extends Component {
     const {match:{params:{orderId}},goodInfo} = this.props;
     const { sValue} = this.state;
 
-    console.log(this.props);
     this.props.dispatch({
       type: 'mine/reFound',
       payload: {
@@ -77,7 +76,6 @@ class index extends Component {
         value: '2',
       },
     ]
-    console.log(goodInfo);
     return (
       <div className={styles.clearingWrap}>
         <List>

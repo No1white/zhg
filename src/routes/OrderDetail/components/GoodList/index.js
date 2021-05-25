@@ -14,15 +14,12 @@ const AgreeItem = Checkbox.AgreeItem;
 // 废弃 没用
 export default class index extends Component {
   onChange = (val) => {
-    console.log(val);
   }
 
 
    render() {
 
     const {goodInfo={},goodList} = this.props;
-    console.log(goodInfo);
-    console.log(goodList);
     return (
       <div className={styles.goodListWrap} >
         <div className={styles.goodList}>

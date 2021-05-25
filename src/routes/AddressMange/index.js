@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-01-11 15:42:40
- * @LastEditTime: 2021-02-04 16:38:59
+ * @LastEditTime: 2021-04-29 20:41:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\AddressMange\index.js
  */
 import React, { Component } from 'react'
-import {Button} from 'antd-mobile'
+import {Button, Toast} from 'antd-mobile'
 import NavBar from './Components/NavBar'
 import { connect } from 'dva';
 import storage from '@/utils/storage'
@@ -30,6 +30,9 @@ class index extends Component {
       type: 'mine/getAddressList',
       payload: {
         userId: userInfo.userId
+      },
+      callback: res=>{
+
       }
     })
   }

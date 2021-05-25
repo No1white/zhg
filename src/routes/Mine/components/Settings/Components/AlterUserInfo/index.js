@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-13 19:43:28
- * @LastEditTime: 2021-03-03 22:32:58
+ * @LastEditTime: 2021-04-29 22:17:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Settings\Components\AlterUserInfo\index.js
@@ -31,14 +31,10 @@ class index extends Component {
       }],
       multiple: false,
     }
-    console.log(this.props);
   }
 
   onChange = (files, type, index) => {
-    console.log(files, type, index);
     const newFiles = [files[1]];
-    // console.log(files);
-    console.log(newFiles);
     // newFiles.push(files[])
     this.setState({
       // files:newFiles,

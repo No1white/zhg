@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-11 16:01:34
- * @LastEditTime: 2021-02-23 16:56:56
+ * @LastEditTime: 2021-05-21 13:44:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\AddressMange\Components\AddressList\index.js
@@ -52,8 +52,8 @@ class index extends Component {
         <div className={styles.addressList}>
           {addressList.map(item => {
             return (
-              <div className={styles.addressItem}  key={item.addressId}>
-                <div className={styles.userInfoWrap} onClick={()=>this.handleAddCheck(item.addressId)}>
+              <div className={styles.addressItem}  key={item.addressId} onClick={()=>this.handleAddCheck(item.addressId)}>
+                <div className={styles.userInfoWrap} >
                   <div className={styles.userInfo}>
                     <span className={styles.userName}>{item.userName}</span>
                     <span className={styles.userPhone}>{item.phone}</span>
@@ -73,7 +73,7 @@ class index extends Component {
                   </div>
 
                 </div>
-                <div className={styles.edit} onClick={()=>{goTo('/addAddress',this.props.history,item)}}>
+                <div className={styles.edit} onClick={(e)=>{e.stopPropagation(); goTo('/addAddress',this.props.history,item)}}>
                     <span className={styles.btn}>编辑</span>
                   </div>
             </div>

@@ -7,7 +7,7 @@ import ExchangeCommodity from './components/exchangeCommodity'
 import goTo from '../../utils/goTo'
 import storage from '@/utils/storage'
 import CommodityList from './components/CommodityList'
-import BtnGroup from '../components/BtnGroup'
+import BtnGroup from '../Mine/components/BtnGroup'
 import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -225,8 +225,9 @@ class index extends Component {
   }
   renderAddress = () => {
     // const { userInfo } = this.state;
-    const { addressInfo ={}} = this.props;
+    const { addressInfo ={},sellerAddressInfo={}} = this.props;
     // let addressInfo =  {};
+    console.log(sellerAddressInfo);
     return (
       <WingBlank>
 
@@ -238,7 +239,7 @@ class index extends Component {
           <div className={styles.addressInfo} >
               <div>
                 <div className={styles.userInfo}>
-                  <p className={`pMargin0 ${styles.userName}`}>{addressInfo.userName}</p>
+                  <p className={`pMargin0 ${styles.userName}`}>{addressInfo.userName}(买家)</p>
                   <p className={`pMargin0 ${styles.phone}`}>{addressInfo.phone}</p>
                 </div>
                 <div className={styles.addressInfo}>
@@ -250,8 +251,34 @@ class index extends Component {
               </div>
 
           </div>
-          {/* <div className={`${styles.arrow}  iconfont icon-jiantou1`}></div> */}
-      </div>
+        </div>
+        {
+          JSON.stringify(sellerAddressInfo) !== '{}' ?
+
+          <div className={styles.addressWrap}>
+
+            <div className={`${styles.addressIcon} `}>
+              <span className={`${styles.address} bgLinear iconfont icon-dizhi1`}></span>
+            </div>
+
+            <div className={styles.addressInfo} >
+                <div>
+                  <div className={styles.userInfo}>
+                    <p className={`pMargin0 ${styles.userName}`}>{sellerAddressInfo.userName}(卖家)</p>
+                    <p className={`pMargin0 ${styles.phone}`}>{sellerAddressInfo.phone}</p>
+                  </div>
+                  <div className={styles.addressInfo}>
+                    {sellerAddressInfo.province}
+                    {sellerAddressInfo.city}
+                    {sellerAddressInfo.region}
+                    {sellerAddressInfo.detail}
+                  </div>
+                </div>
+
+            </div>
+          </div> : ''
+        }
+
       </WingBlank>
     );
   }
@@ -294,7 +321,7 @@ class index extends Component {
   }
   render() {
     // const {goodList = []} = this.state;
-    const {goodInfo,orderInfo,history} = this.props;
+    const {goodInfo,orderInfo,history,exchangeGoodInfo} = this.props;
     const {remark,checked}  =this.state;
     return (
       <div className={styles.clearingWrap}>
@@ -308,7 +335,8 @@ class index extends Component {
           changeTotalPrice={this.changeTotalPrice}
           remark={remark}
           history={history}
-          onRemarkChange={this.onRemarkChange}></CommodityList>
+          onRemarkChange={this.onRemarkChange}
+          exchangeGoodInfo={exchangeGoodInfo}></CommodityList>
           <div className={styles.btnGroup}>
           </div>
         </List>
@@ -321,5 +349,7 @@ const mapStateToProps = (state)=> ({
   goodInfo: state.mine.goodInfo,
   orderInfo: state.mine.orderInfo,
   addressInfo: state.mine.addressInfo,
+  exchangeGoodInfo: state.mine.exchangeGoodInfo,
+  sellerAddressInfo: state.mine.sellerAddressInfo
 })
 export default connect(mapStateToProps)(indexWrap)

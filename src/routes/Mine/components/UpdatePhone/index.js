@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { List, InputItem, WhiteSpace, Button, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import storage from '@/utils/storage'
 import goTo from '../../../../utils/goTo'
 import styles from './index.less'
 
@@ -9,7 +10,6 @@ const Item = List.Item;
 class index extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.history);
     this.state = {
       hint: '获取验证码',
       codeFlag: false,
@@ -27,7 +27,6 @@ class index extends Component {
 
   }
   goToMine = ()=>{
-    console.log('goto');
     goTo('mine',this.props.history)
   }
   // 处理点击事件
@@ -74,31 +73,8 @@ class index extends Component {
     Object.keys(values).forEach(item =>{
       // eslint-disable-next-line default-case
       switch(item) {
+
         case 'phone':
-          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
-          if(!reg.test(values[item])) {
-            this.setState({
-              msg: '输入手机号格式错误'
-            });
-
-          }else {
-            flag++;
-
-          }
-          break;
-        case 'newPhone':
-          reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
-          if(!reg.test(values[item])) {
-            this.setState({
-              msg: '输入手机号格式错误'
-            });
-
-          }else {
-            flag++;
-
-          }
-          break;
-        case 'newPhone2':
           reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
           if(!reg.test(values[item])) {
             this.setState({
@@ -123,7 +99,7 @@ class index extends Component {
           break;
       }
     });
-    if(flag ===4) {
+    if(flag ===2) {
       this.regiter();
     }else {
       return ;
@@ -131,22 +107,19 @@ class index extends Component {
   }
   regiter = () => {
     const { getFieldsValue } = this.props.form;
+    const userInfo = storage.get('userInfo');
     const {match:{params:{flag}}} = this.props;
     const values = getFieldsValue();
-    if(values.newPhone === values.newPhone2) {
       this.props.dispatch({
         type: 'mine/updatePhone',
         payload: {
           ...values,
+          userId: userInfo.userId,
         },
         callback: (res)=> {
-          console.log(res);
           goTo('/mine',this.props.history)
         },
       })
-    }else {
-      Toast.info('两次密码不一致');
-    }
 
   }
   renderLogin = () =>{
@@ -155,9 +128,26 @@ class index extends Component {
     return (
       <div className={styles.operateWrap}>
           <List className={styles.form} >
-            <InputItem
+            {/* <InputItem
               {...getFieldProps('phone')}
               placeholder="请输入手机号"
+              className={'userName'}
+            >
+              <span className={`iconfont icon-shouji ${styles.inputIcon}`} />
+            </InputItem> */}
+
+            <InputItem
+              {...getFieldProps('password')}
+              type="password"
+              placeholder="请输入登录密码"
+              className={'userName'}
+            >
+              <span className={'iconfont icon-iconfont17'} />
+            </InputItem>
+
+            <InputItem
+              {...getFieldProps('phone')}
+              placeholder="请输入新手机号"
               className={'userName'}
             >
               <span className={`iconfont icon-shouji ${styles.inputIcon}`} />
@@ -171,20 +161,13 @@ class index extends Component {
               />
               <span className={`${styles.btnVerify} themeColor ${codeFlag ? 'disableBtn' : 'ableBtn'}`} onClick={this.handleGetCode}>{hint}</span>
             </div>
-            <InputItem
-              {...getFieldProps('newPhone')}
-              placeholder="请输入新手机号"
-              className={'userName'}
-            >
-              <span className={`iconfont icon-shouji ${styles.inputIcon}`} />
-            </InputItem>
-            <InputItem
+            {/* <InputItem
               {...getFieldProps('newPhone2')}
               placeholder="请再次输入手机号"
               className={'userName'}
             >
               <span className={`iconfont icon-shouji ${styles.inputIcon}`} />
-            </InputItem>
+            </InputItem> */}
 
 
             <p className={styles.info}>{msg}</p>

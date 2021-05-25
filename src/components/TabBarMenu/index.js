@@ -50,7 +50,6 @@ export default class index extends Component {
     this.setState({ open: !this.state.open });
   }
   handleReset = () => {
-    console.log('reset');
   }
   sidebar = () => {
     const labels = [

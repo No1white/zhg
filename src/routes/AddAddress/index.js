@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-11 20:59:08
- * @LastEditTime: 2021-02-04 18:31:00
+ * @LastEditTime: 2021-05-21 17:09:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\AddAddress\index.js
@@ -37,6 +37,8 @@ class index extends Component {
     const { getFieldsValue } = this.props.form;
     const values = getFieldsValue();
     const userInfo = storage.get('userInfo');
+    const addressList  = storage.get('addressList');
+    console.log(addressList);
     const { location:{query ={}} } = this.props;
     if(query.userName) {
       this.props.dispatch({
@@ -52,11 +54,18 @@ class index extends Component {
         }
       })
     } else {
+      let defaultAddress = 0;
+      console.log(addressList);
+      if(!addressList) {
+        defaultAddress = 0;
+      }else {
+        defaultAddress = this.state.checked ? 0 : 1;
+      }
       this.props.dispatch({
         type: 'mine/saveAddressInfo',
         payload: {
           ...values,
-          defaultAddress: this.state.checked ? 0 : 1,
+          defaultAddress: defaultAddress,
           userId: userInfo.userId,
         },
         callback: ()=> {
@@ -171,7 +180,7 @@ class index extends Component {
   render() {
     return (
       <div className={styles.addAddressWrap}>
-        <NavBar title={'添加收获地址'} history={this.props.history}></NavBar>
+        <NavBar title={'添加收货地址'} history={this.props.history}></NavBar>
         {this.renderForm()}
         <Button className={`${styles.btn} bgLinear`} size="largar" onClick={this.handleSaveAddress}>保存</Button>
       </div>

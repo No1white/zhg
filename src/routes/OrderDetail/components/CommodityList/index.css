@@ -40,6 +40,10 @@
 .commodityWrap .commodityList .commodityItem .goodListWrap .goodList .goodItem .goodInfo .specification {
   opacity: 0.6;
 }
+.commodityWrap .commodityList .commodityItem .goodListWrap .goodList .exChangeTitle {
+  text-align: center;
+  font-size: 20px;
+}
 .commodityWrap .commodityList .commodityItem .goodListWrap .goodList .dealInfo {
   width: 100%;
 }

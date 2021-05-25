@@ -42,6 +42,7 @@ const initState = {
   addressInfo: {}, //订单地址详情
   collectListInfo:[], //收藏列表
   attentionListInfo: [], //关注的人
+  sellerAddressInfo: {}, //卖家地址
 }
 export default {
 
@@ -206,20 +207,22 @@ export default {
       const reqParams = payload || {};
       const { data } = yield call(autonym, reqParams);
 
-      storage.set('userInfo',data.userInfo);
       if(data.code === 0 || data.code === '0') {
+        storage.set('userInfo',data.userInfo);
+
         Toast.info(data.msg);
-        callback(data);
-      }else {
-        Toast.info(data.msg);
-        return ;
-      }
-      yield put({
+        yield put({
           type: 'save',
           payload: {
             userInfo: data.userInfo
           },
         });
+        callback(data);
+      }else {
+        Toast.info(data.msg);
+        return ;
+      }
+
     },
 
     // 获取下架的商品
@@ -302,6 +305,7 @@ export default {
             addressList:data.addressList
           },
         });
+        callback(data)
       const addressList  = data.addressList.map(item => {
         if(item.defaultAddress === 0) {
           let temp = {
@@ -320,6 +324,7 @@ export default {
         storage.set('addressList',addressList)
       }else {
         Toast.info(data.msg);
+        callback(data)
         return ;
       }
 
@@ -397,8 +402,8 @@ export default {
     *acceprtExChange({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(acceprtExChange, reqParams);
-      if(data === 0 || data ==='0') {
-        callback(data)
+      if(data.code === 0 || data.code ==='0') {
+        callback(data);
       }else {
         Toast.info(data.msg);
       }
@@ -428,7 +433,9 @@ export default {
         payload: {
           addressInfo: data.addressInfo,
           goodInfo: data.goodInfo,
-          orderInfo: data.orderInfo
+          orderInfo: data.orderInfo,
+          exchangeGoodInfo: data.exchangeGoodInfo,
+          sellerAddressInfo: data.sellerAddressInfo,
         },
       });
     },
@@ -480,7 +487,14 @@ export default {
     *acceptReFound({ payload,callback}, { call, put }) {
       const reqParams = payload || {};
       const { data } = yield call(acceptReFound, reqParams);
+      if(data.code ===0) {
+        Toast.info(data.msg);
+        callback(data);
 
+      }else {
+        Toast.info(data.msg);
+        return;
+      }
 
       // yield put({
       //   type: 'save',

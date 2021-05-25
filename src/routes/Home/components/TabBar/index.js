@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-25 11:29:11
- * @LastEditTime: 2021-03-21 13:47:17
+ * @LastEditTime: 2021-04-29 22:16:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Home\components\TabBar\index.js
@@ -14,7 +14,6 @@ class index extends React.Component {
 
   constructor(props){
     super(props);
-    console.log(props);
   }
   render() {
     const {tabs,renderContent,handleTabClick,initialPage} = this.props;

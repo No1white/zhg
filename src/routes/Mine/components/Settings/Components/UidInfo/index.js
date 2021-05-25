@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-01-20 21:15:18
- * @LastEditTime: 2021-04-28 18:40:13
+ * @LastEditTime: 2021-04-29 22:17:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\Mine\components\Settings\Components\Autonym\index.js
  */
 import React, { Component } from 'react'
-import { List, InputItem, WhiteSpace, Button } from 'antd-mobile';
+import { List, InputItem, WhiteSpace, Button,WingBlank} from 'antd-mobile';
 import { createForm } from 'rc-form';
 import {connect} from 'dva'
 import storage from '../../../../../../utils/storage'
@@ -36,38 +36,7 @@ class index extends Component {
     const { getFieldProps } = this.props.form;
     return (
       <div className={styles.operateWrap}>
-          <List className={styles.form} >
-            <InputItem
-              {...getFieldProps('realName')}
-              placeholder="请输入姓名"
-              className={'userName'}
-            >
-              <span className={'iconfont icon-wode'} />
-            </InputItem>
-            <InputItem
-              {...getFieldProps('cardNo')}
-              placeholder="请输入身份证号"
-              className={'userName'}
-            >
-              <span className={'iconfont icon-iconfontwo'} />
-            </InputItem>
-            <InputItem
-              {...getFieldProps('aliPayId')}
-              placeholder="请输入支付宝Uid"
-              className={'userName'}
-            >
-              <span className={'iconfont icon-zhifu-01'} />
-            </InputItem>
-            <div className={styles.getUid} onClick={()=>{goTo('uidInfo',this.props.history)}} >
-              <a className={styles.uid}>如何获取Uid？</a>
-            </div>
-            <div className={styles.info}>
-              <p className={styles.textMsg}>例如:2088621955303871</p>
-              <p className={styles.textMsg}>UID极为重要,用于收付款</p>
-              <p className={styles.textMsg}>后续可在个人中心设置</p>
-            </div>
-        </List>
-          <Button className={styles.submitBtn} onClick={this.autonym}>认证</Button>
+
       </div>
 
     )
@@ -92,13 +61,18 @@ class index extends Component {
         <div className={styles.closeBtn} onClick={()=> {this.props.history.goBack(-1)}}>
           <span className={`iconfont icon-guanbi ${styles.close}`}></span>
         </div>
-        <div className={styles.appTitle}>实名认证</div>
-        <div className={styles.formWrap}>
-          <div className={styles.titleWrap}>
-            {/* <h2 className={styles.title}>实名认证</h2> */}
-          </div>
-          {userInfo.autonym === 1 ? this.renderautonym() : this.renderautonymInfo()}
-        </div>
+        <WingBlank>
+            <div>
+              <h2 className={styles.title}>如何获取支付宝Uid?</h2>
+            </div>
+            <span>
+            电脑端查询路径：b.alipay.com--账号中心，
+            左下角设置进入后-更多-查看PID/KEY,
+
+            </span>
+            <img className={styles.img} src="http://qs7bibypb.hn-bkt.clouddn.com/image/activity/uid.jpg" alt=""/>
+
+        </WingBlank>
 
       </div>
     )

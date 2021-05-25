@@ -5,7 +5,6 @@ const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 export default class index extends Component {
   onChange = (val) => {
-    console.log(val);
   }
   render() {
     const {goodList = [],allChecked =false,userId,goodListCheckChange} = this.props;

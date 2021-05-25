@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-28 11:28:27
- * @LastEditTime: 2021-03-30 18:35:28
+ * @LastEditTime: 2021-04-17 14:24:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \zhg\src\routes\CommodityDetail\index.js
@@ -122,7 +122,6 @@ class index extends Component {
             if(goodItem.goodId === goodDetailInfo.goodId) {
               //如果已经浏览过删除记录，添加到数组第一条,
               flag =1;
-              console.log(goodIndex);
               item.goodList.splice(goodIndex,1);
               item.goodList.unshift(tempObj);
             }
@@ -173,6 +172,11 @@ class index extends Component {
     }
     if(userInfo.userId === goodDetailInfo.userId) {
       Toast.info('不能购买自己发布的商品')
+    }else if(userInfo.autonym === 1){
+      Toast.info('您还未实名认证，请先实名认证,正在跳转');
+      setTimeout(()=>{
+        this.props.history.push(`/mine/settings/autonym`)
+      },2000)
     }else {
       this.props.history.push(`/clearing/${goodDetailInfo.goodId}`)
     }

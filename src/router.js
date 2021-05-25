@@ -91,9 +91,14 @@ function RouterConfig({ history }) {
     loader: () => import('./routes/Mine/components/Settings/Components/AlterUserInfo'),
     loading: Loading,
   });
-  // 修改页面
+  // 实名页面
   const autonymPage = Loadable({
     loader: () => import('./routes/Mine/components/Settings/Components/Autonym'),
+    loading: Loading,
+  });
+  // uid页面
+  const uidPage = Loadable({
+    loader: () => import('./routes/Mine/components/Settings/Components/UidInfo'),
     loading: Loading,
   });
   const CommodityPage = Loadable({
@@ -201,6 +206,8 @@ function RouterConfig({ history }) {
         <Route path='/mine/settings/alterUserInfo' exact component={alterUserInfoPage} />
         {/* 实名认证页面 */}
         <Route path="/mine/settings/autonym" exact component={autonymPage} />
+        {/* 如何获取Uid */}
+        <Route path="/mine/settings/uidInfo" exact component={uidPage} />
         {/* 注册页面 */}
         <Route path="/mine/register" exact component={RegisterPage} />
         {/* 商品详细页面 */}

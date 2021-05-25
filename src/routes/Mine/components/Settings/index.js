@@ -51,7 +51,6 @@ class index extends Component {
     });
   }
   fillApi = (value) => {
-    console.log(value);
     const userInfo = storage.get('userInfo');
     this.props.dispatch({
       type:'mine/fillAliPayId',

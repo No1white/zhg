@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
-import {Checkbox,WingBlank,Switch,List,ActionSheet,Toast, WhiteSpace} from 'antd-mobile'
+import {Checkbox,WingBlank,Switch,List,ActionSheet,Toast, WhiteSpace,InputItem} from 'antd-mobile'
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
 import ExchangeCommodity from './components/exchangeCommodity'
@@ -11,7 +11,13 @@ import styles from './index.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 
-
+const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+let moneyKeyboardWrapProps;
+if (isIPhone) {
+  moneyKeyboardWrapProps = {
+    onTouchStart: e => e.preventDefault(),
+  };
+}
 class index extends Component {
   constructor(props) {
     const {location:{query =[]},userGoodList} = props;
@@ -34,6 +40,8 @@ class index extends Component {
       remark: '',
       goodList:query,
       userGoodList: userGoodList,
+      priceFlag:false,
+      price:0,
     }
 
   }
@@ -77,15 +85,21 @@ class index extends Component {
   openExchange = ()=> {
     const userInfo = storage.get('userInfo');
     // 获取当前用户上架中的商品
-    this.props.dispatch({
-      type: 'clearing/getUserGoods',
-      payload: {
-        userId: userInfo.userId,
-      }
-    })
-      this.setState({
-        checked: !this.state.checked,
+    //判断是否接受置换
+    const { goodDetailInfo } = this.props;
+    if(goodDetailInfo.swap === 0) {
+      this.props.dispatch({
+        type: 'clearing/getUserGoods',
+        payload: {
+          userId: userInfo.userId,
+        }
       })
+        this.setState({
+          checked: !this.state.checked,
+        })
+    }else {
+      Toast.info('卖家不接受置换')
+    }
   }
   showShareActionSheet = () => {
     ActionSheet.showShareActionSheetWithOptions({
@@ -104,7 +118,7 @@ class index extends Component {
   }
   settleAccounts = () => {
     const {goodDetailInfo,userGoodList = []} = this.props;
-    const { remark} = this.state;
+    const { remark,priceFlag,price} = this.state;
     const userInfo = storage.get('userInfo');
     const addressList = storage.get('addressList') || [];
     let addressId = '';
@@ -127,28 +141,59 @@ class index extends Component {
       Toast.info('您还未选择地址');
       return ;
     }
-    this.props.dispatch({
-      type:'clearing/createOrder',
-      payload: {
-        amount:goodDetailInfo.price,
-        userId: userInfo.userId,
-        goodTitle: goodDetailInfo.title,
-        goodId: goodDetailInfo.goodId,
-        swapGoodId,
-        swap,
-        seller: goodDetailInfo.userId, // 卖家id
-        remark: remark,
-        addressId,
-        price: goodDetailInfo.price,
-      },
-      callback:(res)=> {
-        if(res.code === 2 || res.code === '2') {
-          goTo('/success',this.props.history,{msg: res.msg})
-        }else {
-          window.location.href=res.url;
+    console.log(priceFlag);
+    if(priceFlag) {
+      this.props.dispatch({
+        type:'clearing/createOrder',
+        payload: {
+          amount:price,
+          userId: userInfo.userId,
+          goodTitle:'补差价' +goodDetailInfo.title,
+          goodId: goodDetailInfo.goodId,
+          swapGoodId,
+          swap,
+          dealWay: goodDetailInfo.dealWay,
+          seller: goodDetailInfo.userId, // 卖家id
+          remark: remark,
+          addressId,
+          price:goodDetailInfo.price,
+          reFound: price,
+          priceFlag: priceFlag
+        },
+        callback:(res)=> {
+          if(res.code === 2 || res.code === '2') {
+            goTo('/success',this.props.history,{msg: res.msg})
+          }else {
+            window.location.href=res.url;
+          }
         }
-      }
-    })
+      })
+    }else {
+      this.props.dispatch({
+        type:'clearing/createOrder',
+        payload: {
+          amount:goodDetailInfo.price,
+          userId: userInfo.userId,
+          goodTitle: goodDetailInfo.title,
+          goodId: goodDetailInfo.goodId,
+          swapGoodId,
+          swap,
+          seller: goodDetailInfo.userId, // 卖家id
+          remark: remark,
+          addressId,
+          price: goodDetailInfo.price,
+          dealWay: goodDetailInfo.dealWay
+        },
+        callback:(res)=> {
+          if(res.code === 2 || res.code === '2') {
+            goTo('/success',this.props.history,{msg: res.msg})
+          }else {
+            window.location.href=res.url;
+          }
+        }
+      })
+    }
+
 
   }
   changeTotalPrice = (totalPrice) => {
@@ -181,7 +226,13 @@ class index extends Component {
 
     })
   }
-
+  //处理补差价
+  handleAddPrice = (price) => {
+    this.setState({
+      priceFlag:true,
+      price:price,
+    })
+  }
   renderNavBarLeftPart = () => {
     return (
       <h2 className={styles.title}>购物车</h2>
@@ -209,7 +260,7 @@ class index extends Component {
     }
   }
   renderAccount = ()=> {
-    const {showMange,totalPrice,checked} = this.state;
+    const {showMange,totalPrice,checked,priceFlag} = this.state;
     const {goodDetailInfo} = this.props;
     return (
       <div className={styles.accountWrap}>
@@ -225,7 +276,7 @@ class index extends Component {
                   :''
                 }
               </span>
-              {!checked
+              {!checked || priceFlag
               ? <button className={`circleBtn ${styles.btn}`} onClick={this.settleAccounts}>结算</button>
               :<button className={`circleBtn ${styles.btn}`} onClick={this.settleAccounts}>置换</button>
               }
@@ -304,8 +355,40 @@ class index extends Component {
       </WingBlank>
     )
   }
+  renderAddPrice = () => {
+    const { getFieldProps } = this.props.form;
+    return (
+      <WingBlank>
+        <div className={styles.PriceWrap}>
+          <div className={styles.title}>
+            补差价
+          </div>
+          <InputItem
+            {...getFieldProps('money2', {
+              normalize: (v, prev) => {
+                if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
+                  if (v === '.') {
+                    return '0.';
+                  }
+                  return prev;
+                }
+                return v;
+              },
+            })}
+            type={'money'}
+            className={styles.priceInput}
+            placeholder="差价金额"
+            ref={el => this.inputRef = el}
+            onVirtualKeyboardConfirm={v => this.handleAddPrice(v)}
+            clear
+            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+          ></InputItem>
+        </div>
+      </WingBlank>
+    )
+  }
   renderExchange = ()=> {
-    const {userGoodList} = this.props;
+    const {userGoodList = []} = this.props;
 
     return (
       <WingBlank className={styles.exchangeWrap}>
@@ -323,6 +406,7 @@ class index extends Component {
       </WingBlank>
     )
   }
+
   render() {
     // const {goodList = []} = this.state;
     const {goodDetailInfo} = this.props;
@@ -333,6 +417,8 @@ class index extends Component {
           <NavBar history={this.props.history} ></NavBar>
           {this.renderAddress()}
           {this.renderSwitch()}
+          {checked && this.renderAddPrice()}
+
           {checked && this.renderExchange()}
           <CommodityList
           goodList={ [{...goodDetailInfo}]}

@@ -435,9 +435,17 @@ class index extends Component {
                                 </div>
                                 <div className={`${styles.dealItem}`}>
                                   <span className={`${styles.title} ${styles.flex1}`}>订单备注:</span>
-                                  <span className={`${styles.content} ${styles.flex1}`}>{i.dep}</span>
+                                  <span className={`${styles.content} ${styles.flex1}`}>{orderInfo && orderInfo.remark}</span>
                                   {/* <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<span className={'iconfont  icon-jiantou1'}></span></div> */}
                                 </div>
+                                {
+                                  orderInfo && orderInfo.reason &&
+                                  <div className={`${styles.dealItem} themeColor`}>
+                                  <span className={`${styles.title} ${styles.flex1}`}>退款原因:</span>
+                                  <span className={`${styles.content} ${styles.flex1}`}>{orderInfo && orderInfo.reason}</span>
+                                  {/* <div className={`value ${styles.flex1}`}>{constObj.dealWaysObj[i.dealWay]}<span className={'iconfont  icon-jiantou1'}></span></div> */}
+                                </div>
+                                }
                               </div>
                               {/* <div className={`${styles.dealList}`}>
                                 <div className={`${styles.dealItem}`}>

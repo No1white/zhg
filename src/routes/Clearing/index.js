@@ -99,6 +99,9 @@ class index extends Component {
         })
     }else {
       Toast.info('卖家不接受置换')
+      this.setState({
+        checked: false,
+      })
     }
   }
   showShareActionSheet = () => {
